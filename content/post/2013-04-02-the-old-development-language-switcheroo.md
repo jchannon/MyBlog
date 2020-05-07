@@ -1,7 +1,7 @@
 +++
 
 title = "The Old Development Language Switcheroo"
-tags = ["csharp","career","Dart","F#","javascript","Kotlin","node.js","typescript"]
+tags = ["csharp","career","Dart","fsharp","javascript","Kotlin","node.js","typescript"]
 +++
 
 As a C# developer I think I’m pretty safe in saying that its not going away any time soon however, its my opinion that to not become irrelevant you need to have options. Some may argue that its better to be master of one than a Jack of all trades but lets just say you can’t find your next job in the primary language you want to work in. What do you do?
