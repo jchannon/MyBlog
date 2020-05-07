@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>csharp on </title>
+    <link>/tags/csharp/</link>
+    <description>Recent content in csharp on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 10 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/csharp/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Announcing Carter</title>
+      <link>/2018-04-10-announcing-carter/</link>
+      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018-04-10-announcing-carter/</guid>
+      <description>As of beginning of April 2018 Botwin has been renamed to Carter. Whilst I thought the name was genius it became obvious that some people didn&amp;rsquo;t like it or understand it and tried to interpret it as a Bot framework for Windows. After spending too long trying to think of a new name I finally decided upon Carter. Carter comes from the surname of Jay-Z (Shawn Carter) and in his song Empire State of Mind he sings &amp;ldquo;I&amp;rsquo;m the new Sinatra&amp;rdquo;.</description>
+    </item>
+    
+    <item>
+      <title>Debugging .Net Core apps inside Docker container with VSCode</title>
+      <link>/2017-06-07-debugging-netcore-docker/</link>
+      <pubDate>Wed, 07 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017-06-07-debugging-netcore-docker/</guid>
+      <description>&lt;p&gt;So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak &amp;ldquo;I can scale&amp;rdquo; points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.&lt;/p&gt;
+&lt;p&gt;For demonstration purposes lets take a very simple application and we are going to publish it as a self contained application ie/one that has all the runtime and application binaries outputted so you don&amp;rsquo;t have to install dotnet in a container.&lt;/p&gt;
+&lt;p&gt;To be able to debug that application we are going to need VSDBG(the .Net Core command line debugger) inside the container.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We are also going to need to append the launch.json for VSCode in your project&amp;rsquo;s root to have the below:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;name&amp;quot;: &amp;quot;.NET Core Remote Attach&amp;quot;,
+    &amp;quot;type&amp;quot;: &amp;quot;coreclr&amp;quot;,
+    &amp;quot;request&amp;quot;: &amp;quot;attach&amp;quot;,
+    &amp;quot;processId&amp;quot;: &amp;quot;${command:pickRemoteProcess}&amp;quot;,
+    &amp;quot;pipeTransport&amp;quot;: {
+        &amp;quot;pipeProgram&amp;quot;: &amp;quot;bash&amp;quot;,
+        &amp;quot;pipeArgs&amp;quot;: [ &amp;quot;-c&amp;quot;, &amp;quot;docker exec -i json ${debuggerCommand}&amp;quot; ],
+        &amp;quot;debuggerPath&amp;quot;: &amp;quot;/root/vsdbg/vsdbg&amp;quot;,
+        &amp;quot;pipeCwd&amp;quot;: &amp;quot;${workspaceRoot}&amp;quot;,
+        &amp;quot;quoteArgs&amp;quot;: true
+    },
+    &amp;quot;sourceFileMap&amp;quot;: {
+        &amp;quot;/Users/jonathan/Projects/jsonfile&amp;quot;: &amp;quot;${workspaceRoot}&amp;quot;
+    },
+    &amp;quot;justMyCode&amp;quot;: true
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using Docker with .Net Core in CI for OSS</title>
+      <link>/2017-05-15-using-docker-with-netcore-ci/</link>
+      <pubDate>Mon, 15 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017-05-15-using-docker-with-netcore-ci/</guid>
+      <description>&lt;p&gt;I recently wrote a &lt;a href=&#34;http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/&#34;&gt;project&lt;/a&gt; for &lt;a href=&#34;https://t.co/kpkdInRgwG&#34;&gt;ASP.NET Core 2&lt;/a&gt;  and the time had come to get a CI system up and running.  I develop on OSX and mainly test on OSX &amp;amp; Linux and so the defacto place to go is TravisCI.  I&amp;rsquo;ve used it in the past and all has been great but I put out a tweet asking if Travis was still the place to go:&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>Announcing Botwin</title>
+      <link>/2017-05-04-announcing-botwin/</link>
+      <pubDate>Thu, 04 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017-05-04-announcing-botwin/</guid>
+      <description>&lt;p&gt;Whilst keeping my eye on what&amp;rsquo;s going on in .NET Core v2 I came across some planned changes for ASP.NET Core regarding the &lt;a href=&#34;https://github.com/aspnet/Routing/blob/dev/src/Microsoft.AspNetCore.Routing/RequestDelegateRouteBuilderExtensions.cs&#34;&gt;routing&lt;/a&gt;.  I had also read this &lt;a href=&#34;https://www.strathweb.com/2017/01/building-microservices-with-asp-net-core-without-mvc/&#34;&gt;blog post&lt;/a&gt; from &lt;a href=&#34;https://twitter.com/filip_woj&#34;&gt;Filip&lt;/a&gt; about using the planned changes for microservices and a lightbulb went off in my head.  I thought to myself I wonder if I could adapt the new extensions to create Nancy-esque routing.  Turns out, I could!&lt;/p&gt;
+&lt;h3 id=&#34;sample&#34;&gt;Sample&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;public class ActorsModule : BotwinModule
+{
+    public ActorsModule()
+    {
+        this.Get(&amp;quot;/&amp;quot;, async (req, res, routeData) =&amp;gt;
+        {
+            await res.WriteAsync(&amp;quot;Hello World!&amp;quot;);
+        });
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Profiling a CoreCLR application with dotMemory</title>
+      <link>/2016-02-11-profiling-coreclr-application/</link>
+      <pubDate>Thu, 11 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016-02-11-profiling-coreclr-application/</guid>
+      <description>&lt;p&gt;I had ported an application over to CoreCLR (that&amp;rsquo;s a whole other blog post), along with my colleague &lt;a href=&#34;http://twitter.com/yantrio&#34;&gt;James Humphries&lt;/a&gt; put it in a docker image and sat back and watched it do its thing.  After 6 hours of running the docker container had crashed.  Ah nuts we thought,  so pulled up the logs from docker and the last line looked like this &lt;code&gt;2016-02-10T20:18:31.728783069Z Killed&lt;/code&gt;.  I&amp;rsquo;m pretty sure when you have a log entry with &lt;code&gt;Killed&lt;/code&gt; in it, things can&amp;rsquo;t be good. To the interweb&amp;hellip;&lt;/p&gt;
+&lt;p&gt;I opened up the CoreFX repository on Github to search for the term &lt;code&gt;Killed&lt;/code&gt; and there were 2 comments but nothing that was logged out anywhere.  I then Googled for docker and killed and there was an entry that someone else had spotted on their container and the feedback was essentially it was probably out of memory.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Microsoft Endorsing C# as a First Class Citizen in Sublime Text</title>
+      <link>/2014-11-12-csharp-first-class-citizen-sublime-text/</link>
+      <pubDate>Wed, 12 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-11-12-csharp-first-class-citizen-sublime-text/</guid>
+      <description>&lt;p&gt;At the end of my last &lt;a href=&#34;http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/&#34;&gt;post&lt;/a&gt; on using ASP.Net vNext with Sublime Text I briefly mentioned a &lt;a href=&#34;https://github.com/OmniSharp/omnisharp-sublime&#34;&gt;plugin&lt;/a&gt; that aimed at giving intellisense for C# within the editor.  Well 2 months later and I&amp;rsquo;m happy to announce that intellisense works and I&amp;rsquo;ve added a slew of other features that will hopefully make you feel at home away from Visual Studio.&lt;/p&gt;
+&lt;p&gt;I discovered the plugin thanks to &lt;a href=&#34;http://twitter.com/jasonimison&#34;&gt;Jason Imison&lt;/a&gt; but at that point there was some issues getting the intellisense working consistently because at that time I was using it with an ASP.NET vNext application which didn&amp;rsquo;t have a solution file (*.sln) and the plugin was expecting that.  After speaking to Jason I found out I could change the settings so it wouldn&amp;rsquo;t expect a solution file and give me the intellisense I was after in a text editor.  Eureka, it worked!  I was now on a mission to make Sublime be a first class citizen when writing C#.  Some may question why on earth would I want to edit C# in something other than Visual Studio.  I don&amp;rsquo;t really want to get into that debate here but all I&amp;rsquo;ll say is, it&amp;rsquo;s nice to have other editor options and with Microsoft&amp;rsquo;s mission to provide vNext compatibility with Mono and Visual Studio not running on OSX/Linux it makes sense to have an editor with feature rich C# support (yes I know there is Xamarin Studio but &amp;ldquo;options&amp;rdquo; people, &amp;ldquo;options&amp;rdquo;).&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Unit Testing with SqlException</title>
+      <link>/2014-01-02-unit-testing-with-sqlexception/</link>
+      <pubDate>Thu, 02 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-01-02-unit-testing-with-sqlexception/</guid>
+      <description>&lt;p&gt;So after a nice Christmas break I get to some code that needs some unit testing around a try/catch. Something similar to this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;try
+{
+    myService.DoSomethingThatMightTakeALongTime();
+}
+catch (EntityCommandExecutionException ex)
+{
+    var exception = ex.InnerException as SqlException;
+    if (exception != null)
+    {
+        if (exception.Number == -2)
+        {
+            //Do something special
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</title>
+      <link>/2013-10-01-blogging-with-markdown-and-git/</link>
+      <pubDate>Tue, 01 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-10-01-blogging-with-markdown-and-git/</guid>
+      <description>&lt;p&gt;There are many markdown blogging engines out there such as &lt;a href=&#34;http://calepin.co/&#34;&gt;Calepin&lt;/a&gt;, &lt;a href=&#34;http://scriptogr.am/&#34;&gt;Scriptogram&lt;/a&gt; and even &lt;a href=&#34;http://wordpress.org/&#34;&gt;WordPress&lt;/a&gt; allows you to write blog posts in Markdown but &lt;a href=&#34;https://github.com/Sandra/Sandra.Snow&#34;&gt;Sandra.Snow&lt;/a&gt; tries to add something different.  Firstly, it is written in .Net and &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt;, secondly its a static blog generator and finally it supports Git deployment.&lt;/p&gt;
+&lt;p&gt;Even if you don&amp;rsquo;t want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;layout&amp;rdquo; refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you&amp;rsquo;d prefer.  These &amp;ldquo;layout&amp;rdquo; files should exist in the &amp;ldquo;_layouts&amp;rdquo; folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;category&amp;rdquo; or &amp;ldquo;categories&amp;rdquo; property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;title&amp;rdquo; should hopefully be self explanatory!&lt;/p&gt;
+&lt;p&gt;You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Returning multiple fake objects with FakeItEasy</title>
+      <link>/2013-09-20-returning-multiple-fake-objects-with-fakeiteasy/</link>
+      <pubDate>Fri, 20 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-09-20-returning-multiple-fake-objects-with-fakeiteasy/</guid>
+      <description>&lt;p&gt;I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.&lt;/p&gt;
+&lt;p&gt;With &lt;a href=&#34;https://github.com/FakeItEasy/FakeItEasy&#34;&gt;FakeItEasy&lt;/a&gt; this is easy:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;A.CallTo(() =&amp;gt; myInterface.GetSomething(1)).Returns(new Something())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All very nice, but now if I have multiple calls to &lt;code&gt;myInterface&lt;/code&gt; I have to execute the above statement &amp;lsquo;x&amp;rsquo; amount of times:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Should_Do_Something()
+{
+  var myInterface = A.Fake&amp;lt;IApplication&amp;gt;();
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(1)).Returns(new Something());
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(2)).Returns(new Something());
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(3)).Returns(new Something());
+  
+  var result = sut.DoSomething(myInterface);
+  
+  Assert.Equal(&amp;quot;Super Duper&amp;quot;, result);
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Why .Net should become independent!</title>
+      <link>/2013-05-29-why-net-should-become-independent/</link>
+      <pubDate>Wed, 29 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-05-29-why-net-should-become-independent/</guid>
+      <description>&lt;p&gt;I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp;amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in &lt;a href=&#34;http://nancyfx.org/&#34;&gt;Nancy&lt;/a&gt; on my first day and paved the way for Git in the first week).&lt;/p&gt;
+&lt;p&gt;My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.&lt;/p&gt;
+&lt;p&gt;These adverts usually contain a list of tech/experience similar to: MVC, Webforms, Visual Studio, SQL Server, Entity Framework, WCF, LINQ.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What’s the common denominator here?&lt;br&gt;
+&lt;strong&gt;A:&lt;/strong&gt; They are all owned by Microsoft.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What operating system do these all run on?&lt;br&gt;
+&lt;strong&gt;A:&lt;/strong&gt; Microsoft Windows&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What framework and programming language do they run on?&lt;br&gt;
+&lt;strong&gt;A:&lt;/strong&gt; Microsoft .Net and C#&lt;/p&gt;
+&lt;p&gt;Spot a pattern?&lt;/p&gt;
+&lt;p&gt;So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using DateTime in C# and SQL</title>
+      <link>/2013-04-08-using-datetime-in-c-and-sql/</link>
+      <pubDate>Mon, 08 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-08-using-datetime-in-c-and-sql/</guid>
+      <description>&lt;p&gt;I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.&lt;/p&gt;
+&lt;p&gt;Store your datetimes in UTC format into the database. Unfortunately this mean executing something like:
+&lt;code&gt;myObject.ExpiryDate = TimeZoneInfo.ConvertTimeToUtc(dateTime, TimeZoneInfo.FindSystemTimeZoneById(“timezoneid of users”)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In every central place where you update/insert DateTime values on your objects you will need the above.&lt;/p&gt;
+&lt;p&gt;When you display any DateTime information it must display as a local datetime value. You can do this by using     &lt;code&gt;myObject.ExpiryDate.ToLocalTime()&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The Old Development Language Switcheroo</title>
+      <link>/2013-04-02-the-old-development-language-switcheroo/</link>
+      <pubDate>Tue, 02 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-02-the-old-development-language-switcheroo/</guid>
+      <description>&lt;p&gt;As a C# developer I think I’m pretty safe in saying that its not going away any time soon however, its my opinion that to not become irrelevant you need to have options. Some may argue that its better to be master of one than a Jack of all trades but lets just say you can’t find your next job in the primary language you want to work in. What do you do?&lt;/p&gt;
+&lt;p&gt;I have looked more into JavaScript recently and with that comes server and client scope for the use of the language so with some understanding of JS that would be probably the best bet for me however, as much as this may annoy some I think I actually prefer statically typed languages.&lt;/p&gt;
+&lt;p&gt;Now I know there is &lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;TypeScript&lt;/a&gt; that I could use for my &lt;a href=&#34;http://nodejs.org/&#34;&gt;node.js&lt;/a&gt; apps but I see that as more of a workaround and not a core feature of JavaScript. I’m not saying anything bad against JS and the libraries/frameworks that I have used I like but I just find it easier to learn and know what I can do when I have decent intellisense showing me what I can do with my code.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The many approaches to Entity Framework</title>
+      <link>/2013-03-04-the-many-approaches-to-entity-framework/</link>
+      <pubDate>Mon, 04 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-03-04-the-many-approaches-to-entity-framework/</guid>
+      <description>&lt;p&gt;I recently had a need to look into using &lt;a href=&#34;http://www.asp.net/entity-framework&#34;&gt;Entity Framework (EF)&lt;/a&gt; for a &lt;a href=&#34;http://www.asp.net/mvc&#34;&gt;ASP.NET MVC&lt;/a&gt; project. In the past I have always used &lt;a href=&#34;http://www.toptensoftware.com/petapoco/&#34;&gt;PetaPoco&lt;/a&gt; as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.&lt;/p&gt;
+&lt;p&gt;The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.&lt;/p&gt;
+&lt;p&gt;I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript is the future…maybe!</title>
+      <link>/2013-01-09-javascript-is-the-future-maybe/</link>
+      <pubDate>Wed, 09 Jan 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-01-09-javascript-is-the-future-maybe/</guid>
+      <description>&lt;p&gt;I’m not one for New Years resolutions but I thought it was time I looked at JavaScript more in depth.&lt;/p&gt;
+&lt;p&gt;I looked at &lt;a href=&#34;http://blog.jonathanchannon.com/2012/10/08/node-js-express-hello-world-formula-1-style/&#34; title=&#34;Node.js, Express, Hello World Formula 1 Style&#34;&gt;Node.js a while back&lt;/a&gt; and found it very interesting and I probably need to go back to it. Over the last month or so there has been a large discussion about async in .Net frameworks and there appears to be a lot of misunderstanding about it (and lets leave it at that, I don’t want to start another flame war) but the thing we can definitely say with &lt;a href=&#34;http://nodejs.org/&#34;&gt;Node.js&lt;/a&gt;, well JavaScript to be fair is that it is perfectly asynchronous and non-blocking.&lt;/p&gt;
+&lt;p&gt;As a web developer I have used JavaScript from the early days of Response.Write moving onto frameworks such as &lt;a href=&#34;http://script.aculo.us/&#34;&gt;script.aculo.us&lt;/a&gt; and &lt;a href=&#34;http://mootools.net/&#34;&gt;MooTools&lt;/a&gt; and finally ending up with &lt;a href=&#34;http://jquery.com/&#34;&gt;jQuery&lt;/a&gt; which has come pretty much a standard these days so my JavaScript skills are not completely new.&lt;/p&gt;
+&lt;p&gt;However, there has been a large push to use JS more and more for rich user friendly applications with things like &lt;a href=&#34;http://knockoutjs.com/&#34;&gt;KnockoutJS&lt;/a&gt;, &lt;a href=&#34;http://angularjs.org/&#34;&gt;AngularJS&lt;/a&gt; and &lt;a href=&#34;http://backbonejs.org/&#34;&gt;BackboneJS&lt;/a&gt; on the client and Node.js on the server. Microsoft has even taken a prominent role in helping bring Node.js to a Windows environment as it started out on *nix based platforms. They have also started contributing to and including scripts in their Visual Studio project templates for jQuery.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASP.NET Web API Testing</title>
+      <link>/2012-11-29-asp-net-web-api-testing/</link>
+      <pubDate>Thu, 29 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-29-asp-net-web-api-testing/</guid>
+      <description>&lt;p&gt;As the need arose to implement some kind of Web Service/HTTP API I thought I would evaluate &lt;a href=&#34;http://nancyfx.org/&#34;&gt;NancyFX&lt;/a&gt;, &lt;a href=&#34;http://www.asp.net/web-api&#34;&gt;ASP.NET Web API&lt;/a&gt; and &lt;a href=&#34;http://www.servicestack.net/&#34;&gt;ServiceStack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Suffice to say all performed as expected and I was actually surprised to find that implementing ASP.NET Web API was easier than ServiceStack (I know that might be a bit of a statement to make to the ServiceStack followers, sorry). I found Nancy easiest to implement. The very simple API demos can be found on &lt;a href=&#34;http://github.com/jchannon&#34;&gt;my Github page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When it came to testing ASP.NET Web API I found it to be wanting slightly in comparison to Nancy. With WebAPI I could make direct calls to the controller methods to make sure data was returned correctly and I could mock a repository and test that the methods in the repository were being called but there was nothing I could see to test the HTTP response I would get.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The For Loop is the devil in disguise</title>
+      <link>/2012-11-23-the-for-loop-is-the-devil-in-disguise/</link>
+      <pubDate>Fri, 23 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-23-the-for-loop-is-the-devil-in-disguise/</guid>
+      <description>&lt;p&gt;I recently spoke to someone about the ‘for’ loop who opened my eyes to how unstructured the ‘for’ loop is.&lt;/p&gt;
+&lt;p&gt;I have only ever used it in the traditional sense of:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;for(int i = 0; i &amp;lt; 10; i++)
+{
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I looked into some more and thought I’d show anybody else who may not have known about this innocent little thing in the C# language. It may exist in other languages but I am explicitly talking about C#.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;for (; ; )
+{
+  Console.WriteLine(&amp;quot;Hi&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For some reason this compiles and executes! Who knew? Smarter people than me obviously. What do you expect it to output?&lt;/p&gt;
+&lt;p&gt;The answer is it outputs “Hi” forever as there is nothing to determine when the loop should end however there is nothing to determine when it should start either.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Testing your application’s email logic</title>
+      <link>/2012-10-25-testing-your-applications-email-logic/</link>
+      <pubDate>Thu, 25 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-10-25-testing-your-applications-email-logic/</guid>
+      <description>&lt;p&gt;If you’ve ever written an application that sends out email you may have written the code and executed it numerous times to check that the logic works and that the email appears as you hope. This obviously means you have to hit your SMTP server each time, open your email client and check your emails each time.&lt;/p&gt;
+&lt;h3 id=&#34;papercut&#34;&gt;Papercut&lt;/h3&gt;
+&lt;p&gt;Reading through my Twitter timeline I saw &lt;a href=&#34;http://twitter.com/TheCodeJunkie&#34;&gt;@TheCodeJunkie&lt;/a&gt; asking about the app that you can use to test sending emails from your application.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/blogpostimages/tweet.png&#34; alt=&#34;TheCodeJunkie Tweet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Intrigued, I kept an eye on my timeline and found that the application in question was &lt;a href=&#34;http://papercut.codeplex.com/&#34;&gt;Papercut&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
