@@ -1,7 +1,7 @@
 +++
 
 title = "The For Loop is the devil in disguise"
-tags = [".net","c#","learning"]
+tags = [".net","csharp","learning"]
 +++
 
 I recently spoke to someone about the ‘for’ loop who opened my eyes to how unstructured the ‘for’ loop is.

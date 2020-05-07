@@ -1,7 +1,7 @@
 +++
 
 title = "Using Docker with .Net Core in CI for OSS"
-tags = ["OSS","ASP.NET","C#","Docker"]
+tags = ["OSS","ASP.NET","csharp","Docker"]
 +++
 
 I recently wrote a [project](http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/) for [ASP.NET Core 2](https://t.co/kpkdInRgwG)  and the time had come to get a CI system up and running.  I develop on OSX and mainly test on OSX & Linux and so the defacto place to go is TravisCI.  I've used it in the past and all has been great but I put out a tweet asking if Travis was still the place to go:

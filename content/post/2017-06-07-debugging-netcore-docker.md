@@ -1,7 +1,7 @@
 +++
 
 title = "Debugging .Net Core apps inside Docker container with VSCode"
-tags = ["OSS","ASP.NET","C#","Docker"]
+tags = ["OSS","ASP.NET","csharp","Docker"]
 +++
 
 So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak "I can scale" points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.

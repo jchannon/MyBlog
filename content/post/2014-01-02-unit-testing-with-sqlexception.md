@@ -1,7 +1,7 @@
 +++
 
 title = "Unit Testing with SqlException"
-tags = ["c#","unit testing",".net"]
+tags = ["csharp","unit testing",".net"]
 +++
 
 So after a nice Christmas break I get to some code that needs some unit testing around a try/catch. Something similar to this:

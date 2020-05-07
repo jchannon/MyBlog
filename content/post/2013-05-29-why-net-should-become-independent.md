@@ -1,7 +1,7 @@
 +++
 
 title = "Why .Net should become independent!"
-tags = [".net","c#","career","community","oss"]
+tags = [".net","csharp","career","community","oss"]
 +++
 
 I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in [Nancy][1] on my first day and paved the way for Git in the first week).

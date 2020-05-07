@@ -1,7 +1,7 @@
 +++
 
 title = "Announcing Botwin"
-tags = ["OSS","ASP.NET","C#","Botwin"]
+tags = ["OSS","ASP.NET","csharp","Botwin"]
 +++
 
 Whilst keeping my eye on what's going on in .NET Core v2 I came across some planned changes for ASP.NET Core regarding the [routing](https://github.com/aspnet/Routing/blob/dev/src/Microsoft.AspNetCore.Routing/RequestDelegateRouteBuilderExtensions.cs).  I had also read this [blog post](https://www.strathweb.com/2017/01/building-microservices-with-asp-net-core-without-mvc/) from [Filip](https://twitter.com/filip_woj) about using the planned changes for microservices and a lightbulb went off in my head.  I thought to myself I wonder if I could adapt the new extensions to create Nancy-esque routing.  Turns out, I could!

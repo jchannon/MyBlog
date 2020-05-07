@@ -1,7 +1,7 @@
 +++
 
 title = "Using DateTime in C# and SQL"
-tags = [".net","c#","sql","datetime"]
+tags = [".net","csharp","sql","datetime"]
 +++
 
 I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.

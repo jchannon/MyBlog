@@ -1,7 +1,7 @@
 +++
 
 title = "Returning multiple fake objects with FakeItEasy"
-tags = ["fake it easy","oss","unit testing","integration testing","c#",".net"]
+tags = ["fake it easy","oss","unit testing","integration testing","csharp",".net"]
 +++
 I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.  
 

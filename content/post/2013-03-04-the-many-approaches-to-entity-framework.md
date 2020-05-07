@@ -1,7 +1,7 @@
 +++
 
 title = "The many approaches to Entity Framework"
-tags = [".net","asp.net mvc","c#","entity framework","github","SRP"]
+tags = [".net","asp.net mvc","csharp","entity framework","github","SRP"]
 +++
 
 I recently had a need to look into using [Entity Framework (EF)][1] for a [ASP.NET MVC][2] project. In the past I have always used [PetaPoco][3] as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.

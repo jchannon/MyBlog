@@ -1,6 +1,6 @@
 +++
 title = "Blogging with Markdown & Deploying via Git - Introducing Sandra.Snow"
-tags = ["community","oss","snow","nancyfx","git","c#",".net"]
+tags = ["community","oss","snow","nancyfx","git","csharp",".net"]
 +++
 
 There are many markdown blogging engines out there such as [Calepin][1], [Scriptogram][2] and even [WordPress][3] allows you to write blog posts in Markdown but [Sandra.Snow][4] tries to add something different.  Firstly, it is written in .Net and [Nancy][5], secondly its a static blog generator and finally it supports Git deployment.

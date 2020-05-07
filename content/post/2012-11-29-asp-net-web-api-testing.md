@@ -1,7 +1,7 @@
 +++
 
 title = "ASP.NET Web API Testing"
-tags = [".net","c#","asp.net web api","community","github","nancyfx","oss"]
+tags = [".net","csharp","asp.net web api","community","github","nancyfx","oss"]
 +++
 
 As the need arose to implement some kind of Web Service/HTTP API I thought I would evaluate [NancyFX][1], [ASP.NET Web API][2] and [ServiceStack][3].

@@ -1,7 +1,7 @@
 +++
 
 title = "Announcing Carter"
-tags = ["OSS","ASP.NET","C#","Botwin","Carter"]
+tags = ["OSS","ASP.NET","csharp","Botwin","Carter"]
 +++
 
 As of beginning of April 2018 Botwin has been renamed to Carter.  Whilst I thought the name was genius it became obvious that some people didn't like it or understand it and tried to interpret it as a Bot framework for Windows.  After spending too long trying to think of a new name I finally decided upon Carter. Carter comes from the surname of Jay-Z (Shawn Carter) and in his song Empire State of Mind he sings "I'm the new Sinatra". Sinatra is a web framework which inspired Nancy which heavily inspired Botwin.

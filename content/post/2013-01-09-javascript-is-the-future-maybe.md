@@ -1,7 +1,7 @@
 +++
 
 title = "JavaScript is the future…maybe!"
-tags = [".net","angularjs","backbonejs","c#","javascript","knockoutjs","learning","node.js","oss","typescript"]
+tags = [".net","angularjs","backbonejs","csharp","javascript","knockoutjs","learning","node.js","oss","typescript"]
 +++
 
 I’m not one for New Years resolutions but I thought it was time I looked at JavaScript more in depth.
