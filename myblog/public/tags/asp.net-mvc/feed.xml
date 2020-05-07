@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>asp.net mvc on </title>
+    <link>/tags/asp.net-mvc/</link>
+    <description>Recent content in asp.net mvc on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 30 Apr 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/asp.net-mvc/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mocking HttpContext with Fake It Easy</title>
+      <link>/2013-04-30-mocking-httpcontext-with-fake-it-easy/</link>
+      <pubDate>Tue, 30 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-30-mocking-httpcontext-with-fake-it-easy/</guid>
+      <description>&lt;p&gt;Lets start with the conclusion first and say “use &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt; for your web applications and APIs” as its brilliant!&lt;/p&gt;
+&lt;p&gt;If you want to continue reading lets crack on.&lt;/p&gt;
+&lt;p&gt;I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, &lt;em&gt;eg. Response.Write(“How will I mock thee?”);&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Having moved over to &lt;a href=&#34;http://xunit.codeplex.com/&#34;&gt;xUnit&lt;/a&gt; and &lt;a href=&#34;https://github.com/FakeItEasy/FakeItEasy&#34;&gt;FakeItEasy&lt;/a&gt; recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.&lt;/p&gt;
+&lt;p&gt;Doing this is no easy feat with MVC (with Nancy its all &lt;a href=&#34;https://github.com/NancyFx/Nancy/wiki/Testing-your-application&#34;&gt;done for you&lt;/a&gt;) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The many approaches to Entity Framework</title>
+      <link>/2013-03-04-the-many-approaches-to-entity-framework/</link>
+      <pubDate>Mon, 04 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-03-04-the-many-approaches-to-entity-framework/</guid>
+      <description>&lt;p&gt;I recently had a need to look into using &lt;a href=&#34;http://www.asp.net/entity-framework&#34;&gt;Entity Framework (EF)&lt;/a&gt; for a &lt;a href=&#34;http://www.asp.net/mvc&#34;&gt;ASP.NET MVC&lt;/a&gt; project. In the past I have always used &lt;a href=&#34;http://www.toptensoftware.com/petapoco/&#34;&gt;PetaPoco&lt;/a&gt; as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.&lt;/p&gt;
+&lt;p&gt;The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.&lt;/p&gt;
+&lt;p&gt;I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Why use NancyFX?</title>
+      <link>/2012-12-19-why-use-nancyfx/</link>
+      <pubDate>Wed, 19 Dec 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-12-19-why-use-nancyfx/</guid>
+      <description>&lt;p&gt;When a new project comes along why should you automatically choose ASP.NET MVC? Yes, its Microsoft based so you may have more of your peers fluent already in that architecture but is there an alternative, a better alternative?&lt;/p&gt;
+&lt;p&gt;I believe so and its called &lt;a href=&#34;http://nancyfx.org/&#34;&gt;NancyFX&lt;/a&gt;. Your first reaction, what is so special about Nancy? I also believe you’ll ask what is wrong with ASP.NET MVC but maybe you should look at it differently and ask what is right with Nancy?&lt;/p&gt;
+&lt;h2 id=&#34;what-is-nancy&#34;&gt;What is Nancy?&lt;/h2&gt;
+&lt;p&gt;Nancy is a lightweight framework for building websites / services without getting in your way. It’s heavily inspired by a Ruby project called Sinatra, which happens to identify itself as not being a framework, since it doesn’t include all the plumbing of things such as an ORM, lots of configuration, etc.&lt;/p&gt;
+&lt;h2 id=&#34;does-it-implement-mvc&#34;&gt;Does it implement MVC?&lt;/h2&gt;
+&lt;p&gt;Nancy does not force you to adhere to the model-view-controller pattern, or any other pattern. It’s nothing more than a service endpoint responding to HTTP verbs. Making it ideal for building Websites, Web Services and APIs.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Building all and current dotnet core projects in VSCode on </title>
+    <link>/2016-07-13-building-all-current-dotnet-core-projects-vscode/</link>
+    <description>Recent content in Building all and current dotnet core projects in VSCode on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 13 Jul 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/2016-07-13-building-all-current-dotnet-core-projects-vscode/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>

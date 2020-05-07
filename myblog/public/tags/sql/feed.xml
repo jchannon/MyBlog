@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sql on </title>
+    <link>/tags/sql/</link>
+    <description>Recent content in sql on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 20 Dec 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/sql/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Using SQL Server with node.js</title>
+      <link>/2013-12-20-using-sql-server-with-nodejs/</link>
+      <pubDate>Fri, 20 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-12-20-using-sql-server-with-nodejs/</guid>
+      <description>&lt;p&gt;I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I&amp;rsquo;d heard about &lt;a href=&#34;http://tjanczuk.github.io/edge/#/&#34;&gt;edge.js&lt;/a&gt; many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I&amp;rsquo;ve spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn&amp;rsquo;t like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.&lt;/p&gt;
+&lt;p&gt;I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp;amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using DateTime in C# and SQL</title>
+      <link>/2013-04-08-using-datetime-in-c-and-sql/</link>
+      <pubDate>Mon, 08 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-08-using-datetime-in-c-and-sql/</guid>
+      <description>&lt;p&gt;I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.&lt;/p&gt;
+&lt;p&gt;Store your datetimes in UTC format into the database. Unfortunately this mean executing something like:
+&lt;code&gt;myObject.ExpiryDate = TimeZoneInfo.ConvertTimeToUtc(dateTime, TimeZoneInfo.FindSystemTimeZoneById(“timezoneid of users”)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In every central place where you update/insert DateTime values on your objects you will need the above.&lt;/p&gt;
+&lt;p&gt;When you display any DateTime information it must display as a local datetime value. You can do this by using     &lt;code&gt;myObject.ExpiryDate.ToLocalTime()&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

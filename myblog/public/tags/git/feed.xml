@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on </title>
+    <link>/tags/git/</link>
+    <description>Recent content in git on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 06 Jun 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/git/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Modifying the bash prompt and adding Git completion to terminal</title>
+      <link>/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/</link>
+      <pubDate>Fri, 06 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/</guid>
+      <description>&lt;p&gt;At work we use Git and I use &lt;a href=&#34;http://sourceforge.net/projects/console/files/&#34;&gt;Console2&lt;/a&gt; to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.&lt;/p&gt;
+&lt;p&gt;Fire up your terminal and type in this command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will download a git completion file into your home folder to a hidden file called git-completion.bash.&lt;/p&gt;
+&lt;p&gt;If the file ~/.bash_profile does not already exist create it with the following command.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;touch ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now open it and paste this in:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now if you type a git command and press tab, BOOM!, you have auto complete for Git!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using Git to update YouTrack via TeamCity</title>
+      <link>/2013-11-07-using-git-to-update-youtrack-via-teamcity/</link>
+      <pubDate>Thu, 07 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-11-07-using-git-to-update-youtrack-via-teamcity/</guid>
+      <description>This post is mainly a reminder for me as I keep forgetting the command in Git to integrate commits to YouTrack items.
+YouTrack uses TeamCity to get the information about the commits and then scans the commit comment for a YouTrack item id and any commands that it can apply such as item status or time spent on said item.
+There is some documentation here but its not the greatest in terms of clarity and I&amp;rsquo;ve spoken to Hadi Hariri from JetBrains about improving this so hopefully they&amp;rsquo;re working on it.</description>
+    </item>
+    
+    <item>
+      <title>Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</title>
+      <link>/2013-10-01-blogging-with-markdown-and-git/</link>
+      <pubDate>Tue, 01 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-10-01-blogging-with-markdown-and-git/</guid>
+      <description>&lt;p&gt;There are many markdown blogging engines out there such as &lt;a href=&#34;http://calepin.co/&#34;&gt;Calepin&lt;/a&gt;, &lt;a href=&#34;http://scriptogr.am/&#34;&gt;Scriptogram&lt;/a&gt; and even &lt;a href=&#34;http://wordpress.org/&#34;&gt;WordPress&lt;/a&gt; allows you to write blog posts in Markdown but &lt;a href=&#34;https://github.com/Sandra/Sandra.Snow&#34;&gt;Sandra.Snow&lt;/a&gt; tries to add something different.  Firstly, it is written in .Net and &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt;, secondly its a static blog generator and finally it supports Git deployment.&lt;/p&gt;
+&lt;p&gt;Even if you don&amp;rsquo;t want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;layout&amp;rdquo; refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you&amp;rsquo;d prefer.  These &amp;ldquo;layout&amp;rdquo; files should exist in the &amp;ldquo;_layouts&amp;rdquo; folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;category&amp;rdquo; or &amp;ldquo;categories&amp;rdquo; property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;title&amp;rdquo; should hopefully be self explanatory!&lt;/p&gt;
+&lt;p&gt;You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modifying files within Git history</title>
+      <link>/2013-07-03-modifying-files-within-git-history/</link>
+      <pubDate>Wed, 03 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-07-03-modifying-files-within-git-history/</guid>
+      <description>&lt;p&gt;If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.&lt;/p&gt;
+&lt;p&gt;I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.&lt;/p&gt;
+&lt;p&gt;For Sublime Text run this in the command line:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global core.editor &amp;quot;&#39;C:/Program Files/Sublime Text 2/sublime_text.exe&#39;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next up is finding the commit id you want to go back to, to edit:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Make a note of the parent commit id of the commit you want to edit.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.gitignore not working – fixed!</title>
+      <link>/2012-11-18-gitignore-not-working-fixed/</link>
+      <pubDate>Sun, 18 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-18-gitignore-not-working-fixed/</guid>
+      <description>&lt;p&gt;This happens to me too often and I always end up googling the answer so this post is probably more of a location I know I can come to find the answer, although by writing it down hopefully it may sink in that I should stop getting too excited on a new project.&lt;/p&gt;
+&lt;h3 id=&#34;new-project-scenario&#34;&gt;New project scenario&lt;/h3&gt;
+&lt;p&gt;You’re all very excited about your new project and you think its about time you committed this to source control. Obviously you’re using &lt;a href=&#34;http://git-scm.com/&#34;&gt;Git&lt;/a&gt; so you initialise a new repository and commit your files. You then setup a remote repository at &lt;a href=&#34;http://github.com&#34;&gt;Github&lt;/a&gt; and it asks you whether you want it create a .gitignore file – you do. So now you have a repository remotely and locally. Easiest thing to do is pull from the remote, setup your remote and push to it. The other scenario might be you’ve committed locally and then realise you need to add a .gitignore file which you do and then commit.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Publishing to Windows Azure from Github</title>
+      <link>/2012-11-06-publishing-to-windows-azure-from-github/</link>
+      <pubDate>Tue, 06 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-06-publishing-to-windows-azure-from-github/</guid>
+      <description>&lt;p&gt;Back in &lt;a href=&#34;http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx&#34;&gt;July 2012&lt;/a&gt; Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my &lt;a href=&#34;http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/&#34; title=&#34;NancyFX, RavenDB, NerdDinner and Me&#34;&gt;DinnerParty blog post&lt;/a&gt; but have only just looked at implementing it.&lt;/p&gt;
+&lt;h2 id=&#34;preparation&#34;&gt;Preparation&lt;/h2&gt;
+&lt;p&gt;As I said in my previous post Azure supported Git publishing but it was a two step process. You push to Github and then push to Azure and it gets deployed. If you already have Git setup on your Azure account there is nowhere in the dashboard that allows to you setup Github integration. I thought I was going to have reset my deployment credentials and set it all up again when I asked the question on &lt;a href=&#34;http://jabbr.net&#34;&gt;Jabbr&lt;/a&gt;. Luckily &lt;a href=&#34;http://twitter.com/davidfowl&#34;&gt;David Fowler&lt;/a&gt; was online. Why is that lucky? He wrote the Github integration feature of Azure.&lt;/p&gt;
+&lt;p&gt;To setup your Azure account to enable Github integration you have to FTP into your Azure account and delete the deployment history by deleting all contents in the /site/deployments folder.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/blogpostimages/deploymenthistory-620x604.png&#34; alt=&#34;Deployment History&#34; title=&#34;Deployment History&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Deployment History&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

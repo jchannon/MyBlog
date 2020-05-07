@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on </title>
+    <link>/tags/javascript/</link>
+    <description>Recent content in javascript on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 24 Nov 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/javascript/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Running Gulp in Visual &amp; Xamarin Studio</title>
+      <link>/2014-11-24-running-gulp-in-visual-xamarin-studio/</link>
+      <pubDate>Mon, 24 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-11-24-running-gulp-in-visual-xamarin-studio/</guid>
+      <description>&lt;p&gt;I was going to write a long post explaining about all the pain I went through to get this working but then realised you probably don&amp;rsquo;t really care and you just want the code!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/iYjnPK0.png&#34; alt=&#34;Show the code&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using NodeJS and FTP with Promises</title>
+      <link>/2014-03-22-using-node-and-ftp-with-promises/</link>
+      <pubDate>Sat, 22 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-03-22-using-node-and-ftp-with-promises/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve played with node in the &lt;a href=&#34;http://blog.jonathanchannon.com/2012/10/08/node-js-express-hello-world-formula-1-style/&#34;&gt;past&lt;/a&gt; but as of the new year I decided to try and make a more concerted effort to get stuck into node properly.  I decided to go back to the beginning to try and get a better appreciation for the language so read &amp;ldquo;JavaScript: The Good Parts by Douglas Crockford&amp;rdquo;.  I found that exercise fulfilling and resulted in a few light bulb moments that made some dots join up so I&amp;rsquo;d recommend reading it if you haven&amp;rsquo;t already.&lt;/p&gt;
+&lt;p&gt;###Real World App&lt;/p&gt;
+&lt;p&gt;As I stated earlier I have already played with node in the past using &lt;a href=&#34;http://expressjs.com/&#34;&gt;Express&lt;/a&gt; and have read quite a bit on node and read many examples but I wanted to write a non-web app as I felt this would give me a better opportunity to get to grips with the language and Node. Using Express allows you to get up and running very quickly without to much head scratching so I felt a standalone script would give me more exposure to things.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using SQL Server with node.js</title>
+      <link>/2013-12-20-using-sql-server-with-nodejs/</link>
+      <pubDate>Fri, 20 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-12-20-using-sql-server-with-nodejs/</guid>
+      <description>&lt;p&gt;I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I&amp;rsquo;d heard about &lt;a href=&#34;http://tjanczuk.github.io/edge/#/&#34;&gt;edge.js&lt;/a&gt; many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I&amp;rsquo;ve spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn&amp;rsquo;t like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.&lt;/p&gt;
+&lt;p&gt;I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp;amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Running Mocha tests within Sublime Text</title>
+      <link>/2013-10-21-running-mocha-tests-with-sublime-text/</link>
+      <pubDate>Mon, 21 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-10-21-running-mocha-tests-with-sublime-text/</guid>
+      <description>&lt;p&gt;I spend most of my day in Visual Studio with lots of the goodies an IDE can offer.  One of them being able to run your tests from a keystroke.&lt;/p&gt;
+&lt;p&gt;In a bid to expand my mind I&amp;rsquo;m working on a little project that is made up of JS entirely so I&amp;rsquo;ve dug out &lt;a href=&#34;http://sublimetext.com&#34;&gt;Sublime Text&lt;/a&gt;. It has lots of plugins that are very handy, especially &lt;a href=&#34;https://github.com/victorporof/Sublime-HTMLPrettify&#34;&gt;Sublime-HTMLPrettify&lt;/a&gt; which will tidy your HTML, CSS &amp;amp; JS for you.&lt;/p&gt;
+&lt;p&gt;When writing tests for JS there are many libraries you can use but I&amp;rsquo;ve chosen &lt;a href=&#34;http://visionmedia.github.io/mocha/&#34;&gt;Mocha&lt;/a&gt; for now.  The one thing I couldn&amp;rsquo;t work out was to run my tests within Sublime Text until now.&lt;/p&gt;
+&lt;p&gt;###Build System&lt;/p&gt;
+&lt;p&gt;Sublime allows you to have build systems a bit like an IDE so you can tell it what to do when you invoke it via &lt;!-- raw HTML omitted --&gt;cmd&lt;!-- raw HTML omitted --&gt;+&lt;!-- raw HTML omitted --&gt;B&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;p&gt;To get Mocha to run we need to create a new build system. To do this click Tools - Build System - New Build System and paste in the below:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>A quick look at Visual Node</title>
+      <link>/2013-08-22-a-quick-look-at-visual-node/</link>
+      <pubDate>Thu, 22 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-08-22-a-quick-look-at-visual-node/</guid>
+      <description>&lt;p&gt;I came across &lt;a href=&#34;http://www.visualnode.info/&#34;&gt;Visual Node&lt;/a&gt; a few months ago and was excited by the looks of it.  For those that didn&amp;rsquo;t click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what&amp;rsquo;s going on.&lt;/p&gt;
+&lt;p&gt;The hipster in me is screaming saying &amp;ldquo;You should be using Sublime Text and &lt;a href=&#34;https://github.com/dannycoates/node-inspector&#34;&gt;node-inspector&lt;/a&gt; for debugging&amp;rdquo; but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that&amp;rsquo;s just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I&amp;rsquo;m never going to touch a dynamic language again, &amp;ldquo;give me a statically typed language every time with a compiler&amp;rdquo;.  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Up &amp; Running with TypeScript and WebStorm</title>
+      <link>/2013-04-17-up-running-with-typescript-and-webstorm/</link>
+      <pubDate>Wed, 17 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-17-up-running-with-typescript-and-webstorm/</guid>
+      <description>&lt;p&gt;I love my iMac and I’m on a mission to find a language I enjoy that I can use my Mac for (no Windows fan boy jokes please). There’s something in my mind I associate with work and my Windows laptop. Therefore, I don’t feel to excited about getting my laptop out of my bag in the evenings/weekends to play with other stuff.&lt;/p&gt;
+&lt;p&gt;As I want to broaden my knowledge I wanted to find something ideally statically typed (although I’m currently looking into Python) that would work on OS X. I’ve said previously that JavaScript seems the way to go in my current situation so I thought I’d take a look at TypeScript and also use &lt;a href=&#34;http://www.jetbrains.com/webstorm/&#34;&gt;WebStorm&lt;/a&gt; from Jetbrains as my IDE seeing as I’ve heard so many great things about them and their products (don’t worry I use ReSharper).&lt;/p&gt;
+&lt;h2 id=&#34;typescript&#34;&gt;TypeScript&lt;/h2&gt;
+&lt;p&gt;So I went over to TypeScript’s &lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;website&lt;/a&gt; and followed the Hello World type code examples under the “Learn” tab.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The Old Development Language Switcheroo</title>
+      <link>/2013-04-02-the-old-development-language-switcheroo/</link>
+      <pubDate>Tue, 02 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-02-the-old-development-language-switcheroo/</guid>
+      <description>&lt;p&gt;As a C# developer I think I’m pretty safe in saying that its not going away any time soon however, its my opinion that to not become irrelevant you need to have options. Some may argue that its better to be master of one than a Jack of all trades but lets just say you can’t find your next job in the primary language you want to work in. What do you do?&lt;/p&gt;
+&lt;p&gt;I have looked more into JavaScript recently and with that comes server and client scope for the use of the language so with some understanding of JS that would be probably the best bet for me however, as much as this may annoy some I think I actually prefer statically typed languages.&lt;/p&gt;
+&lt;p&gt;Now I know there is &lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;TypeScript&lt;/a&gt; that I could use for my &lt;a href=&#34;http://nodejs.org/&#34;&gt;node.js&lt;/a&gt; apps but I see that as more of a workaround and not a core feature of JavaScript. I’m not saying anything bad against JS and the libraries/frameworks that I have used I like but I just find it easier to learn and know what I can do when I have decent intellisense showing me what I can do with my code.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Evaluating KnockoutJS and AngularJS – Part 1</title>
+      <link>/2013-02-05-evaluating-knockoutjs-and-angularjs-part-1/</link>
+      <pubDate>Tue, 05 Feb 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-02-05-evaluating-knockoutjs-and-angularjs-part-1/</guid>
+      <description>&lt;p&gt;As I stated in my earlier post &lt;a href=&#34;http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/&#34; title=&#34;JavaScript is the future…maybe!&#34;&gt;“JavaScript is the future…maybe”&lt;/a&gt; so with that in mind I had to brush up my JS skills and get more involved with the language’s core concepts so after watching some videos and reading some articles I was ready to look at &lt;a href=&#34;http://knockoutjs.com&#34;&gt;KnockoutJS&lt;/a&gt; and &lt;a href=&#34;http://angularjs.org/&#34;&gt;AngularJS&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Before I actually looked at these two I spent some time with &lt;a href=&#34;http://sammyjs.org/&#34;&gt;SammyJS&lt;/a&gt; but realised afterwards it was mainly MVC based and not around 2-way binding that Knockout and Angular offer. However, I really liked it and it seemed very familiar and easy to use, the reason being it was inspired by &lt;a href=&#34;http://www.sinatrarb.com/&#34;&gt;Sinatra&lt;/a&gt; which we all know &lt;a href=&#34;http://nancyfx.org/&#34;&gt;Nancy&lt;/a&gt; was also inspired by and we also know how much &lt;a href=&#34;http://nancyfx.org/mvm.html&#34;&gt;I like Nancy&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;Getting to grips with any language or frameworks is tricky and the best way to do it is to write an application using it. The next difficult thing to overcome is an idea for writing an application. ToDo list’s are very common with JavaScript frameworks and there is a whole website for you to peruse but after looking at SammyJS and their docs they walk through writing a simple shopping basket so I thought I’d use that.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Evaluating KnockoutJS and AngularJS – Part 2</title>
+      <link>/2013-02-05-evaluating-knockoutjs-and-angularjs-part-2/</link>
+      <pubDate>Tue, 05 Feb 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-02-05-evaluating-knockoutjs-and-angularjs-part-2/</guid>
+      <description>&lt;p&gt;In &lt;a href=&#34;http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/&#34; title=&#34;Evaluating KnockoutJS and AngularJS – Part 1&#34;&gt;Part 1&lt;/a&gt;, I described how I was using the demo tutorial from &lt;a href=&#34;http://sammyjs.org/&#34;&gt;SammyJS&lt;/a&gt; to get a better understanding of &lt;a href=&#34;http://angularjs.org/&#34;&gt;AngularJS&lt;/a&gt; and &lt;a href=&#34;http://knockoutjs.com/&#34;&gt;KnockoutJS&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In this blog post I will focus on what I found when using KnockoutJS.&lt;/p&gt;
+&lt;p&gt;Again if you just want to get to the code then feel free to take a look here for &lt;a href=&#34;https://github.com/jchannon/AngularShopping&#34;&gt;Angular&lt;/a&gt; and here for &lt;a href=&#34;https://github.com/jchannon/KnockoutShopping&#34;&gt;Knockout&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;knockout&#34;&gt;Knockout&lt;/h2&gt;
+&lt;p&gt;Firstly Knockout should be commended on their documentation and online tutorials. Their website tutorials follows a step by step approach and once you have completed each step you can click through to the next section. You can also leave the tutorial and come back to it and it will remember where you left. There is great support in the KnockoutJS room in Jabbr and I’d like to thank &lt;a href=&#34;https://twitter.com/davepermen&#34;&gt;David Spörri&lt;/a&gt; for answering my newbie JS and Knockout questions.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using AngularJS/BackboneJS in Windows 8 JavaScript app</title>
+      <link>/2013-01-24-using-angularjsbackbonejs-in-windows-8-javascript-app/</link>
+      <pubDate>Thu, 24 Jan 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-01-24-using-angularjsbackbonejs-in-windows-8-javascript-app/</guid>
+      <description>&lt;p&gt;To help me expand my JavaScript knowledge as I said I would in my &lt;a href=&#34;http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/&#34; title=&#34;JavaScript is the future…maybe!&#34;&gt;previous post&lt;/a&gt; I thought I’d write a Windows 8 application using JavaScript.&lt;/p&gt;
+&lt;p&gt;After following a few “Hello World” tutorials from Microsoft I thought I’d take a look at the ToDo list demos shown at &lt;a href=&#34;http://TodoMVC.com&#34;&gt;TodoMVC.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This website/Github repository takes the ToDo demo and implements it in all the various JS frameworks and libraries out there. As I said previously its a minefield.&lt;/p&gt;
+&lt;p&gt;Anyhow, I thought I’d start with Backbone, copy the files, add the references to WinJS and hit F5 and bingo. However, I got the below error:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://i.stack.imgur.com/DOQl1.png&#34; alt=&#34;Unhandled Exception&#34; title=&#34;Unhandled Exception&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript is the future…maybe!</title>
+      <link>/2013-01-09-javascript-is-the-future-maybe/</link>
+      <pubDate>Wed, 09 Jan 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-01-09-javascript-is-the-future-maybe/</guid>
+      <description>&lt;p&gt;I’m not one for New Years resolutions but I thought it was time I looked at JavaScript more in depth.&lt;/p&gt;
+&lt;p&gt;I looked at &lt;a href=&#34;http://blog.jonathanchannon.com/2012/10/08/node-js-express-hello-world-formula-1-style/&#34; title=&#34;Node.js, Express, Hello World Formula 1 Style&#34;&gt;Node.js a while back&lt;/a&gt; and found it very interesting and I probably need to go back to it. Over the last month or so there has been a large discussion about async in .Net frameworks and there appears to be a lot of misunderstanding about it (and lets leave it at that, I don’t want to start another flame war) but the thing we can definitely say with &lt;a href=&#34;http://nodejs.org/&#34;&gt;Node.js&lt;/a&gt;, well JavaScript to be fair is that it is perfectly asynchronous and non-blocking.&lt;/p&gt;
+&lt;p&gt;As a web developer I have used JavaScript from the early days of Response.Write moving onto frameworks such as &lt;a href=&#34;http://script.aculo.us/&#34;&gt;script.aculo.us&lt;/a&gt; and &lt;a href=&#34;http://mootools.net/&#34;&gt;MooTools&lt;/a&gt; and finally ending up with &lt;a href=&#34;http://jquery.com/&#34;&gt;jQuery&lt;/a&gt; which has come pretty much a standard these days so my JavaScript skills are not completely new.&lt;/p&gt;
+&lt;p&gt;However, there has been a large push to use JS more and more for rich user friendly applications with things like &lt;a href=&#34;http://knockoutjs.com/&#34;&gt;KnockoutJS&lt;/a&gt;, &lt;a href=&#34;http://angularjs.org/&#34;&gt;AngularJS&lt;/a&gt; and &lt;a href=&#34;http://backbonejs.org/&#34;&gt;BackboneJS&lt;/a&gt; on the client and Node.js on the server. Microsoft has even taken a prominent role in helping bring Node.js to a Windows environment as it started out on *nix based platforms. They have also started contributing to and including scripts in their Visual Studio project templates for jQuery.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ASP.Net on </title>
+    <link>/tags/asp.net/</link>
+    <description>Recent content in ASP.Net on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 10 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/asp.net/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Announcing Carter</title>
+      <link>/2018-04-10-announcing-carter/</link>
+      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018-04-10-announcing-carter/</guid>
+      <description>As of beginning of April 2018 Botwin has been renamed to Carter. Whilst I thought the name was genius it became obvious that some people didn&amp;rsquo;t like it or understand it and tried to interpret it as a Bot framework for Windows. After spending too long trying to think of a new name I finally decided upon Carter. Carter comes from the surname of Jay-Z (Shawn Carter) and in his song Empire State of Mind he sings &amp;ldquo;I&amp;rsquo;m the new Sinatra&amp;rdquo;.</description>
+    </item>
+    
+    <item>
+      <title>Debugging .Net Core apps inside Docker container with VSCode</title>
+      <link>/2017-06-07-debugging-netcore-docker/</link>
+      <pubDate>Wed, 07 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017-06-07-debugging-netcore-docker/</guid>
+      <description>&lt;p&gt;So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak &amp;ldquo;I can scale&amp;rdquo; points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.&lt;/p&gt;
+&lt;p&gt;For demonstration purposes lets take a very simple application and we are going to publish it as a self contained application ie/one that has all the runtime and application binaries outputted so you don&amp;rsquo;t have to install dotnet in a container.&lt;/p&gt;
+&lt;p&gt;To be able to debug that application we are going to need VSDBG(the .Net Core command line debugger) inside the container.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We are also going to need to append the launch.json for VSCode in your project&amp;rsquo;s root to have the below:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;name&amp;quot;: &amp;quot;.NET Core Remote Attach&amp;quot;,
+    &amp;quot;type&amp;quot;: &amp;quot;coreclr&amp;quot;,
+    &amp;quot;request&amp;quot;: &amp;quot;attach&amp;quot;,
+    &amp;quot;processId&amp;quot;: &amp;quot;${command:pickRemoteProcess}&amp;quot;,
+    &amp;quot;pipeTransport&amp;quot;: {
+        &amp;quot;pipeProgram&amp;quot;: &amp;quot;bash&amp;quot;,
+        &amp;quot;pipeArgs&amp;quot;: [ &amp;quot;-c&amp;quot;, &amp;quot;docker exec -i json ${debuggerCommand}&amp;quot; ],
+        &amp;quot;debuggerPath&amp;quot;: &amp;quot;/root/vsdbg/vsdbg&amp;quot;,
+        &amp;quot;pipeCwd&amp;quot;: &amp;quot;${workspaceRoot}&amp;quot;,
+        &amp;quot;quoteArgs&amp;quot;: true
+    },
+    &amp;quot;sourceFileMap&amp;quot;: {
+        &amp;quot;/Users/jonathan/Projects/jsonfile&amp;quot;: &amp;quot;${workspaceRoot}&amp;quot;
+    },
+    &amp;quot;justMyCode&amp;quot;: true
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using Docker with .Net Core in CI for OSS</title>
+      <link>/2017-05-15-using-docker-with-netcore-ci/</link>
+      <pubDate>Mon, 15 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017-05-15-using-docker-with-netcore-ci/</guid>
+      <description>&lt;p&gt;I recently wrote a &lt;a href=&#34;http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/&#34;&gt;project&lt;/a&gt; for &lt;a href=&#34;https://t.co/kpkdInRgwG&#34;&gt;ASP.NET Core 2&lt;/a&gt;  and the time had come to get a CI system up and running.  I develop on OSX and mainly test on OSX &amp;amp; Linux and so the defacto place to go is TravisCI.  I&amp;rsquo;ve used it in the past and all has been great but I put out a tweet asking if Travis was still the place to go:&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>Announcing Botwin</title>
+      <link>/2017-05-04-announcing-botwin/</link>
+      <pubDate>Thu, 04 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017-05-04-announcing-botwin/</guid>
+      <description>&lt;p&gt;Whilst keeping my eye on what&amp;rsquo;s going on in .NET Core v2 I came across some planned changes for ASP.NET Core regarding the &lt;a href=&#34;https://github.com/aspnet/Routing/blob/dev/src/Microsoft.AspNetCore.Routing/RequestDelegateRouteBuilderExtensions.cs&#34;&gt;routing&lt;/a&gt;.  I had also read this &lt;a href=&#34;https://www.strathweb.com/2017/01/building-microservices-with-asp-net-core-without-mvc/&#34;&gt;blog post&lt;/a&gt; from &lt;a href=&#34;https://twitter.com/filip_woj&#34;&gt;Filip&lt;/a&gt; about using the planned changes for microservices and a lightbulb went off in my head.  I thought to myself I wonder if I could adapt the new extensions to create Nancy-esque routing.  Turns out, I could!&lt;/p&gt;
+&lt;h3 id=&#34;sample&#34;&gt;Sample&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;public class ActorsModule : BotwinModule
+{
+    public ActorsModule()
+    {
+        this.Get(&amp;quot;/&amp;quot;, async (req, res, routeData) =&amp;gt;
+        {
+            await res.WriteAsync(&amp;quot;Hello World!&amp;quot;);
+        });
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Building all and current dotnet core projects in VSCode</title>
+      <link>/2016-07-13-building-all-current-dotnet-core-projects-vscode/</link>
+      <pubDate>Wed, 13 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016-07-13-building-all-current-dotnet-core-projects-vscode/</guid>
+      <description>&lt;p&gt;As you may or may not know I try to work on OSX as much as possible and with .Net that&amp;rsquo;s quite painful to be honest.  Things are moving along nicely with Jetbrains Rider,
+VSCode, Xamarin and Omnisharp.  I&amp;rsquo;ll be honest, none of them are perfect and I often find myself using Visual Studio in a VM because it just works (yes, its clunky etc etc).
+Recently, VSCode got a 1.3 release with some new features, tabs being one of them.  I never really got on with VSCode so dismissed it most of the time but this new release
+opened my eyes a bit more and thought I&amp;rsquo;d give it a go.  Its C# support now runs on .Net Core RTM and most of my work at the moment is porting projects to .Net Core so it seemed
+this would be worthwhile.  I&amp;rsquo;ve tried to setup keybindings that are the ones I know from Visual Studio and installed couple of extensions to make things easier and prettier.&lt;/p&gt;
+&lt;p&gt;As VSCode is language agnostic the one thing I found was how to build .Net Core projects was a bit off.  For each project you have you have to configure a task runner.  VSCode tries to
+help you here and gives you a few languages to choose from.  For .Net Core it creates a &lt;code&gt;dotnet build&lt;/code&gt; task.  The problem with this is that it runs that command from the workspace root,
+ie the folder where VSCode is opened.  What if you open it from the git root folder and your project(s) are under a src/MyProject folder?  It will fail as it cant find project.json.
+What you can do is set the &lt;code&gt;cwd&lt;/code&gt; to be a specific directory by hardcoding it in the task configuration but thats not great if you have multiple projects.  You could use some predefined
+variables that VSCode provides eg/&lt;code&gt;${fileDirname}&lt;/code&gt; but again if you are in a folder 4 levels deep that wont work either.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Porting OWIN middleware to ASP.Net Core</title>
+      <link>/2016-06-27-porting-owin-middleware-aspnetcore/</link>
+      <pubDate>Mon, 27 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016-06-27-porting-owin-middleware-aspnetcore/</guid>
+      <description>&lt;p&gt;In our application at work we make use of various middleware and as we are making everything run on .Net Core the time has come to port said middleware to .Net Core.  If you don&amp;rsquo;t already know ASP.Net Core has a bridge that allows you to use OWIN components in an ASP.Net Core application.  This will convert the HttpContext into a OWIN environment dictionary on input and then back again on output.&lt;/p&gt;
+&lt;p&gt;Lets take an example of some middleware&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public class MyMiddleware
+{
+    private readonly Func&amp;lt;IDictionary&amp;lt;string, object&amp;gt;, Task&amp;gt; nextFunc;
+    private readonly OwinUserMiddlewareOptions options;
+
+    public OwinUserMiddleware(Func&amp;lt;IDictionary&amp;lt;string, object&amp;gt;, Task&amp;gt; nextFunc, MyMiddlewareOptions options)
+    {
+        this.options = options;
+        this.nextFunc = nextFunc;
+    }
+
+    public Task Invoke(IDictionary&amp;lt;string, object&amp;gt; environment)
+    {
+        //Everything is awesome
+        return nextFunc(environment);
+    }
+}
+
+public static class MyMiddlewareExtensions
+{
+    public static IAppBuilder UseMyMiddleware(this IAppBuilder app, MyMiddlewareOptions options = null)
+    {
+        return app.Use(typeof(MyMiddleware), options);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

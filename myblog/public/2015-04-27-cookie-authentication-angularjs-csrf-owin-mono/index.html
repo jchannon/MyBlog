@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog - Cookie Authentication &amp; CRSF with AngularJs, Owin &amp; Mono</title>
+        <meta name="description" content="I&rsquo;m currently working on a project that has Nancy serving up an API.  For the UI there is AngularJS.  We were using JWT for authentication just to get us up and running but then as things became more final in the product we knew it would be better to swap to cookies for security plus we may as well leverage the browser capabilities  for cookie handling. I&rsquo;m not going to get into the arguments about JWT security vs cookie security, there are advantages/disadvantages for using both in this scenario.  Our API is built on top of OWIN and Microsoft provide cookie middleware so I thought this would be nice and simple to plug in.  Lets just remember I&rsquo;m working on Mono!
+In our Startup class I added the below
+app.UseCookieAuthentication(new CookieAuthenticationOptions
+{
+    AuthenticationMode = AuthenticationMode.Active,
+    CookieHttpOnly = true,
+    CookieSecure = Microsoft.Owin.Security.Cookies.CookieSecureOption.SameAsRequest,
+    SlidingExpiration = true,
+    AuthenticationType = &quot;MyCookie&quot;,
+    CookieName = &quot;MyCookie&quot;
+});
+
+Hopefully thats pretty self explanatory. So I fired up my application and BOOM!">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.69.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <meta property="og:title" content="Cookie Authentication &amp; CRSF with AngularJs, Owin &amp; Mono">
+<meta property="og:description" content="I&rsquo;m currently working on a project that has Nancy serving up an API.  For the UI there is AngularJS.  We were using JWT for authentication just to get us up and running but then as things became more final in the product we knew it would be better to swap to cookies for security plus we may as well leverage the browser capabilities  for cookie handling. I&rsquo;m not going to get into the arguments about JWT security vs cookie security, there are advantages/disadvantages for using both in this scenario.  Our API is built on top of OWIN and Microsoft provide cookie middleware so I thought this would be nice and simple to plug in.  Lets just remember I&rsquo;m working on Mono!
+In our Startup class I added the below
+app.UseCookieAuthentication(new CookieAuthenticationOptions
+{
+    AuthenticationMode = AuthenticationMode.Active,
+    CookieHttpOnly = true,
+    CookieSecure = Microsoft.Owin.Security.Cookies.CookieSecureOption.SameAsRequest,
+    SlidingExpiration = true,
+    AuthenticationType = &quot;MyCookie&quot;,
+    CookieName = &quot;MyCookie&quot;
+});
+
+Hopefully thats pretty self explanatory. So I fired up my application and BOOM!">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2015-04-27-cookie-authentication-angularjs-csrf-owin-mono/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/dist/site.css">
+        <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+            <link href="/2015-04-27-cookie-authentication-angularjs-csrf-owin-mono/feed.xml" rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog">
+        
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
+                        
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
+
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
+
+                </div>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
+
+
+<div class="post-item boxed post-detail" itemtype="http://schema.org/BlogPosting">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2015-04-27-cookie-authentication-angularjs-csrf-owin-mono/">Cookie Authentication &amp; CRSF with AngularJs, Owin &amp; Mono</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">April 27, 2015</span> 
+        
+        <div class="commentcount" data-disqus-url="/2015-04-27-cookie-authentication-angularjs-csrf-owin-mono/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I&rsquo;m currently working on a project that has <a href="http://nancyfx.org">Nancy</a> serving up an API.  For the UI there is AngularJS.  We were using JWT for authentication just to get us up and running but then as things became more final in the product we knew it would be better to swap to cookies for security plus we may as well leverage the browser capabilities  for cookie handling. I&rsquo;m not going to get into the arguments about JWT security vs cookie security, there are advantages/disadvantages for using both in this scenario.  Our API is built on top of OWIN and Microsoft provide cookie middleware so I thought this would be nice and simple to plug in.  Lets just remember I&rsquo;m working on Mono!</p>
+<p>In our Startup class I added the below</p>
+<pre><code>app.UseCookieAuthentication(new CookieAuthenticationOptions
+{
+    AuthenticationMode = AuthenticationMode.Active,
+    CookieHttpOnly = true,
+    CookieSecure = Microsoft.Owin.Security.Cookies.CookieSecureOption.SameAsRequest,
+    SlidingExpiration = true,
+    AuthenticationType = &quot;MyCookie&quot;,
+    CookieName = &quot;MyCookie&quot;
+});
+</code></pre>
+<p>Hopefully thats pretty self explanatory. So I fired up my application and BOOM!</p>
+<p>Could not load type &lsquo;Microsoft.Owin.Security.DataProtection.DpapiDataProtector&rsquo;</p>
+<p>Turns out the default security for cookie auth doesn&rsquo;t work on Mono. <strong>Fix</strong> : Install <a href="https://www.nuget.org/packages/Owin.Security.AesDataProtectorProvider">Owin.Security.AesDataProtectorProvider</a></p>
+<p>Now we add this to be the bottom of our OWIN middleware:</p>
+<pre><code>app.UseAesDataProtectorProvider();
+</code></pre>
+<p>Fire up our app and bingo!</p>
+<p>Now we need to handle logging in our user. As we are using OWIN we need to use Claims for our authenticated users. <strong>Fix</strong> Install <a href="https://www.nuget.org/packages/Nancy.MSOwinSecurity/">Nancy.MSOwinSecurity</a>, this gives us Claims support inside Nancy (in v2 of Nancy the default authentication model will be using Claims, keep an eye out for release information). Below is our login code:</p>
+<pre><code>public class HomeModule : NancyModule
+{
+    public HomeModule()
+    {
+        Post[&quot;/login&quot;] = _ =&gt;
+        {
+            //probably best we validate the user here!!!
+            
+            var claims = new List&lt;Claim&gt;(new[]
+                {
+                    new Claim(ClaimTypes.Email, &quot;blah@blah.com&quot;), 
+                    new Claim(ClaimTypes.Name, &quot;Mr Blah&quot;)
+                });
+
+            this.Context.GetAuthenticationManager().SignIn(new ClaimsIdentity(claims, &quot;MyCookie&quot;));
+
+            return Response.AsRedirect(&quot;/&quot;);
+        };
+    }
+}
+</code></pre>
+<p>What will happen here is as the request comes in it will fall through the cookie middleware, fall in to Nancy, we will login and as the request reverses back up the OWIN pipeline the cookie middleware will see there is someone logged in and return a cookie in the response.</p>
+<p>Super duper!</p>
+<p>One thing that authentication middleware tends to do however, is still allows requests through the pipeline even if there isn&rsquo;t a authenticated user. The reason being there may be other middleware that may be responsible for authenticating users in another manner.  We plan to add JWT back into our API so we would end up with:</p>
+<pre><code>app.UseJwtBearerAuthentication(); 
+app.UseCookieAuthentication();
+</code></pre>
+<p>Our previous use of <a href="https://github.com/jchannon/Owin.StatelessAuth/">JWT</a> would return a 401 before it dropped through to the next middleware so we needed to swap out Owin.StatelessAuth to the MS middleware above.  The problem now is we need some more middleware to protect our API after the request has dropped through the JWT and cookie middleware:</p>
+<pre><code>public Task Invoke(IDictionary&lt;string, object&gt; environment)
+{
+    if (!environment.ContainsKey(&quot;owin.RequestPath&quot;))
+    {
+        throw new ApplicationException(&quot;Invalid OWIN request. Expected owin.RequestPath, but not present.&quot;);
+    }
+        
+
+    if (!environment.ContainsKey(ServerUser) || environment[ServerUser] == null)
+    {
+        return AuthChallengeResponse(environment);
+    }
+
+    return nextFunc(environment);
+}
+
+private Task AuthChallengeResponse(IDictionary&lt;string, object&gt; environment)
+{
+    environment[&quot;owin.ResponseStatusCode&quot;] = 401;
+
+    if (this.options != null &amp;&amp; !string.IsNullOrWhiteSpace(this.options.WWWAuthenticateChallenge))
+    {
+        var wwwauthenticatechallenge = this.options.WWWAuthenticateChallenge;
+
+        if (!environment.ContainsKey(&quot;owin.ResponseHeaders&quot;))
+        {
+            environment.Add(&quot;owin.ResponseHeaders&quot;, new Dictionary&lt;string, string[]&gt;());
+        }
+
+        var responseHeaders = (IDictionary&lt;string, string[]&gt;)environment[&quot;owin.ResponseHeaders&quot;];
+        responseHeaders.Add(&quot;WWW-Authenticate&quot;, new[] { wwwauthenticatechallenge });
+    }
+
+    return Task.FromResult(0);
+}
+</code></pre>
+<p>Then we end up with:</p>
+<pre><code>app.UseJwtBearerAuthentication(); 
+app.UseCookieAuthentication();
+app.CheckLoggedInUser();
+</code></pre>
+<p>So now we have it all working but what about <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">CRSF</a>?</p>
+<p>Luckily Angular has some built in mechanisms to cater for CSRF and in its documentation is this:</p>
+<blockquote>
+<p>To take advantage of this, your server needs to set a token in a JavaScript readable session cookie called XSRF-TOKEN on first HTTP GET request. On subsequent non-GET requests the server
+can verify that the cookie matches X-XSRF-TOKEN HTTP header, and therefore be sure that only JavaScript running on your domain could have read the token. The token must be unique for each
+user and must be verifiable by the server (to prevent the JavaScript making up its own tokens). We recommend that the token is a digest of your site&rsquo;s authentication cookie with salt for
+added security.</p>
+</blockquote>
+<p>So now we need some middleware to create this <code>XSRF-TOKEN</code> cookie:</p>
+<pre><code>public class XSRFCookieMiddleware
+{
+    private readonly Func&lt;IDictionary&lt;string, object&gt;, Task&gt; nextFunc;
+
+    public XSRFCookieMiddleware(Func&lt;IDictionary&lt;string, object&gt;, Task&gt; nextFunc)
+    {
+        this.nextFunc = nextFunc;
+    }
+
+    public  Task Invoke(IDictionary&lt;string, object&gt; env)
+    {
+        var context = new OwinContext(env);
+
+        context.Response.OnSendingHeaders(_ =&gt;
+            {
+                if ((string)env[&quot;owin.RequestPath&quot;] == &quot;/login&quot; &amp;&amp; (string)env[&quot;owin.RequestMethod&quot;] == &quot;POST&quot;)
+                {
+                    var responseHeaders = (IDictionary&lt;string, string[]&gt;)env[&quot;owin.ResponseHeaders&quot;];
+                    if (responseHeaders.ContainsKey(&quot;Set-Cookie&quot;))
+                    {
+                        var setcookies = responseHeaders[&quot;Set-Cookie&quot;].ToList();
+                        var authcookie = setcookies.FirstOrDefault(x =&gt; x.StartsWith(&quot;VQCookie&quot;));
+                        if (authcookie != null)
+                        {
+                            var authcookieValue = authcookie.Split(new[]{ '=' }, StringSplitOptions.RemoveEmptyEntries)[1].Split(new [] { ';' })[0];
+                            var csrfToken = new CsrfTokenHelper().GenerateCsrfTokenFromAuthToken(authcookieValue);
+                            setcookies.Add(&quot;XSRF-TOKEN=&quot; + csrfToken + &quot;;path=/&quot;);
+                            responseHeaders[&quot;Set-Cookie&quot;] = setcookies.ToArray();
+                        }
+                    }
+                }
+                else if ((string)env[&quot;owin.RequestPath&quot;] == &quot;/api/authenticate/logout&quot; &amp;&amp; (string)env[&quot;owin.RequestMethod&quot;] == &quot;GET&quot;)
+                {
+                    context.Response.Cookies.Append(&quot;XSRF-TOKEN&quot;, &quot;DEAD&quot;, new CookieOptions{ Expires = DateTime.UtcNow.AddDays(-1) });
+                }
+            }, null);
+
+        return nextFunc(env);
+    }
+
+}
+</code></pre>
+<p>Note the usage of <code>OnSendingHeaders</code>, this is required because when a response stream is first written to in an OWIN pipeline the headers are flushed and using this event from Microsoft they will be called when the response is returned.  I had previously written this middleware similar to the below beforehand but this approach could potentially have unwanted effects:</p>
+<pre><code>public async Task Invoke(IDictionary&lt;string, object&gt; env)
+{
+  await nextFunc(env);
+  if ((string)env[&quot;owin.RequestPath&quot;] == &quot;/login&quot; &amp;&amp; (string)env[&quot;owin.RequestMethod&quot;] == &quot;POST&quot;)
+  {
+      //
+  }
+}
+</code></pre>
+<p>One thing to note that cost me a few days is the ordering of these events.  Suffice to say there is no specification for this but HttpListener, Nowin &amp; System.Web call these events via LIFO (Last In First Out) which means that our middleware needs to be above the <code>app.UseCookieAuthentication()</code> line so that our event gets called after the auth cookie has been set.</p>
+<p>So now we return the <code>XSRF-TOKEN</code> cookie on login Angular will now detect this and then send the <code>X-XSRF-TOKEN</code> header on every request. We now need some middleware to obviously validate this:</p>
+<pre><code>public class XSRFMiddleware
+{
+    private readonly Func&lt;IDictionary&lt;string, object&gt;, Task&gt; nextFunc;
+
+    public XSRFMiddleware(Func&lt;IDictionary&lt;string, object&gt;, Task&gt; nextFunc)
+    {
+        this.nextFunc = nextFunc;
+    }
+
+    public async Task Invoke(IDictionary&lt;string, object&gt; environment)
+    {
+        var owinContext = new OwinContext(environment);
+
+        var requestHeaders = (IDictionary&lt;string, string[]&gt;)environment[&quot;owin.RequestHeaders&quot;];
+
+        if (owinContext.Request.Method == &quot;GET&quot;)
+        {
+            await nextFunc(environment);
+        }
+        else if (requestHeaders.ContainsKey(&quot;Authorization&quot;) &amp;&amp; !requestHeaders.ContainsKey(&quot;Cookie&quot;))
+        {
+            await nextFunc(environment);
+        }
+        else
+        {
+            if (owinContext.Request.Cookies.Count() == 0)
+            {
+                environment[&quot;owin.ResponseStatusCode&quot;] = 401;
+                return;   
+            }
+
+            if (string.IsNullOrWhiteSpace(owinContext.Request.Cookies[&quot;MyCookie&quot;]))
+            {
+                environment[&quot;owin.ResponseStatusCode&quot;] = 401;
+                return;
+            }
+
+            if (!requestHeaders.ContainsKey(&quot;X-XSRF-TOKEN&quot;))
+            {
+                environment[&quot;owin.ResponseStatusCode&quot;] = 401;
+                return;
+            }
+
+            var authCookie = owinContext.Request.Cookies[&quot;MyCookie&quot;];
+
+            var csrfToken = requestHeaders[&quot;X-XSRF-TOKEN&quot;].FirstOrDefault();
+
+            var valid = new CsrfTokenHelper().DoesCsrfTokenMatchAuthToken(csrfToken, authCookie);
+
+            if (!valid)
+            {
+                environment[&quot;owin.ResponseStatusCode&quot;] = 401;
+                return;
+            }
+
+            await nextFunc(environment);
+        }
+    }
+}
+</code></pre>
+<p>So now we have</p>
+<pre><code>app.UseXSRFCookieMiddleware();  //Add XSRF-TOKEN cookie on login
+app.UseJwtBearerAuthentication(); 
+app.UseCookieAuthentication();
+app.UseXSRFMiddleware(); //Validate XSRF requests
+app.UseOwinUserVerifcation();  //Check server.User key is populated
+app.UseNancy();
+</code></pre>
+<p>One thing to note is the CsrfTokenHelper, below is the code:</p>
+<pre><code>public class CsrfTokenHelper
+{
+    const string ConstantSalt = &quot;MYSALT&quot;;
+
+    public string GenerateCsrfTokenFromAuthToken(string authToken)
+    {
+        return GenerateCookieFriendlyHash(authToken);
+    }
+
+    public bool DoesCsrfTokenMatchAuthToken(string csrfToken, string authToken)
+    {
+        return csrfToken == GenerateCookieFriendlyHash(authToken);
+    }
+
+    private static string GenerateCookieFriendlyHash(string authToken)
+    {
+        using (var sha = SHA256.Create())
+        {
+            var computedHash = sha.ComputeHash(Encoding.Unicode.GetBytes(authToken + ConstantSalt));
+            var cookieFriendlyHash = UrlTokenEncode(computedHash);  //HttpServerUtility.UrlTokenEncode
+            return cookieFriendlyHash;
+        }
+    }
+
+    //Borrowed from Mono System.Web ;)
+    private static string UrlTokenEncode(byte[] input)
+    {
+        if (input == null)
+            throw new ArgumentNullException(&quot;input&quot;);
+        if (input.Length &lt; 1)
+            return String.Empty;
+        string base64 = Convert.ToBase64String(input);
+        int retlen;
+        if (base64 == null || (retlen = base64.Length) == 0)
+            return String.Empty;
+
+        // MS.NET implementation seems to process the base64
+        // string before returning. It replaces the chars:
+        //
+        //  + with -
+        //  / with _
+        //
+        // Then removes trailing ==, which may appear in the
+        // base64 string, and replaces them with a single digit
+        // that's the count of removed '=' characters (0 if none
+        // were removed)
+        int equalsCount = 0x30;
+        while (retlen &gt; 0 &amp;&amp; base64[retlen - 1] == '=')
+        {
+            equalsCount++;
+            retlen--;
+        }
+        char[] chars = new char[retlen + 1];
+        chars[retlen] = (char)equalsCount;
+        for (int i = 0; i &lt; retlen; i++)
+        {
+            switch (base64[i])
+            {
+                case '+':
+                    chars[i] = '-';
+                    break;
+
+                case '/':
+                    chars[i] = '_';
+                    break;
+
+                default:
+                    chars[i] = base64[i];
+                    break;
+            }
+        }
+        return new string(chars);
+    }
+}
+</code></pre>
+<p>You&rsquo;ll notice I had to pinch <code>UrlTokenEncode</code> from Github from System.Web! OSS FTW! I didn&rsquo;t want to take a dependency on System.Web just for one method!</p>
+<p>Once I&rsquo;d finally got this all sorted I wanted to write some tests to check all was working for example I was getting 2 cookies after logging in.</p>
+<p>I was already using <a href="https://www.nuget.org/packages/Microsoft.Owin.Testing/">Microsoft.Owin.Testing</a> and all seemed ok however I discovered I couldn&rsquo;t actually test for cookies as there was no handler to pass to the HttpClient that the TestServer returns.  Luckily in all situations OWIN related <a href="http://twitter.com/randompunter">@randompunter</a> always has another better option, this time called <a href="http://www.nuget.org/packages/OwinHttpMessageHandler/">OwinHttpMessageHandler</a>. This allowed me to test against cookies which the previous library didn&rsquo;t but then I spotted an issue on Windows. My test passed on Mono and failed on Windows, its usually the other way around.  This is where the ordering of the middleware and <code>OnSendingHeaders</code> played a big part.  Anyway after a bit of toing and froing we discovered a bug and it was fixed however, <strong>beware</strong> Microsoft.Owin.Testing also has this bug in that it uses FIFO(first in first out).  So MS hosts act in one way but their test library works the opposite!</p>
+<p>Here&rsquo;s the test</p>
+<pre><code>public class CookieTests
+{
+    [Fact]
+    public async Task Should_Have_2_Headers()
+    {
+        var app = GetAppBuilder();
+        var handler = GetHandler(app);
+        var client = CreateHttpClient(handler);
+
+        var response = await client.PostAsync(&quot;http://localhost/login&quot;, new StringContent(&quot;&quot;));
+
+        var authCookie = handler
+           .CookieContainer
+           .GetCookies(new Uri(&quot;http://localhost&quot;))[&quot;MyCookie&quot;];
+
+        var xsrfCookie = handler
+            .CookieContainer
+            .GetCookies(new Uri(&quot;http://localhost/login&quot;))[&quot;XSRF-TOKEN&quot;];
+
+        //Then
+        Assert.NotNull(authCookie);
+        Assert.NotNull(xsrfCookie);
+    }
+
+    private AppBuilder GetAppBuilder()
+    {
+        var app = new AppBuilder();
+        new Startup().Configuration(app);
+        return app;
+    }
+
+    private OwinHttpMessageHandler GetHandler(AppBuilder builder)
+    {
+        return new OwinHttpMessageHandler(builder.Build())
+        {
+            UseCookies = true
+        };
+    }
+
+    private HttpClient CreateHttpClient(OwinHttpMessageHandler handler)
+    {
+        var client = new HttpClient(handler)
+        {
+            BaseAddress = new Uri(&quot;http://example.com&quot;)
+        };
+
+        return client;
+    }
+}
+</code></pre>
+<p>So after some lessons learnt and bugs fixed we have Cookie Authentication &amp; CRSF with AngularJs, Owin &amp; Mono.  After getting this all working it was pointed out to me that Kestrel, Microsoft&rsquo;s new cross platform web server behaves the opposite to HttpListener, Nowin &amp; System.Web in its ordering of <code>OnSendingHeaders</code> Isn&rsquo;t this all fun!!</p>
+<p>As you will see I mentioned having token and cookie middleware in the same app and that is my plan but again we have another long story and heads being bashed on the desk and that can be another blog post but the short answer is it should all work in Mono 4 from looking at the code but at the moment Microsoft&rsquo;s <code>app.UseJwtBearerAuthentication();</code> does not work properly on Mono at the time of writing.</p>
+<p>I hope this blog post is helpful and prevents the pain I experienced with this but I guess on a positive note it was a learning experience!</p>
+<p>One last thing, I can&rsquo;t take the credit for the token generation etc.  I had read a Stackoverflow post about how to do CSRF with Angular and came across <a href="http://stackoverflow.com/questions/15574486/angular-against-asp-net-webapi-implement-csrf-on-the-server">this</a>, all I have done is make it work for OWIN.</p>
+<p>Thanks to <a href="https://twitter.com/PinpointTownes">@PinpointTownes</a> and <a href="http://twitter.com/randompunter">@randompunter</a> for helping me out and getting this all working in an OWIN app.</p>
+    </div> 
+    
+        <div id="tagcloud">   
+            
+            
+                <a href="/tags/mono/"><span>mono</span></a>
+            
+                <a href="/tags/owin/"><span>owin</span></a>
+            
+                <a href="/tags/.net/"><span>.net</span></a>
+            
+                <a href="/tags/angularjs/"><span>angularjs</span></a>
+            
+                <a href="/tags/nancyfx/"><span>nancyfx</span></a>
+            
+                <a href="/tags/oss/"><span>oss</span></a>
+                     
+        </div>
+    
+    
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    
+<div id="disqus_thread"></div>
+<script>
+
+    
+
+
+    var disqus_config = function () {
+        this.page.url = '\/2015-04-27-cookie-authentication-angularjs-csrf-owin-mono\/';  
+        this.page.identifier = ''; 
+    };
+
+    (function () { 
+        var d = document, s = d.createElement('script');
+        s.src = '//jonathanchannonblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
+</html>

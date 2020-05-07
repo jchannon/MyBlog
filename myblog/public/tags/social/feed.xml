@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>social on </title>
+    <link>/tags/social/</link>
+    <description>Recent content in social on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 25 Oct 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/social/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simple .Net Twitter,Google,Facebook Authentication</title>
+      <link>/2012-10-25-simple-net-twittergooglefacebook-authentication/</link>
+      <pubDate>Thu, 25 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-10-25-simple-net-twittergooglefacebook-authentication/</guid>
+      <description>&lt;p&gt;Logging into websites is no longer a matter of typing in your username and password and clicking the login button. If you already have an account with the main social networks you can log into a site using your credentials from that website saving you having to register your details &lt;em&gt;again&lt;/em&gt;. This obviously makes things a bit easier as you don’t have to remember another password. (Although you should all be using a password manager such as &lt;a href=&#34;http://www.lastpass.com&#34;&gt;LastPass&lt;/a&gt;.)&lt;/p&gt;
+&lt;h2 id=&#34;current-social-login-providers&#34;&gt;Current Social Login Providers&lt;/h2&gt;
+&lt;p&gt;There are currently providers out there that allow you to use their services to integrate into your website to provide authentication via the social networks. The main two that I know of are &lt;a href=&#34;http://janrain.com&#34;&gt;Janrain&lt;/a&gt; and &lt;a href=&#34;http://www.dotnetopenauth.net/&#34;&gt;DotNetOpenAuth&lt;/a&gt;. I’ve not worked with DotNetOpenAuth but I have with Janrain when building &lt;a href=&#34;http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/&#34;&gt;DinnerParty&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The process was reasonably easy but not as simple as it could be.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

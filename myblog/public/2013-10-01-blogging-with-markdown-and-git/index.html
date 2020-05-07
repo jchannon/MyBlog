@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog - Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</title>
+        <meta name="description" content="There are many markdown blogging engines out there such as Calepin, Scriptogram and even WordPress allows you to write blog posts in Markdown but Sandra.Snow tries to add something different.  Firstly, it is written in .Net and Nancy, secondly its a static blog generator and finally it supports Git deployment.
+Even if you don&rsquo;t want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.
+---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+
+It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.
+The &ldquo;layout&rdquo; refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you&rsquo;d prefer.  These &ldquo;layout&rdquo; files should exist in the &ldquo;_layouts&rdquo; folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.
+The &ldquo;category&rdquo; or &ldquo;categories&rdquo; property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.
+The &ldquo;title&rdquo; should hopefully be self explanatory!
+You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.69.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <meta property="og:title" content="Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow">
+<meta property="og:description" content="There are many markdown blogging engines out there such as Calepin, Scriptogram and even WordPress allows you to write blog posts in Markdown but Sandra.Snow tries to add something different.  Firstly, it is written in .Net and Nancy, secondly its a static blog generator and finally it supports Git deployment.
+Even if you don&rsquo;t want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.
+---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+
+It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.
+The &ldquo;layout&rdquo; refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you&rsquo;d prefer.  These &ldquo;layout&rdquo; files should exist in the &ldquo;_layouts&rdquo; folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.
+The &ldquo;category&rdquo; or &ldquo;categories&rdquo; property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.
+The &ldquo;title&rdquo; should hopefully be self explanatory!
+You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2013-10-01-blogging-with-markdown-and-git/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/dist/site.css">
+        <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+            <link href="/2013-10-01-blogging-with-markdown-and-git/feed.xml" rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog">
+        
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
+                        
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
+
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
+
+                </div>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
+
+
+<div class="post-item boxed post-detail" itemtype="http://schema.org/BlogPosting">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-10-01-blogging-with-markdown-and-git/">Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">October 1, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-10-01-blogging-with-markdown-and-git/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>There are many markdown blogging engines out there such as <a href="http://calepin.co/">Calepin</a>, <a href="http://scriptogr.am/">Scriptogram</a> and even <a href="http://wordpress.org/">WordPress</a> allows you to write blog posts in Markdown but <a href="https://github.com/Sandra/Sandra.Snow">Sandra.Snow</a> tries to add something different.  Firstly, it is written in .Net and <a href="http://nancyfx.org">Nancy</a>, secondly its a static blog generator and finally it supports Git deployment.</p>
+<p>Even if you don&rsquo;t want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.</p>
+<pre><code>---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+</code></pre>
+<p>It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.</p>
+<p>The &ldquo;layout&rdquo; refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you&rsquo;d prefer.  These &ldquo;layout&rdquo; files should exist in the &ldquo;_layouts&rdquo; folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.</p>
+<p>The &ldquo;category&rdquo; or &ldquo;categories&rdquo; property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.</p>
+<p>The &ldquo;title&rdquo; should hopefully be self explanatory!</p>
+<p>You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.</p>
+<p>###Global Config</p>
+<p>In the root of the site template is a snow.config file which is what Sandra.Snow uses to determine url format, where to look for posts and layouts and other related information. It is JSON formatted and looks like this:</p>
+<pre><code>{
+  &quot;blogTitle&quot; : &quot;Joe Bloggs Blog&quot;,
+  &quot;author&quot; : &quot;Mr.Guest&quot;,
+  &quot;email&quot; : &quot;guest@gmail.com&quot;,
+  &quot;siteUrl&quot;: &quot;http://blog.joebloggs.com&quot;,
+  &quot;posts&quot;: &quot;Snow/_posts&quot;,
+  &quot;layouts&quot;: &quot;Snow/_layouts&quot;,
+  &quot;output&quot;: &quot;../MYRelativeWebsiteFolder&quot;,
+  &quot;urlFormat&quot;: &quot;yyyy/MM/dd/slug&quot;,
+  &quot;copyDirectories&quot;: [
+    &quot;Snow/images =&gt; images&quot;,
+    &quot;Snow/js =&gt; js&quot;,
+    &quot;Snow/css =&gt; css&quot;
+  ],
+  &quot;processFiles&quot;: [{
+    &quot;file&quot;: &quot;Snow/index.cshtml&quot;,
+    &quot;loop&quot;: &quot;Posts&quot;
+  },{
+    &quot;file&quot;: &quot;Snow/category.cshtml&quot;,
+    &quot;loop&quot;: &quot;Categories&quot;
+  },{
+    &quot;file&quot;: &quot;Snow/categories.cshtml =&gt; categories&quot;
+  },{
+    &quot;file&quot;: &quot;Snow/archive.cshtml =&gt; archive&quot;
+  },{
+    &quot;file&quot;: &quot;Snow/about.cshtml =&gt; about&quot;
+  },{
+    &quot;file&quot;: &quot;Snow/contact.cshtml =&gt; contact&quot;
+  },{
+    &quot;file&quot;: &quot;feed.xml&quot;,
+    &quot;loop&quot;: &quot;RSS&quot;
+  },{
+    &quot;file&quot;: &quot;sitemap.xml&quot;,
+    &quot;loop&quot;: &quot;sitemap&quot;
+  }]
+}
+</code></pre>
+<p>Here is an explanation:</p>
+<ul>
+<li>
+<p>&ldquo;blogTitle&rdquo; : The title of the blog you want to appear on your RSS feed</p>
+</li>
+<li>
+<p>&ldquo;author&rdquo; : The author&rsquo;s name</p>
+</li>
+<li>
+<p>&ldquo;email&rdquo; : The author&rsquo;s email.(You can use an <a href="https://github.com/Sandra/Sandra.Snow/wiki/Gravatar-Support">HTMLHelper</a> in the view that gets the author&rsquo;s Gravatar from the global/post settings)</p>
+</li>
+<li>
+<p>&ldquo;siteUrl&rdquo;: &ldquo;This is used to enable Disqus support. Simply use an <a href="https://github.com/Sandra/Sandra.Snow/wiki/Disqus-Support">HTMLHelper</a> to render Disqus comments&rdquo;</p>
+</li>
+<li>
+<p>&ldquo;posts&rdquo; : The location of the markdown files</p>
+</li>
+<li>
+<p>&ldquo;layouts&rdquo; : The location of the layout files</p>
+</li>
+<li>
+<p>&ldquo;output&rdquo; : The location where Sandra.Snow will put the static HTML. This is relative</p>
+</li>
+<li>
+<p>&ldquo;urlFormat&rdquo; : The format of the URL to your blog post</p>
+</li>
+<li>
+<p>&ldquo;copyDirectories&rdquo; : The directories in your template that it will copy to the output</p>
+</li>
+<li>
+<p>&ldquo;processFiles&rdquo; : This takes an object of the filename and property information on how to render the file.  Each file/view will be called and rendered with model information availble.  The model information available to these views are shown below:</p>
+<pre><code>  public List&lt;Post&gt; PostsInCategory { get; set; }
+  public Dictionary&lt;int, Dictionary&lt;int, List&lt;Post&gt;&gt;&gt; PostsGroupedByYearThenMonth { get; set; }
+  public List&lt;Post&gt; Posts { get; set; }
+  public List&lt;Post&gt; PostsPaged { get; set; }
+
+  public bool HasPreviousPage { get; set; }
+  public bool HasNextPage { get; set; }
+  public int NextPage { get; set; }
+  public int PreviousPage { get; set; }
+</code></pre>
+</li>
+</ul>
+<p>In the standard website template there are category, categories, about and index *.cshtml pages which accept this model information and render the relevant information. Based on the file name you can guess what each file outputs.  The &ldquo;loop&rdquo; in the settings is used internally by Sandra.Snow to process the relevant data. For example &ldquo;RSS&rdquo; creates a RSS file based on the list of posts while Posts/Categories create sub-directories for the relevant model type eg/categories/posts.  &ldquo;sitemap&rdquo; will use the <code>List&lt;Post&gt;</code> to create a sitemap.xml in the root of your blog.</p>
+<p>As Sandra.Snow is a static HTML generator it will create folders with the relevant name for the post or file named in the config file eg/<code>http://mydomain.com/2013/08/18/this-is-a-great-article</code> or <code>http://mydomain.com/categories</code> and create a <code>index.html</code> file for each folder.  In the root of the website it will create a <code>index.html</code> with 10 blog posts inside it.  If you have 100 markdown posts it will it will page this for you and create links to <code>http://mydomain.com/page2</code> etc.  If you use <code>&lt;!--excerpt--&gt;</code> in your Markdown it will read up to that point so you can click a &ldquo;read more&rdquo; link otherwise it will use the whole Markdown content.    If you look at the model properties you&rsquo;ll see your index layout view can tell if there is a next/previous page and therefore create the relevant links in the HTML.</p>
+<p>Once you run the Sandra.Snow exe it will output the HTML and you can then FTP your files to your website.</p>
+<p>Check out the <a href="https://github.com/Sandra/Sandra.Snow/wiki">wiki</a> for more details about other HTMLHelpers such as Google Analytics.</p>
+<p>###Git Integration</p>
+<p>FTP is so 2001 so Sandra.Snow has a website called Sandra.Snow.Barbato which allows you to access it (final URL to be confirmed) and log in with your Github credentials.  It will then give you a list of your repositories, the idea being one of them is your blog with the markdown posts and snow.config etc.  A <a href="https://github.com/Sandra/Sandra.Snow.BarbatoTemplate">base template</a> is available in the Sandra repository for you to fork.  You can then choose whether you&rsquo;d like to deploy to another Git repository that supports Git deployment eg/Azure, AppHarbor, Heroku or you can select FTP.  In either scenario, enter your details and off you go. The website will use Sandra.Snow to create the output and it will then wire it over to your chosen destination.</p>
+<p>Sandra.Snow.Barbato is also setup to handle Github hooks so in Github if you tell your repository to do a post commit hook to the website, after you write a new blog post and push to Github it will post to the website and know if you&rsquo;ve previously logged in and if so generate the HTML and re-deploy your blog.  It will also push the generated content back to your Github repository on the master branch. Very nice!</p>
+<p>###Setting up Sandra.Snow.Barbato</p>
+<p>One you have forked the Barbato template you can begin to style your blog pages.  Obviously every time you want to make a style change you want to see the results.  There are 2 ways to do this.  i) Run Sandra.Snow locally, setup a webserver eg/IISExpress to point to the Snow output directory and open up your browser to see the changes. Keep making changes to the *.cshtml and *.css files until happy ii) Make the changes in your repo, sign up with Sandra.Snow.Barbato and go to your domain to check the changes that were deployed.</p>
+<p>####Azure
+If deploying to Azure you must have a .deployment file in the root of your repository that contains:</p>
+<pre><code>[config]
+project = Website
+</code></pre>
+<p>This is needed because when your template repository is pushed to Azure it needs to know what to deploy. This simply tells it to use the Website folder ie.the output folder from Sandra.Snow.</p>
+<p>####Github Pages
+If deploying to Github you need a few things. Your repository needs to be called <code>username.github.io</code>. You then need to create a CNAME file in your repo that has the domain you will be using inside it. Finally you need to setup the DNS on your domain to point to <code>username.github.io</code> by creating a CNAME record in your DNS Manager. What you&rsquo;ll have to probably do is clone your <code>username.github.io</code> repo and run Snow and set the output setting in snow.config to the path of your <code>username.github.io</code> folder. You can then push the changes to Github.</p>
+<p>###Wordpress Migration</p>
+<p>My blog was previously using Wordpress so I needed to get my data out.  The most common referred to tool was <a href="https://github.com/dreikanter/wp2md">wp2md</a> which uses Python to go through the exported Wordpress content and then convert to Markdown.  For some reason I didn&rsquo;t go with that choice and went with <a href="http://heckyesmarkdown.com/">http://heckyesmarkdown.com/</a>.  Its a bit more work because you have to give it your previous URLs to your blog posts and it reads the source of the page and converts it to Markdown.  It worked brilliantly for me.  I had to make a few changes on the output it provided by generally it was very good.</p>
+<p>As I didn&rsquo;t want to worry about HTTP 302, I made sure I saved my markdown files as the urls are on my live site so <a href="http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/">http://blog.jonathanchannon.com/2012/12/19/why-use-nancyfx/</a> was saved in a file called <code>2012-12-19-why-use-nancyfx.md</code>. This file naming format is currently enforced so Snow can gather date and slug information(unsafe characters in the slug/title for URLs will be removed).</p>
+<p>I then went through addind the meta headers to tell Sandra.Snow a bit more about the posts and also added in the <code>&lt;!--excerpt--&gt;</code> information so not to render the whole blog content on the home pages.</p>
+<p>I then went through and styled the master page <code>default.cshtml</code> in the _layouts folder as well as the <code>post.cshtml</code> and the other files in the root of the site template folder.</p>
+<p>Once done I ran the .exe file to generate my content.  One of the great things about Sandra.Snow is its speed. It takes less than a second to do 100 blog posts, luckily I only have 25 so its really fast.  I opened up a browser and checked my files and if some styling needed tweaking I could do so and re-run.  Once all ok I can deploy or push the template folder to Github, setup the post commit hook and then use Sandra.Snow.Barbato to handle deployment from now on.</p>
+<p>###Conclusion</p>
+<p>If you&rsquo;re a Git and Markdown user and want to create a blog with complete simplicity this is a great tool.  No more messy Wordpress, no more running exe&rsquo;s on your machine (unless you want to), its completely automated apart from writing the blog posts!  In fact I&rsquo;m so happy with this project, this blog is using it!  Give it a try and if you like the look of it get involved with its development.  <a href="https://github.com/Sandra/Sandra.Snow">Sandra.Snow</a> the new modern, simplistic and effective tool for blogging.</p>
+    </div> 
+    
+        <div id="tagcloud">   
+            
+            
+                <a href="/tags/community/"><span>community</span></a>
+            
+                <a href="/tags/oss/"><span>oss</span></a>
+            
+                <a href="/tags/snow/"><span>snow</span></a>
+            
+                <a href="/tags/nancyfx/"><span>nancyfx</span></a>
+            
+                <a href="/tags/git/"><span>git</span></a>
+            
+                <a href="/tags/c/"><span>c#</span></a>
+            
+                <a href="/tags/.net/"><span>.net</span></a>
+                     
+        </div>
+    
+    
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    
+<div id="disqus_thread"></div>
+<script>
+
+    
+
+
+    var disqus_config = function () {
+        this.page.url = '\/2013-10-01-blogging-with-markdown-and-git\/';  
+        this.page.identifier = ''; 
+    };
+
+    (function () { 
+        var d = document, s = d.createElement('script');
+        s.src = '//jonathanchannonblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
+</html>

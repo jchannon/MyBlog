@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on </title>
+    <link>/tags/docker/</link>
+    <description>Recent content in Docker on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 07 Jun 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/docker/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Debugging .Net Core apps inside Docker container with VSCode</title>
+      <link>/2017-06-07-debugging-netcore-docker/</link>
+      <pubDate>Wed, 07 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017-06-07-debugging-netcore-docker/</guid>
+      <description>&lt;p&gt;So by now using .Net Core on Linux is old news, everyone is doing it and deploying their production apps on Kubernetes to reach peak &amp;ldquo;I can scale&amp;rdquo; points.  However, one thing that can get tricky is when you have a requirement to debug an application in a container.  I believe VS on Windows and VS for Mac has some sort of capability to do that (I have no idea what it does underneath but hey who cares I can right click debug right!?) but the information about doing this in VSCode is a bit sketchy.  I tend to use VSCode on OSX the most so I wanted to see how I could do this.&lt;/p&gt;
+&lt;p&gt;For demonstration purposes lets take a very simple application and we are going to publish it as a self contained application ie/one that has all the runtime and application binaries outputted so you don&amp;rsquo;t have to install dotnet in a container.&lt;/p&gt;
+&lt;p&gt;To be able to debug that application we are going to need VSDBG(the .Net Core command line debugger) inside the container.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We are also going to need to append the launch.json for VSCode in your project&amp;rsquo;s root to have the below:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;name&amp;quot;: &amp;quot;.NET Core Remote Attach&amp;quot;,
+    &amp;quot;type&amp;quot;: &amp;quot;coreclr&amp;quot;,
+    &amp;quot;request&amp;quot;: &amp;quot;attach&amp;quot;,
+    &amp;quot;processId&amp;quot;: &amp;quot;${command:pickRemoteProcess}&amp;quot;,
+    &amp;quot;pipeTransport&amp;quot;: {
+        &amp;quot;pipeProgram&amp;quot;: &amp;quot;bash&amp;quot;,
+        &amp;quot;pipeArgs&amp;quot;: [ &amp;quot;-c&amp;quot;, &amp;quot;docker exec -i json ${debuggerCommand}&amp;quot; ],
+        &amp;quot;debuggerPath&amp;quot;: &amp;quot;/root/vsdbg/vsdbg&amp;quot;,
+        &amp;quot;pipeCwd&amp;quot;: &amp;quot;${workspaceRoot}&amp;quot;,
+        &amp;quot;quoteArgs&amp;quot;: true
+    },
+    &amp;quot;sourceFileMap&amp;quot;: {
+        &amp;quot;/Users/jonathan/Projects/jsonfile&amp;quot;: &amp;quot;${workspaceRoot}&amp;quot;
+    },
+    &amp;quot;justMyCode&amp;quot;: true
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using Docker with .Net Core in CI for OSS</title>
+      <link>/2017-05-15-using-docker-with-netcore-ci/</link>
+      <pubDate>Mon, 15 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017-05-15-using-docker-with-netcore-ci/</guid>
+      <description>&lt;p&gt;I recently wrote a &lt;a href=&#34;http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/&#34;&gt;project&lt;/a&gt; for &lt;a href=&#34;https://t.co/kpkdInRgwG&#34;&gt;ASP.NET Core 2&lt;/a&gt;  and the time had come to get a CI system up and running.  I develop on OSX and mainly test on OSX &amp;amp; Linux and so the defacto place to go is TravisCI.  I&amp;rsquo;ve used it in the past and all has been great but I put out a tweet asking if Travis was still the place to go:&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

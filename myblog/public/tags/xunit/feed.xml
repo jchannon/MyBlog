@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xunit on </title>
+    <link>/tags/xunit/</link>
+    <description>Recent content in xunit on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 12 Sep 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/xunit/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Keeping SQL Data Organised in Integration Tests</title>
+      <link>/2013-09-12-keeping-sql-data-organised-in-integration-tests/</link>
+      <pubDate>Thu, 12 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-09-12-keeping-sql-data-organised-in-integration-tests/</guid>
+      <description>&lt;p&gt;In my latest project I had kept my solution tidy with my main app project, my unit test project and integration test project. I tend to stick with a naming convention such as MainApp, MainApp.Tests.Unit &amp;amp; MainApp.Tests.Integration.&lt;/p&gt;
+&lt;p&gt;I had begun writing my integration tests for a repository that hits the database and returns data. Currently it was one method being called in the repository.  &lt;a href=&#34;http://xunit.codeplex.com/&#34;&gt;xUnit&lt;/a&gt; allows you to setup any test dependencies in the constructor of your test class.  It also allows you to do any tidying up in a Dispose method if you implement IDisposable although this is &lt;a href=&#34;http://xunit.codeplex.com/wikipage?title=Comparisons&amp;amp;referringTitle=Home#note2&#34;&gt;frowned upon&lt;/a&gt;.  However I felt for my needs I would implement this.&lt;/p&gt;
+&lt;p&gt;I  was creating data in the database in the constructor which will get called before the test runs, retrieving data in the test, asserting and then deleting all data and resetting the auto-incrementing from the tables in the Dispose method.&lt;/p&gt;
+&lt;p&gt;This was working perfectly until I wanted to test another method on my repository.&lt;/p&gt;
+&lt;p&gt;I now needed to add data for my new method but realised if I added different data to the database in the constructor, I would be creating unnecessary data unrelated to the test.&lt;/p&gt;
+&lt;p&gt;My options were to move the constructor logic into separate methods and then call the methods in the test or have separate test classes per method in the repo.  Both were a not an ideal solution and quite frankly verbose, ugly and not best practice.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mocking HttpContext with Fake It Easy</title>
+      <link>/2013-04-30-mocking-httpcontext-with-fake-it-easy/</link>
+      <pubDate>Tue, 30 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-30-mocking-httpcontext-with-fake-it-easy/</guid>
+      <description>&lt;p&gt;Lets start with the conclusion first and say “use &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt; for your web applications and APIs” as its brilliant!&lt;/p&gt;
+&lt;p&gt;If you want to continue reading lets crack on.&lt;/p&gt;
+&lt;p&gt;I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, &lt;em&gt;eg. Response.Write(“How will I mock thee?”);&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Having moved over to &lt;a href=&#34;http://xunit.codeplex.com/&#34;&gt;xUnit&lt;/a&gt; and &lt;a href=&#34;https://github.com/FakeItEasy/FakeItEasy&#34;&gt;FakeItEasy&lt;/a&gt; recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.&lt;/p&gt;
+&lt;p&gt;Doing this is no easy feat with MVC (with Nancy its all &lt;a href=&#34;https://github.com/NancyFx/Nancy/wiki/Testing-your-application&#34;&gt;done for you&lt;/a&gt;) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

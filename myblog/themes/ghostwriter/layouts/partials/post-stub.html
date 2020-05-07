@@ -1,9 +1,19 @@
-<li class="post-stub" itemprop="blogPost" itemscope="" itemtype="https://schema.org/BlogPosting">
-    <a href="{{ .Permalink }}" itemprop="url" title="Go to post detail">
-        <h4 class="post-stub-title" itemprop="name">{{ .Title }}</h4>
-        <time class="post-stub-date" datetime="{{ .Date.Format "2006-01-02" }}">Published {{ dateFormat (default "Mon, Jan 2, 2006" .Site.Params.dateFormat) .Date }}</time>
-        {{ with .Params.featured }}
-            <span class="post-stub-tag">Featured</span>
-        {{ end }}
-    </a>
-</li>
+<div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">{{ .PublishDate.Format "January 2, 2006" }}</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments"></span> -->
+        <div class="commentcount" data-disqus-url="{{ .Permalink }}"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        {{ .Summary }}
+    </div>
+
+    <p><a class="readmore" href="{{ .Permalink }}">Read more...</a></p>            
+    
+  </div>

@@ -1,21 +1,30 @@
 <!DOCTYPE html>
+
+
+
+
+
+
 <html prefix="og: http://ogp.me/ns#">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Migrating from Jekyll &middot; </title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog - Migrating from Jekyll</title>
         <meta name="description" content="Migrating from Jekyll description.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="generator" content="Hugo 0.69.2" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
         <meta property="og:title" content="Migrating from Jekyll">
 <meta property="og:description" content="Migrating from Jekyll description.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="/migrate-from-jekyll/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/dist/site.css">
         <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         
@@ -26,73 +35,58 @@
     <body>
         
 
-        <div id="wrapper">
-            <header class="site-header">
-                <div class="container">
-                    <div class="site-title-wrapper">
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
                         
-                            <h1 class="site-title">
-                                <a title="My blog" href="/">My blog</a>
-                            </h1>
-                        
-                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
-                        
-                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/XXX" rel="me">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                        
-                        
-                        
-                        
-                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/XXX" rel="me">
-                                <i class="fa fa-github-alt"></i>
-                            </a>
-                        
-                        
-                        
-                        
-                            <a class="button-square button-social hint--top" data-hint="Email" title="Email" href="mailto:XXX@example.com">
-                                <i class="fa fa-envelope"></i>
-                            </a>
-                        
-                    </div>
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-green"><a href="/about"><span>About Me</span></a></li>               
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                            <li class="menu-item-purple"><a href="/contact"><span>Contact</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
 
-                    <ul class="site-nav">
-                        
-    <li class="site-nav-item">
-        <a title="Getting Started with Hugo" href="/hugoisforlovers/">Getting Started with Hugo</a>
-    </li>
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
 
-                    </ul>
                 </div>
-            </header>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
 
-            <div id="container">
 
-
-<div class="container">
-    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
-        <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Migrating from Jekyll</h1>
+<div class="post-item boxed post-detail" itemtype="http://schema.org/BlogPosting">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/migrate-from-jekyll/">Migrating from Jekyll</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">April 2, 2016</span> 
+        
+        <div class="commentcount" data-disqus-url="/migrate-from-jekyll/"></div>
+    </div>
     
-        <p class="post-description" itemprop="description">Migrating from Jekyll description.</p>
-    
-    <p class="post-date post-line">
-        <span>Published <time datetime="2014-04-02" itemprop="datePublished">Wed, Apr 2, 2014</time></span>
-        <span>by</span>
-        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
-            <span itemprop="name">
-                <a href="#" itemprop="url" rel="author">Michael Henderson</a>
-            </span>
-        </span>
-    </p>
-    
-</header>
-
-        <div class="post-content clearfix" itemprop="articleBody">
-    
-
-    <h2 id="move-static-content-to-static">Move static content to <code>static</code></h2>
+    <div class="post-descr entry">
+        <h2 id="move-static-content-to-static">Move static content to <code>static</code></h2>
 <p>Jekyll has a rule that any directory not starting with <code>_</code> will be copied as-is to the <code>_site</code> output. Hugo keeps all static content under <code>static</code>. You should therefore move it all there.
 With Jekyll, something that looked like</p>
 <pre><code>▾ &lt;root&gt;/
@@ -226,70 +220,101 @@ Liquid::Template.register_tag('image', Jekyll::ImageTag)
 <h2 id="a-practical-example-in-a-diff">A practical example in a diff</h2>
 <p><a href="http://heyitsalex.net/">Hey, it&rsquo;s Alex</a> was migrated in less than a <em>father-with-kids day</em> from Jekyll to Hugo. You can see all the changes (and screw-ups) by looking at this <a href="https://github.com/alexandre-normand/alexandre-normand/compare/869d69435bd2665c3fbf5b5c78d4c22759d7613a...b7f6605b1265e83b4b81495423294208cc74d610">diff</a>.</p>
 
+    </div> 
+    
+    
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    
+        (function() {
+            
+            
+            
+                
+        
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            var disqus_shortname = 'jonathanchannonblog';
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="https://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
 </div>
 
-        <footer class="post-footer clearfix">
-    
-
-    <div class="share">
-        
-            <a class="icon-twitter" href="https://twitter.com/share?text=Migrating%20from%20Jekyll&url=%2fmigrate-from-jekyll%2f"
-                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-                <i class="fa fa-twitter"></i>
-                <span class="hidden">Twitter</span>
-            </a>
-        
-
-        
-            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2fmigrate-from-jekyll%2f"
-                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-                <i class="fa fa-facebook"></i>
-                <span class="hidden">Facebook</span>
-            </a>
-        
-
-        
-            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2fmigrate-from-jekyll%2f"
-              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-              <i class="fa fa-google-plus"></i>
-                <span class="hidden">Google+</span>
-            </a>
-        
+        </div>
         
     </div>
-</footer>
-
-        
-    </article>
 </div>
 
-            </div>
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+            <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            <a href="/index.xml" class="social-rss">RSS Feed</a>
         </div>
+    </div>
+</div>
 
-        <footer class="footer">
-            <div class="container">
-                <div class="site-title-wrapper">
-                    <h1 class="site-title">
-                        <a title="My blog" href="/">My blog</a>
-                    </h1>
-                    <a class="button-square button-jump-top js-jump-top" href="#">
-                        <i class="fa fa-angle-up"></i>
-                    </a>
-                </div>
 
-                <p class="footer-copyright">
-                    <span>&copy; 2015 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
-                </p>
-                <p class="footer-copyright">
-                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
-                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
-                </p>
-            </div>
-        </footer>
 
-        <script src="/js/jquery-1.11.3.min.js"></script>
-        <script src="/js/jquery.fitvids.js"></script>
-        <script src="/js/scripts.js"></script>
-    </body>
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
 </html>
-

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>visual studio on </title>
+    <link>/tags/visual-studio/</link>
+    <description>Recent content in visual studio on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 24 Nov 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/visual-studio/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Running Gulp in Visual &amp; Xamarin Studio</title>
+      <link>/2014-11-24-running-gulp-in-visual-xamarin-studio/</link>
+      <pubDate>Mon, 24 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-11-24-running-gulp-in-visual-xamarin-studio/</guid>
+      <description>&lt;p&gt;I was going to write a long post explaining about all the pain I went through to get this working but then realised you probably don&amp;rsquo;t really care and you just want the code!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/iYjnPK0.png&#34; alt=&#34;Show the code&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>A quick look at Visual Node</title>
+      <link>/2013-08-22-a-quick-look-at-visual-node/</link>
+      <pubDate>Thu, 22 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-08-22-a-quick-look-at-visual-node/</guid>
+      <description>&lt;p&gt;I came across &lt;a href=&#34;http://www.visualnode.info/&#34;&gt;Visual Node&lt;/a&gt; a few months ago and was excited by the looks of it.  For those that didn&amp;rsquo;t click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what&amp;rsquo;s going on.&lt;/p&gt;
+&lt;p&gt;The hipster in me is screaming saying &amp;ldquo;You should be using Sublime Text and &lt;a href=&#34;https://github.com/dannycoates/node-inspector&#34;&gt;node-inspector&lt;/a&gt; for debugging&amp;rdquo; but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that&amp;rsquo;s just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I&amp;rsquo;m never going to touch a dynamic language again, &amp;ldquo;give me a statically typed language every time with a compiler&amp;rdquo;.  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

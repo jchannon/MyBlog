@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>first blog post on </title>
+    <link>/tags/first-blog-post/</link>
+    <description>Recent content in first blog post on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 17 Sep 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/first-blog-post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>I’ve started blogging. Why?</title>
+      <link>/2012-09-17-ive-started-blogging-why/</link>
+      <pubDate>Mon, 17 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-09-17-ive-started-blogging-why/</guid>
+      <description>&lt;p&gt;So here I am, Jonathan Channon, blogger.  I never saw the point of blogging before so why now?&lt;/p&gt;
+&lt;p&gt;I have read and spoken to many people regarding blogging who were all in favour of it.  I would always argue that I don’t have time, I have nothing to blog about or I’m not that insane to start blogging about stuff I barely understand just so the masses can come and hurl abuse at my ignorance.  However I recently read an &lt;a href=&#34;http://buildstarted.com/2012/08/28/how-i-learned-to-stop-worrying-and-love-my-community/&#34;&gt;article&lt;/a&gt; by &lt;a href=&#34;http://twitter.com/buildstarted&#34;&gt;Ben Dornis&lt;/a&gt; titled “How I learned to stop worrying and love my community”.  He outlined all the reasons why a lot of people don’t publish their code and don’t publish their thoughts online. I thought he was being modest, the man is clearly talented at what he does so he didn’t have to worry however, someone like me still had these fears.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

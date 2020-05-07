@@ -3,98 +3,603 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/about.html/</loc>
-    <lastmod>2015-04-03T02:13:50+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/contact.html/</loc>
-    <lastmod>2015-04-03T02:13:50+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/</loc>
-    <lastmod>2015-04-03T02:13:50+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/page/</loc>
-    <lastmod>2015-04-03T02:13:50+00:00</lastmod>
+    <loc>/2018-04-10-announcing-carter/</loc>
   </url>
   
   <url>
-    <loc>/creating-a-new-theme/</loc>
-    <lastmod>2014-09-28T02:13:50+00:00</lastmod>
+    <loc>/tags/asp.net/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/botwin/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/c#/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/carter/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/oss/</loc>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2014-09-28T02:13:50+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/goisforlovers/</loc>
-    <lastmod>2014-04-02T02:13:50+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/development/</loc>
-    <lastmod>2014-04-02T02:13:50+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/go/</loc>
-    <lastmod>2014-04-02T02:13:50+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/golang/</loc>
-    <lastmod>2014-04-02T02:13:50+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/migrate-from-jekyll/</loc>
-    <lastmod>2014-04-02T02:13:50+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2014-04-02T02:13:50+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/templates/</loc>
-    <lastmod>2014-04-02T02:13:50+00:00</lastmod>
+    <loc>/2017-06-07-debugging-netcore-docker/</loc>
   </url>
   
   <url>
-    <loc>/tags/themes/</loc>
-    <lastmod>2014-04-02T02:13:50+00:00</lastmod>
+    <loc>/tags/docker/</loc>
+  </url>
+  
+  <url>
+    <loc>/2017-05-15-using-docker-with-netcore-ci/</loc>
+  </url>
+  
+  <url>
+    <loc>/2017-05-04-announcing-botwin/</loc>
+  </url>
+  
+  <url>
+    <loc>/2016-07-13-building-all-current-dotnet-core-projects-vscode/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/vscode/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/owin/</loc>
+  </url>
+  
+  <url>
+    <loc>/2016-06-27-porting-owin-middleware-aspnetcore/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/hypermedia/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/rest/</loc>
+  </url>
+  
+  <url>
+    <loc>/2016-04-28-what-is-a-hypermedia-client/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/.net/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/community/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/coreclr/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/nancyfx/</loc>
+  </url>
+  
+  <url>
+    <loc>/2016-03-30-vq-communications-funds-coreclr-nancyfx/</loc>
+  </url>
+  
+  <url>
+    <loc>/2016-02-11-profiling-coreclr-application/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/golang/</loc>
+  </url>
+  
+  <url>
+    <loc>/2015-11-16-content-negotiation-golang/</loc>
+  </url>
+  
+  <url>
+    <loc>/2015-10-27-introducting-pogo-golang-twitter-pocket/</loc>
+  </url>
+  
+  <url>
+    <loc>/2015-08-07-hypermedia-and-nancyfx/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/angularjs/</loc>
+  </url>
+  
+  <url>
+    <loc>/2015-04-27-cookie-authentication-angularjs-csrf-owin-mono/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/mono/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/gulp/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/javascript/</loc>
+  </url>
+  
+  <url>
+    <loc>/2014-11-24-running-gulp-in-visual-xamarin-studio/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/visual-studio/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/xamarin-studio/</loc>
+  </url>
+  
+  <url>
+    <loc>/2014-11-12-csharp-first-class-citizen-sublime-text/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/sublimetext/</loc>
+  </url>
+  
+  <url>
+    <loc>/2014-08-05-nancy-aspnetvnext-osx-sublime-text/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/osx/</loc>
+  </url>
+  
+  <url>
+    <loc>/2014-06-14-nancy-aspnet-vnext-vs2014-azure/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/bash/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/git/</loc>
+  </url>
+  
+  <url>
+    <loc>/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/terminal/</loc>
+  </url>
+  
+  <url>
+    <loc>/2014-05-07-introducing-owin-statelessauth-with-nancy-angular-demo/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/nodejs/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/promises/</loc>
+  </url>
+  
+  <url>
+    <loc>/2014-03-22-using-node-and-ftp-with-promises/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/unit-testing/</loc>
+  </url>
+  
+  <url>
+    <loc>/2014-01-02-unit-testing-with-sqlexception/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/node.js/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/sql/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-12-20-using-sql-server-with-nodejs/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-11-25-octopus-xml-transformation-in-services/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/octopusdeploy/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/team-city/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-11-07-using-git-to-update-youtrack-via-teamcity/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/youtrack/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/mocha/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-10-21-running-mocha-tests-with-sublime-text/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/sublime-text-2/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-10-01-blogging-with-markdown-and-git/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/snow/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/fake-it-easy/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/integration-testing/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-09-20-returning-multiple-fake-objects-with-fakeiteasy/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-09-16-enabling-cors-in-iisexpress/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/iis-express/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-09-12-keeping-sql-data-organised-in-integration-tests/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/xunit/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-09-11-comparing-object-instances-with-fakeiteasy/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/async/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-08-24-async-route-handling-with-nancy/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-08-22-a-quick-look-at-visual-node/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/visual-node/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/github/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-07-03-modifying-files-within-git-history/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/st2/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/career/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-05-29-why-net-should-become-independent/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/asp.net-mvc/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-04-30-mocking-httpcontext-with-fake-it-easy/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/typescript/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-04-17-up-running-with-typescript-and-webstorm/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/webstorm/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/datetime/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/markdown/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-04-08-using-a-markdown-viewengine-with-nancy/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-04-08-using-datetime-in-c-and-sql/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/dart/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/f#/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/kotlin/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-04-02-the-old-development-language-switcheroo/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/entity-framework/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/srp/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-03-04-the-many-approaches-to-entity-framework/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-02-05-evaluating-knockoutjs-and-angularjs-part-1/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-02-05-evaluating-knockoutjs-and-angularjs-part-2/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/handlebars/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/knockoutjs/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/learning/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/sammyjs/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/backbonejs/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-01-24-using-angularjsbackbonejs-in-windows-8-javascript-app/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/windows-8/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/winjs/</loc>
+  </url>
+  
+  <url>
+    <loc>/2013-01-09-javascript-is-the-future-maybe/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/asp.net-web-api/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-12-19-why-use-nancyfx/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-12-07-easily-publish-a-nuget-package/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/nuget/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-11-29-asp-net-web-api-testing/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-11-23-the-for-loop-is-the-devil-in-disguise/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-11-18-gitignore-not-working-fixed/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/stackoverflow/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/deployment/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/dinnerparty/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-11-06-publishing-to-windows-azure-from-github/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/windowsazure/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/authentication/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/email/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/papercut/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-10-25-simple-net-twittergooglefacebook-authentication/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/social/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/social-authentication/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-10-25-testing-your-applications-email-logic/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/editor/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/express/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/f1/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/ide/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/jade/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/json/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-10-08-node-js-express-hello-world-formula-1-style/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-09-28-abstracting-the-file-system/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/file-system/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/system.io.abstractions/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-09-25-is-oss-good-for-your-career/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/dinner-party/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-09-21-nancyfx-ravendb-nerddinner-and-me/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/ravendb/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/windows-azure/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/first-blog-post/</loc>
+  </url>
+  
+  <url>
+    <loc>/2012-09-17-ive-started-blogging-why/</loc>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2014-04-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/development/</loc>
-    <lastmod>2014-04-02T00:00:00+00:00</lastmod>
+    <loc>/contact/</loc>
   </url>
   
   <url>
-    <loc>/hugoisforlovers/</loc>
-    <lastmod>2014-04-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/golang/</loc>
-    <lastmod>2014-04-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/hugo/</loc>
-    <lastmod>2014-04-02T00:00:00+00:00</lastmod>
+    <loc>/page/</loc>
   </url>
   
 </urlset>

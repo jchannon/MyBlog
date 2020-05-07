@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog - Modifying the bash prompt and adding Git completion to terminal</title>
+        <meta name="description" content="At work we use Git and I use Console2 to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.
+Fire up your terminal and type in this command:
+curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+
+This will download a git completion file into your home folder to a hidden file called git-completion.bash.
+If the file ~/.bash_profile does not already exist create it with the following command.
+touch ~/.bash_profile
+
+Now open it and paste this in:
+if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+
+Now if you type a git command and press tab, BOOM!, you have auto complete for Git!">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.69.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <meta property="og:title" content="Modifying the bash prompt and adding Git completion to terminal">
+<meta property="og:description" content="At work we use Git and I use Console2 to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.
+Fire up your terminal and type in this command:
+curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+
+This will download a git completion file into your home folder to a hidden file called git-completion.bash.
+If the file ~/.bash_profile does not already exist create it with the following command.
+touch ~/.bash_profile
+
+Now open it and paste this in:
+if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+
+Now if you type a git command and press tab, BOOM!, you have auto complete for Git!">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/dist/site.css">
+        <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+            <link href="/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/feed.xml" rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog">
+        
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
+                        
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
+
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
+
+                </div>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
+
+
+<div class="post-item boxed post-detail" itemtype="http://schema.org/BlogPosting">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/">Modifying the bash prompt and adding Git completion to terminal</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">June 6, 2014</span> 
+        
+        <div class="commentcount" data-disqus-url="/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>At work we use Git and I use <a href="http://sourceforge.net/projects/console/files/">Console2</a> to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.</p>
+<p>Fire up your terminal and type in this command:</p>
+<pre><code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+</code></pre>
+<p>This will download a git completion file into your home folder to a hidden file called git-completion.bash.</p>
+<p>If the file ~/.bash_profile does not already exist create it with the following command.</p>
+<pre><code>touch ~/.bash_profile
+</code></pre>
+<p>Now open it and paste this in:</p>
+<pre><code>if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+</code></pre>
+<p>Now if you type a git command and press tab, BOOM!, you have auto complete for Git!</p>
+<p>Also by default if you&rsquo;re in a directory that has a git repository inside it will not show you the branch you&rsquo;re on.  Again in Console2 in Windows it does however we can get the same functionality.</p>
+<p>Open the .bash_profile and paste the below in, save and reopen your terminal and bingo:</p>
+<pre><code># Git branch in prompt.
+parse_git_branch() {
+    git branch 2&gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1=&quot;\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ &quot;
+</code></pre>
+<p>A few days later whilst I was using Console2 I wanted to have the date/time in my prompt so I know when I last used the git command.  If you look at the code above you&rsquo;ll see the PS1 variable which controls what you prompt will look like.  The variables in there eg\ <code>\W</code> all mean different things. Here&rsquo;s a <a href="http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html">link</a> to explain them.</p>
+<p>So in Console to I executed <code>echo $PS1</code> which showed me my current settings. I used the above link to help me and I added the datetime with a color.</p>
+<p>Before :  <code>\[\033]0;$MSYSTEM:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[32m\]\u@\h\[\033[33m\]\w$(__git_ps1)\[\033[0m\]\n\ \[\033[0m\]$ </code></p>
+<p>After :  <code>\[\033]0;$MSYSTEM:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[32m\]\u@\h\[\033[33m\]\w$(__git_ps1)\[\033[0m\]\n\[\033[31m\]\t \[\033[0m\]$ </code></p>
+<p>Now if this is all a bit much for you I was told about <a href="http://www.iterm2.com/#/section/home">iTerm2</a>, a OSX terminal replacement and <a href="https://github.com/robbyrussell/oh-my-zsh">Oh My Zsh</a> a way to configure your terminal that provides lots of plugins and themes.</p>
+<p>Hope this is helpful for someone.</p>
+    </div> 
+    
+        <div id="tagcloud">   
+            
+            
+                <a href="/tags/osx/"><span>osx</span></a>
+            
+                <a href="/tags/terminal/"><span>terminal</span></a>
+            
+                <a href="/tags/bash/"><span>bash</span></a>
+            
+                <a href="/tags/git/"><span>git</span></a>
+                     
+        </div>
+    
+    
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    
+<div id="disqus_thread"></div>
+<script>
+
+    
+
+
+    var disqus_config = function () {
+        this.page.url = '\/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal\/';  
+        this.page.identifier = ''; 
+    };
+
+    (function () { 
+        var d = document, s = d.createElement('script');
+        s.src = '//jonathanchannonblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
+</html>

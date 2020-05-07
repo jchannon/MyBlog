@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>asp.net web api on </title>
+    <link>/tags/asp.net-web-api/</link>
+    <description>Recent content in asp.net web api on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 19 Dec 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/asp.net-web-api/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Why use NancyFX?</title>
+      <link>/2012-12-19-why-use-nancyfx/</link>
+      <pubDate>Wed, 19 Dec 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-12-19-why-use-nancyfx/</guid>
+      <description>&lt;p&gt;When a new project comes along why should you automatically choose ASP.NET MVC? Yes, its Microsoft based so you may have more of your peers fluent already in that architecture but is there an alternative, a better alternative?&lt;/p&gt;
+&lt;p&gt;I believe so and its called &lt;a href=&#34;http://nancyfx.org/&#34;&gt;NancyFX&lt;/a&gt;. Your first reaction, what is so special about Nancy? I also believe you’ll ask what is wrong with ASP.NET MVC but maybe you should look at it differently and ask what is right with Nancy?&lt;/p&gt;
+&lt;h2 id=&#34;what-is-nancy&#34;&gt;What is Nancy?&lt;/h2&gt;
+&lt;p&gt;Nancy is a lightweight framework for building websites / services without getting in your way. It’s heavily inspired by a Ruby project called Sinatra, which happens to identify itself as not being a framework, since it doesn’t include all the plumbing of things such as an ORM, lots of configuration, etc.&lt;/p&gt;
+&lt;h2 id=&#34;does-it-implement-mvc&#34;&gt;Does it implement MVC?&lt;/h2&gt;
+&lt;p&gt;Nancy does not force you to adhere to the model-view-controller pattern, or any other pattern. It’s nothing more than a service endpoint responding to HTTP verbs. Making it ideal for building Websites, Web Services and APIs.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Easily publish a NuGet package</title>
+      <link>/2012-12-07-easily-publish-a-nuget-package/</link>
+      <pubDate>Fri, 07 Dec 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-12-07-easily-publish-a-nuget-package/</guid>
+      <description>&lt;p&gt;I recently published &lt;a href=&#34;http://blog.jonathanchannon.com/2012/11/29/asp-net-web-api-testing/&#34; title=&#34;ASP.NET Web API Testing&#34;&gt;WebAPI.Testing&lt;/a&gt; on &lt;a href=&#34;http://nuget.org/packages/WebAPI.Testing&#34;&gt;Nuget&lt;/a&gt; but found it a bit tricky to build a package ready for NuGet.&lt;/p&gt;
+&lt;p&gt;There is &lt;a href=&#34;http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package&#34;&gt;documentation &lt;/a&gt;about how to do it but I found it hard to follow so I thought I’d document how I finally got my package ready.&lt;/p&gt;
+&lt;p&gt;The easiest way I thought was to have something built into Visual Studio. I spoke to &lt;a href=&#34;https://twitter.com/davidfowl&#34;&gt;David Fowler&lt;/a&gt; and he told me you can edit your *.csproj file and add &lt;code&gt;&amp;lt;BuildPackage&amp;gt;true&amp;lt;/BuildPackage&amp;gt;&lt;/code&gt; to it.&lt;/p&gt;
+&lt;p&gt;When you build your project a *.nupkg is created ready for publishing with NuGet.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASP.NET Web API Testing</title>
+      <link>/2012-11-29-asp-net-web-api-testing/</link>
+      <pubDate>Thu, 29 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-29-asp-net-web-api-testing/</guid>
+      <description>&lt;p&gt;As the need arose to implement some kind of Web Service/HTTP API I thought I would evaluate &lt;a href=&#34;http://nancyfx.org/&#34;&gt;NancyFX&lt;/a&gt;, &lt;a href=&#34;http://www.asp.net/web-api&#34;&gt;ASP.NET Web API&lt;/a&gt; and &lt;a href=&#34;http://www.servicestack.net/&#34;&gt;ServiceStack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Suffice to say all performed as expected and I was actually surprised to find that implementing ASP.NET Web API was easier than ServiceStack (I know that might be a bit of a statement to make to the ServiceStack followers, sorry). I found Nancy easiest to implement. The very simple API demos can be found on &lt;a href=&#34;http://github.com/jchannon&#34;&gt;my Github page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When it came to testing ASP.NET Web API I found it to be wanting slightly in comparison to Nancy. With WebAPI I could make direct calls to the controller methods to make sure data was returned correctly and I could mock a repository and test that the methods in the repository were being called but there was nothing I could see to test the HTTP response I would get.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

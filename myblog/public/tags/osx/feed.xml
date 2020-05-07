@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>osx on </title>
+    <link>/tags/osx/</link>
+    <description>Recent content in osx on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 05 Aug 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/osx/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Nancy, ASP.Net vNext, OSX and Sublime Text</title>
+      <link>/2014-08-05-nancy-aspnetvnext-osx-sublime-text/</link>
+      <pubDate>Tue, 05 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-08-05-nancy-aspnetvnext-osx-sublime-text/</guid>
+      <description>&lt;p&gt;One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against &lt;a href=&#34;http://www.mono-project.com/Main_Page&#34;&gt;Mono&lt;/a&gt;.  Along with this MS are developing a web server that is cross platform and goes by the name of &lt;a href=&#34;https://github.com/aspnet/KestrelHttpServer&#34;&gt;Kestrel&lt;/a&gt;.  One thing they aren&amp;rsquo;t doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is &lt;a href=&#34;http://www.sublimetext.com/3&#34;&gt;Sublime Text&lt;/a&gt;.  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UPDATE - As of August 13th 2014 there is a Mono 3.6 release which means you no longer need to compile Mono but you will need to install Homebrew for ASP.Net vNext. &lt;a href=&#34;#vnext&#34;&gt;Skip to nnext section&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;At the time of writing the official binary for Mono is 3.4.0 and this does not include some features needed for ASP.Net vNext to run so we are going to have to manually compile Mono ourselves.  Now I know this sounds scary but its not as bad as it seems and I&amp;rsquo;ve gone through the pain of setting it up so hopefully this blog post should make it easier for you&lt;/p&gt;
+&lt;p&gt;There is a &lt;a href=&#34;http://mono-project.com/Compiling_Mono_on_OSX&#34;&gt;guide&lt;/a&gt; on Mono&amp;rsquo;s website on how to compile but I found some issues with it.  I&amp;rsquo;m running on OSX Mavericks so I&amp;rsquo;m not sure if that resulted in issues but here&amp;rsquo;s my guide to get it compiling.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modifying the bash prompt and adding Git completion to terminal</title>
+      <link>/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/</link>
+      <pubDate>Fri, 06 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-06-06-modifying-bash-adding-git-auto-completion-to-terminal/</guid>
+      <description>&lt;p&gt;At work we use Git and I use &lt;a href=&#34;http://sourceforge.net/projects/console/files/&#34;&gt;Console2&lt;/a&gt; to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.&lt;/p&gt;
+&lt;p&gt;Fire up your terminal and type in this command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will download a git completion file into your home folder to a hidden file called git-completion.bash.&lt;/p&gt;
+&lt;p&gt;If the file ~/.bash_profile does not already exist create it with the following command.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;touch ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now open it and paste this in:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now if you type a git command and press tab, BOOM!, you have auto complete for Git!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Up &amp; Running with TypeScript and WebStorm</title>
+      <link>/2013-04-17-up-running-with-typescript-and-webstorm/</link>
+      <pubDate>Wed, 17 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-17-up-running-with-typescript-and-webstorm/</guid>
+      <description>&lt;p&gt;I love my iMac and I’m on a mission to find a language I enjoy that I can use my Mac for (no Windows fan boy jokes please). There’s something in my mind I associate with work and my Windows laptop. Therefore, I don’t feel to excited about getting my laptop out of my bag in the evenings/weekends to play with other stuff.&lt;/p&gt;
+&lt;p&gt;As I want to broaden my knowledge I wanted to find something ideally statically typed (although I’m currently looking into Python) that would work on OS X. I’ve said previously that JavaScript seems the way to go in my current situation so I thought I’d take a look at TypeScript and also use &lt;a href=&#34;http://www.jetbrains.com/webstorm/&#34;&gt;WebStorm&lt;/a&gt; from Jetbrains as my IDE seeing as I’ve heard so many great things about them and their products (don’t worry I use ReSharper).&lt;/p&gt;
+&lt;h2 id=&#34;typescript&#34;&gt;TypeScript&lt;/h2&gt;
+&lt;p&gt;So I went over to TypeScript’s &lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;website&lt;/a&gt; and followed the Hello World type code examples under the “Learn” tab.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

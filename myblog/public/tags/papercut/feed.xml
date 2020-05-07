@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>papercut on </title>
+    <link>/tags/papercut/</link>
+    <description>Recent content in papercut on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 25 Oct 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/papercut/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing your application’s email logic</title>
+      <link>/2012-10-25-testing-your-applications-email-logic/</link>
+      <pubDate>Thu, 25 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-10-25-testing-your-applications-email-logic/</guid>
+      <description>&lt;p&gt;If you’ve ever written an application that sends out email you may have written the code and executed it numerous times to check that the logic works and that the email appears as you hope. This obviously means you have to hit your SMTP server each time, open your email client and check your emails each time.&lt;/p&gt;
+&lt;h3 id=&#34;papercut&#34;&gt;Papercut&lt;/h3&gt;
+&lt;p&gt;Reading through my Twitter timeline I saw &lt;a href=&#34;http://twitter.com/TheCodeJunkie&#34;&gt;@TheCodeJunkie&lt;/a&gt; asking about the app that you can use to test sending emails from your application.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/blogpostimages/tweet.png&#34; alt=&#34;TheCodeJunkie Tweet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Intrigued, I kept an eye on my timeline and found that the application in question was &lt;a href=&#34;http://papercut.codeplex.com/&#34;&gt;Papercut&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

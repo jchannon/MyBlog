@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>github on </title>
+    <link>/tags/github/</link>
+    <description>Recent content in github on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 03 Jul 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/github/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Modifying files within Git history</title>
+      <link>/2013-07-03-modifying-files-within-git-history/</link>
+      <pubDate>Wed, 03 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-07-03-modifying-files-within-git-history/</guid>
+      <description>&lt;p&gt;If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.&lt;/p&gt;
+&lt;p&gt;I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.&lt;/p&gt;
+&lt;p&gt;For Sublime Text run this in the command line:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global core.editor &amp;quot;&#39;C:/Program Files/Sublime Text 2/sublime_text.exe&#39;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next up is finding the commit id you want to go back to, to edit:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Make a note of the parent commit id of the commit you want to edit.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The many approaches to Entity Framework</title>
+      <link>/2013-03-04-the-many-approaches-to-entity-framework/</link>
+      <pubDate>Mon, 04 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-03-04-the-many-approaches-to-entity-framework/</guid>
+      <description>&lt;p&gt;I recently had a need to look into using &lt;a href=&#34;http://www.asp.net/entity-framework&#34;&gt;Entity Framework (EF)&lt;/a&gt; for a &lt;a href=&#34;http://www.asp.net/mvc&#34;&gt;ASP.NET MVC&lt;/a&gt; project. In the past I have always used &lt;a href=&#34;http://www.toptensoftware.com/petapoco/&#34;&gt;PetaPoco&lt;/a&gt; as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.&lt;/p&gt;
+&lt;p&gt;The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.&lt;/p&gt;
+&lt;p&gt;I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using AngularJS/BackboneJS in Windows 8 JavaScript app</title>
+      <link>/2013-01-24-using-angularjsbackbonejs-in-windows-8-javascript-app/</link>
+      <pubDate>Thu, 24 Jan 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-01-24-using-angularjsbackbonejs-in-windows-8-javascript-app/</guid>
+      <description>&lt;p&gt;To help me expand my JavaScript knowledge as I said I would in my &lt;a href=&#34;http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/&#34; title=&#34;JavaScript is the future…maybe!&#34;&gt;previous post&lt;/a&gt; I thought I’d write a Windows 8 application using JavaScript.&lt;/p&gt;
+&lt;p&gt;After following a few “Hello World” tutorials from Microsoft I thought I’d take a look at the ToDo list demos shown at &lt;a href=&#34;http://TodoMVC.com&#34;&gt;TodoMVC.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This website/Github repository takes the ToDo demo and implements it in all the various JS frameworks and libraries out there. As I said previously its a minefield.&lt;/p&gt;
+&lt;p&gt;Anyhow, I thought I’d start with Backbone, copy the files, add the references to WinJS and hit F5 and bingo. However, I got the below error:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://i.stack.imgur.com/DOQl1.png&#34; alt=&#34;Unhandled Exception&#34; title=&#34;Unhandled Exception&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASP.NET Web API Testing</title>
+      <link>/2012-11-29-asp-net-web-api-testing/</link>
+      <pubDate>Thu, 29 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-29-asp-net-web-api-testing/</guid>
+      <description>&lt;p&gt;As the need arose to implement some kind of Web Service/HTTP API I thought I would evaluate &lt;a href=&#34;http://nancyfx.org/&#34;&gt;NancyFX&lt;/a&gt;, &lt;a href=&#34;http://www.asp.net/web-api&#34;&gt;ASP.NET Web API&lt;/a&gt; and &lt;a href=&#34;http://www.servicestack.net/&#34;&gt;ServiceStack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Suffice to say all performed as expected and I was actually surprised to find that implementing ASP.NET Web API was easier than ServiceStack (I know that might be a bit of a statement to make to the ServiceStack followers, sorry). I found Nancy easiest to implement. The very simple API demos can be found on &lt;a href=&#34;http://github.com/jchannon&#34;&gt;my Github page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When it came to testing ASP.NET Web API I found it to be wanting slightly in comparison to Nancy. With WebAPI I could make direct calls to the controller methods to make sure data was returned correctly and I could mock a repository and test that the methods in the repository were being called but there was nothing I could see to test the HTTP response I would get.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.gitignore not working – fixed!</title>
+      <link>/2012-11-18-gitignore-not-working-fixed/</link>
+      <pubDate>Sun, 18 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-18-gitignore-not-working-fixed/</guid>
+      <description>&lt;p&gt;This happens to me too often and I always end up googling the answer so this post is probably more of a location I know I can come to find the answer, although by writing it down hopefully it may sink in that I should stop getting too excited on a new project.&lt;/p&gt;
+&lt;h3 id=&#34;new-project-scenario&#34;&gt;New project scenario&lt;/h3&gt;
+&lt;p&gt;You’re all very excited about your new project and you think its about time you committed this to source control. Obviously you’re using &lt;a href=&#34;http://git-scm.com/&#34;&gt;Git&lt;/a&gt; so you initialise a new repository and commit your files. You then setup a remote repository at &lt;a href=&#34;http://github.com&#34;&gt;Github&lt;/a&gt; and it asks you whether you want it create a .gitignore file – you do. So now you have a repository remotely and locally. Easiest thing to do is pull from the remote, setup your remote and push to it. The other scenario might be you’ve committed locally and then realise you need to add a .gitignore file which you do and then commit.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Publishing to Windows Azure from Github</title>
+      <link>/2012-11-06-publishing-to-windows-azure-from-github/</link>
+      <pubDate>Tue, 06 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-06-publishing-to-windows-azure-from-github/</guid>
+      <description>&lt;p&gt;Back in &lt;a href=&#34;http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx&#34;&gt;July 2012&lt;/a&gt; Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my &lt;a href=&#34;http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/&#34; title=&#34;NancyFX, RavenDB, NerdDinner and Me&#34;&gt;DinnerParty blog post&lt;/a&gt; but have only just looked at implementing it.&lt;/p&gt;
+&lt;h2 id=&#34;preparation&#34;&gt;Preparation&lt;/h2&gt;
+&lt;p&gt;As I said in my previous post Azure supported Git publishing but it was a two step process. You push to Github and then push to Azure and it gets deployed. If you already have Git setup on your Azure account there is nowhere in the dashboard that allows to you setup Github integration. I thought I was going to have reset my deployment credentials and set it all up again when I asked the question on &lt;a href=&#34;http://jabbr.net&#34;&gt;Jabbr&lt;/a&gt;. Luckily &lt;a href=&#34;http://twitter.com/davidfowl&#34;&gt;David Fowler&lt;/a&gt; was online. Why is that lucky? He wrote the Github integration feature of Azure.&lt;/p&gt;
+&lt;p&gt;To setup your Azure account to enable Github integration you have to FTP into your Azure account and delete the deployment history by deleting all contents in the /site/deployments folder.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/blogpostimages/deploymenthistory-620x604.png&#34; alt=&#34;Deployment History&#34; title=&#34;Deployment History&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Deployment History&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

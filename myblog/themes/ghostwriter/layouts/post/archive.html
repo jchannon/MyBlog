@@ -1,0 +1,15 @@
+{{ partial "header.html" . }}
+
+{{ range .Site.RegularPages.GroupByDate "2006 January"  }}
+  {{ if (ne (.Key) "0001 January") }}
+      <h3 style="padding:10px 0;">{{ .Key }}</h3>
+      {{ range .Pages }}
+          <div class="catboxed" style="position:relative; margin-bottom:20px;">
+            <span class="cat-label"></span>
+            <a href="{{ .Permalink }}">{{.Title}}</a> <small>({{ .PublishDate.Format "January 2, 2006" }})</small>
+          </div>
+      {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ partial "footer.html" . }}

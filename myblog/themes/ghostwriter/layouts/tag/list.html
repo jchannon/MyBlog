@@ -1,18 +1,14 @@
 {{ partial "header.html" . }}
 
-<div id="post-index" class="container">
-    {{ partial "intro.html" . }}
+      {{ $pag := .Paginate .Pages }}
+      <h3 style="padding:10px 0;">Other posts with tag: {{ .Title }}</h3>
+      {{ range $pag.Pages }}
+          <div class="catboxed" style="position:relative; margin-bottom:20px;">
+            <span class="cat-label"></span>
+            <a href="{{ .Permalink }}">{{.Title}}</a> <small>({{ .PublishDate.Format "January 2, 2006" }})</small>
+          </div>
+      {{ end }}
 
-    <ol class="post-list tag-list">
-        {{ $pag := .Paginate .Pages }}
-        {{ range $pag.Pages }}
-            {{ partial "page-stub.html" . }}
-        {{ end }}
-    </ol>
 
-    <div class="post-navigation tag-navigation">
-        {{ partial "tag-pagination.html" . }}
-    </div>
-</div>
 
 {{ partial "footer.html" . }}

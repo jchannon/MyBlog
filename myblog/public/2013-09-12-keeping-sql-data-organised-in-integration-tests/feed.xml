@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Keeping SQL Data Organised in Integration Tests on </title>
+    <link>/2013-09-12-keeping-sql-data-organised-in-integration-tests/</link>
+    <description>Recent content in Keeping SQL Data Organised in Integration Tests on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 12 Sep 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/2013-09-12-keeping-sql-data-organised-in-integration-tests/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>

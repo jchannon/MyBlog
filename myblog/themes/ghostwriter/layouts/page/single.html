@@ -1,11 +1,15 @@
 {{ partial "header.html" . }}
 
-<div class="container">
-    <article class="post-container">
-        {{ partial "page-header.html" . }}
-
-        {{ partial "page-content.html" . }}
-    </article>
+<div class="post-item boxed post-detail">
+    <span class="post-label label-cat"></span>           
+    <div class="post-title">
+      <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
+    </div>
+   
+    <div class="post-descr entry">
+      {{ .Content }}
+    </div> 
+   
 </div>
 
 {{ partial "footer.html" . }}

@@ -1,0 +1,26 @@
+{{- $pctx := . -}}
+{{ $pctx = .Site }}
+{{- $pages := slice -}}
+{{- $pages = $pctx.RegularPages -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jonathan Channon Blog</title>
+    <link>http://blog.jonathanchannon.com/feed.xml</link>
+    <description>Jonathan Channon Blog RSS Feed</description>
+    {{ with .OutputFormats.Get "RSS" }}
+	{{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+    {{ end }}
+    {{ range $pages }}
+    {{if and (ne .Title "About Me") (ne .Title "Contact Me") (ne .Title "Archive")}}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      <guid>{{ .Permalink }}</guid>
+      <description>{{ .Summary | html }}</description>
+    </item>
+    {{ end }}
+    {{ end }}
+  </channel>
+</rss>

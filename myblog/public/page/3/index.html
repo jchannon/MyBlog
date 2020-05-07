@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog</title>
+        <meta name="description" content="My description">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.69.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <meta property="og:title" content="">
+<meta property="og:description" content="My description">
+<meta property="og:type" content="website">
+<meta property="og:url" content="/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/dist/site.css">
+        <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+            <link href="/feed.xml" rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog">
+        
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
+                        
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
+
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
+
+                </div>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
+
+
+        
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2014-01-02-unit-testing-with-sqlexception/">Unit Testing with SqlException</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">January 2, 2014</span> 
+        
+        <div class="commentcount" data-disqus-url="/2014-01-02-unit-testing-with-sqlexception/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>So after a nice Christmas break I get to some code that needs some unit testing around a try/catch. Something similar to this:</p>
+<pre><code>try
+{
+    myService.DoSomethingThatMightTakeALongTime();
+}
+catch (EntityCommandExecutionException ex)
+{
+    var exception = ex.InnerException as SqlException;
+    if (exception != null)
+    {
+        if (exception.Number == -2)
+        {
+            //Do something special
+        }
+    }
+}
+</code></pre>
+    </div>
+
+    <p><a class="readmore" href="/2014-01-02-unit-testing-with-sqlexception/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-12-20-using-sql-server-with-nodejs/">Using SQL Server with node.js</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">December 20, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-12-20-using-sql-server-with-nodejs/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I&rsquo;d heard about <a href="http://tjanczuk.github.io/edge/#/">edge.js</a> many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I&rsquo;ve spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn&rsquo;t like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.</p>
+<p>I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-12-20-using-sql-server-with-nodejs/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-11-25-octopus-xml-transformation-in-services/">Octopus XML Transformation in Services</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">November 25, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-11-25-octopus-xml-transformation-in-services/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>We use <a href="http://octopusdeploy.com/">Octopus Deploy</a> at work and its a superb tool for deploying your applications whether they be websites or *.exes.</p>
+<p>One of the great things it also provides is the ability to use <a href="http://msdn.microsoft.com/en-us/library/dd465326.aspx">Microsoft&rsquo;s Transformation</a> process for config files.  However, when deploying a exe application its a bit trickier than a website.  Unfortunately the documentation doesn&rsquo;t mention the steps needed to get this working so read on!</p>
+<p>Typically a web application will have web.config and a web.Release.config as well as other derivations you may use.  Octopus also supports web.[Environment].config.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-11-25-octopus-xml-transformation-in-services/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-11-07-using-git-to-update-youtrack-via-teamcity/">Using Git to update YouTrack via TeamCity</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">November 7, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-11-07-using-git-to-update-youtrack-via-teamcity/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        This post is mainly a reminder for me as I keep forgetting the command in Git to integrate commits to YouTrack items.
+YouTrack uses TeamCity to get the information about the commits and then scans the commit comment for a YouTrack item id and any commands that it can apply such as item status or time spent on said item.
+There is some documentation here but its not the greatest in terms of clarity and I&rsquo;ve spoken to Hadi Hariri from JetBrains about improving this so hopefully they&rsquo;re working on it.
+    </div>
+
+    <p><a class="readmore" href="/2013-11-07-using-git-to-update-youtrack-via-teamcity/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-10-21-running-mocha-tests-with-sublime-text/">Running Mocha tests within Sublime Text</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">October 21, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-10-21-running-mocha-tests-with-sublime-text/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I spend most of my day in Visual Studio with lots of the goodies an IDE can offer.  One of them being able to run your tests from a keystroke.</p>
+<p>In a bid to expand my mind I&rsquo;m working on a little project that is made up of JS entirely so I&rsquo;ve dug out <a href="http://sublimetext.com">Sublime Text</a>. It has lots of plugins that are very handy, especially <a href="https://github.com/victorporof/Sublime-HTMLPrettify">Sublime-HTMLPrettify</a> which will tidy your HTML, CSS &amp; JS for you.</p>
+<p>When writing tests for JS there are many libraries you can use but I&rsquo;ve chosen <a href="http://visionmedia.github.io/mocha/">Mocha</a> for now.  The one thing I couldn&rsquo;t work out was to run my tests within Sublime Text until now.</p>
+<p>###Build System</p>
+<p>Sublime allows you to have build systems a bit like an IDE so you can tell it what to do when you invoke it via <!-- raw HTML omitted -->cmd<!-- raw HTML omitted -->+<!-- raw HTML omitted -->B<!-- raw HTML omitted -->.</p>
+<p>To get Mocha to run we need to create a new build system. To do this click Tools - Build System - New Build System and paste in the below:</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-10-21-running-mocha-tests-with-sublime-text/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-10-01-blogging-with-markdown-and-git/">Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">October 1, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-10-01-blogging-with-markdown-and-git/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>There are many markdown blogging engines out there such as <a href="http://calepin.co/">Calepin</a>, <a href="http://scriptogr.am/">Scriptogram</a> and even <a href="http://wordpress.org/">WordPress</a> allows you to write blog posts in Markdown but <a href="https://github.com/Sandra/Sandra.Snow">Sandra.Snow</a> tries to add something different.  Firstly, it is written in .Net and <a href="http://nancyfx.org">Nancy</a>, secondly its a static blog generator and finally it supports Git deployment.</p>
+<p>Even if you don&rsquo;t want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.</p>
+<pre><code>---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+</code></pre>
+<p>It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.</p>
+<p>The &ldquo;layout&rdquo; refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you&rsquo;d prefer.  These &ldquo;layout&rdquo; files should exist in the &ldquo;_layouts&rdquo; folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.</p>
+<p>The &ldquo;category&rdquo; or &ldquo;categories&rdquo; property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.</p>
+<p>The &ldquo;title&rdquo; should hopefully be self explanatory!</p>
+<p>You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-10-01-blogging-with-markdown-and-git/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-09-20-returning-multiple-fake-objects-with-fakeiteasy/">Returning multiple fake objects with FakeItEasy</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 20, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-09-20-returning-multiple-fake-objects-with-fakeiteasy/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.</p>
+<p>With <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> this is easy:</p>
+<pre><code>A.CallTo(() =&gt; myInterface.GetSomething(1)).Returns(new Something())
+</code></pre>
+<p>All very nice, but now if I have multiple calls to <code>myInterface</code> I have to execute the above statement &lsquo;x&rsquo; amount of times:</p>
+<pre><code>[Fact]
+public void Should_Do_Something()
+{
+  var myInterface = A.Fake&lt;IApplication&gt;();
+  A.CallTo(() =&gt; myInterface.GetSomething(1)).Returns(new Something());
+  A.CallTo(() =&gt; myInterface.GetSomething(2)).Returns(new Something());
+  A.CallTo(() =&gt; myInterface.GetSomething(3)).Returns(new Something());
+  
+  var result = sut.DoSomething(myInterface);
+  
+  Assert.Equal(&quot;Super Duper&quot;, result);
+}
+</code></pre>
+    </div>
+
+    <p><a class="readmore" href="/2013-09-20-returning-multiple-fake-objects-with-fakeiteasy/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-09-16-enabling-cors-in-iisexpress/">Enabling CORS in IISExpress</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 16, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-09-16-enabling-cors-in-iisexpress/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        I was playing around with swagger-ui and was trying to point it to a local endpoint that I started with IIS Express. I was getting an error saying that it needed the endpoint to accept Access-Control-Allow-Origin requests.
+I went Googling and it couldn&rsquo;t find anything specific to IIS Express but managed to use some guidance for full blown IIS.
+The solution is to go to C:\Program Files (x86)\IIS Express\AppServer and open the applicationhost.
+    </div>
+
+    <p><a class="readmore" href="/2013-09-16-enabling-cors-in-iisexpress/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-09-12-keeping-sql-data-organised-in-integration-tests/">Keeping SQL Data Organised in Integration Tests</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 12, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-09-12-keeping-sql-data-organised-in-integration-tests/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>In my latest project I had kept my solution tidy with my main app project, my unit test project and integration test project. I tend to stick with a naming convention such as MainApp, MainApp.Tests.Unit &amp; MainApp.Tests.Integration.</p>
+<p>I had begun writing my integration tests for a repository that hits the database and returns data. Currently it was one method being called in the repository.  <a href="http://xunit.codeplex.com/">xUnit</a> allows you to setup any test dependencies in the constructor of your test class.  It also allows you to do any tidying up in a Dispose method if you implement IDisposable although this is <a href="http://xunit.codeplex.com/wikipage?title=Comparisons&amp;referringTitle=Home#note2">frowned upon</a>.  However I felt for my needs I would implement this.</p>
+<p>I  was creating data in the database in the constructor which will get called before the test runs, retrieving data in the test, asserting and then deleting all data and resetting the auto-incrementing from the tables in the Dispose method.</p>
+<p>This was working perfectly until I wanted to test another method on my repository.</p>
+<p>I now needed to add data for my new method but realised if I added different data to the database in the constructor, I would be creating unnecessary data unrelated to the test.</p>
+<p>My options were to move the constructor logic into separate methods and then call the methods in the test or have separate test classes per method in the repo.  Both were a not an ideal solution and quite frankly verbose, ugly and not best practice.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-09-12-keeping-sql-data-organised-in-integration-tests/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-09-11-comparing-object-instances-with-fakeiteasy/">Comparing object instances with FakeItEasy</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 11, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-09-11-comparing-object-instances-with-fakeiteasy/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I had the task of writing a new application recently and of course I chose <a href="http://nancyfx.org">Nancy</a>.  One of the many great reasons is the testing capabilites it offers (For more on that see <a href="http://www.marcusoft.net/2013/01/NancyTesting1.html">this</a> great series of articles).</p>
+<p>The basics of a test with Nancy looks like this:</p>
+<pre><code>[Fact]
+public void Should_return_status_ok_when_route_exists()
+{
+    // Given
+    var bootstrapper = new DefaultNancyBootstrapper();
+    var browser = new Browser(bootstrapper);
+     
+    // When
+    var result = browser.Get(&quot;/&quot;, with =&gt; {
+        with.HttpRequest();
+    });
+        
+    // Then
+    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+}
+</code></pre>
+<p>You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the <code>ConfigurableBootstrapper</code>.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-09-11-comparing-object-instances-with-fakeiteasy/">Read more...</a></p>            
+    
+  </div>
+        
+   
+
+    
+        
+
+    <div class="text-center">
+
+        
+            <a href="/page/2/">&larr; Newer Posts</a>
+        
+        
+            <a href="/page/4/">Older Posts &rarr;</a>
+        
+    </div>
+
+    
+</div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
+</html>

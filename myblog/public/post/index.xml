@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on My blog</title>
+    <title>Posts on </title>
     <link>/post/</link>
-    <description>Recent content in Posts on My blog</description>
+    <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sun, 28 Sep 2014 02:13:50 +0000</lastBuildDate>
     
@@ -16,7 +16,7 @@
       <pubDate>Sun, 28 Sep 2014 02:13:50 +0000</pubDate>
       
       <guid>/creating-a-new-theme/</guid>
-      <description>Introduction 999This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
+      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
     </item>
     
@@ -53,6 +53,16 @@ More complete instructions are available at installing hugo
 Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
 Follow the following steps:
  Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
+    </item>
+    
+    <item>
+      <title>I’ve started blogging. Why?</title>
+      <link>/2012-09-17-ive-started-blogging-why/</link>
+      <pubDate>Mon, 17 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-09-17-ive-started-blogging-why/</guid>
+      <description>&lt;p&gt;So here I am, Jonathan Channon, blogger.  I never saw the point of blogging before so why now?&lt;/p&gt;
+&lt;p&gt;I have read and spoken to many people regarding blogging who were all in favour of it.  I would always argue that I don’t have time, I have nothing to blog about or I’m not that insane to start blogging about stuff I barely understand just so the masses can come and hurl abuse at my ignorance.  However I recently read an &lt;a href=&#34;http://buildstarted.com/2012/08/28/how-i-learned-to-stop-worrying-and-love-my-community/&#34;&gt;article&lt;/a&gt; by &lt;a href=&#34;http://twitter.com/buildstarted&#34;&gt;Ben Dornis&lt;/a&gt; titled “How I learned to stop worrying and love my community”.  He outlined all the reasons why a lot of people don’t publish their code and don’t publish their thoughts online. I thought he was being modest, the man is clearly talented at what he does so he didn’t have to worry however, someone like me still had these fears.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -1,15 +1,32 @@
 {{ partial "header.html" . }}
 
-<div class="container">
-    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
-        {{ partial "post-header.html" . }}
-
-        {{ partial "post-content.html" . }}
-
-        {{ partial "post-footer.html" . }}
-
-        {{ partial "disqus.html" . }}
-    </article>
+<div class="post-item boxed post-detail" itemtype="http://schema.org/BlogPosting">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">{{ .PublishDate.Format "January 2, 2006" }}</span> <!-- <span class="post-author">Jonathan Channon</span> -->
+        <!-- <span class="link-comments">20 comments</span> -->
+        <div class="commentcount" data-disqus-url="{{ .Permalink }}"></div>
+    </div>
+    <!-- <div class="post-image"><img src="images/temp/slider_1_1.jpg" alt=""></div> -->
+    <div class="post-descr entry">
+        {{ .Content }}
+    </div> 
+    {{ if .Params.tags }}
+        <div id="tagcloud">   
+            {{ $len := len .Params.tags }}
+            {{ range $index, $tag := .Params.tags }}
+                <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/"><span>{{ . }}</span></a>
+            {{ end }}         
+        </div>
+    {{ end}}
+    
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    {{ partial "disqus.html" . }}
 </div>
 
 {{ partial "footer.html" . }}

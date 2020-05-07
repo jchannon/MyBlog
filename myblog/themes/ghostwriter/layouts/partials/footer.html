@@ -1,29 +1,57 @@
-            </div>
         </div>
+        <!-- #content -->
+    </div>
+</div>
+<!--/ middle -->
 
-        <footer class="footer">
-            <div class="container">
-                <div class="site-title-wrapper">
-                    <h1 class="site-title">
-                        <a title="{{ .Site.Title }}" href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
-                    </h1>
-                    <a class="button-square button-jump-top js-jump-top" href="#">
-                        <i class="fa fa-angle-up"></i>
-                    </a>
-                </div>
+<!-- footer social -->
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            {{ with .Site.Params.twitter }}
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="{{ . }}" rel="me">Twitter</a>
+            {{ end }}
+            {{ with .Site.Params.github }}
+                <a class="social-github" data-hint="Github" title="Github" href="{{ . }}" rel="me">Github</a>
+            {{ end }}
+            {{ with .Site.Params.linkedin }}
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="{{ . }}" rel="me">Linked In</a>
+            {{ end }}
+            {{ if .OutputFormats.Get "RSS" }}
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            {{ end }}
+        </div>
+    </div>
+</div>
+<!--/ footer social -->
 
-                <p class="footer-copyright">
-                    <span>&copy; {{ .Site.LastChange.Format "2006" }} / Powered by <a href="https://gohugo.io/">Hugo</a></span>
-                </p>
-                <p class="footer-copyright">
-                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
-                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
-                </p>
-            </div>
-        </footer>
 
-        <script src="{{ .Site.BaseURL }}js/jquery-1.11.3.min.js"></script>
-        <script src="{{ .Site.BaseURL }}js/jquery.fitvids.js"></script>
-        <script src="{{ .Site.BaseURL }}js/scripts.js"></script>
-    </body>
+</div>
+
+<!-- main JS libs  -->
+<script src="{{ .Site.BaseURL }}/js/libs/modernizr.min.js"></script>
+<script src="{{ .Site.BaseURL }}/js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<!-- scripts  -->
+<script src="{{ .Site.BaseURL }}/js/general.js"></script>
+<script src="{{ .Site.BaseURL }}/js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        //prettyPrint();
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+{{ template "_internal/google_analytics.html" . }}
+
+</body>
+
 </html>

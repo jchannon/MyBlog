@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sublimetext on </title>
+    <link>/tags/sublimetext/</link>
+    <description>Recent content in sublimetext on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 12 Nov 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/sublimetext/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Microsoft Endorsing C# as a First Class Citizen in Sublime Text</title>
+      <link>/2014-11-12-csharp-first-class-citizen-sublime-text/</link>
+      <pubDate>Wed, 12 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-11-12-csharp-first-class-citizen-sublime-text/</guid>
+      <description>&lt;p&gt;At the end of my last &lt;a href=&#34;http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/&#34;&gt;post&lt;/a&gt; on using ASP.Net vNext with Sublime Text I briefly mentioned a &lt;a href=&#34;https://github.com/OmniSharp/omnisharp-sublime&#34;&gt;plugin&lt;/a&gt; that aimed at giving intellisense for C# within the editor.  Well 2 months later and I&amp;rsquo;m happy to announce that intellisense works and I&amp;rsquo;ve added a slew of other features that will hopefully make you feel at home away from Visual Studio.&lt;/p&gt;
+&lt;p&gt;I discovered the plugin thanks to &lt;a href=&#34;http://twitter.com/jasonimison&#34;&gt;Jason Imison&lt;/a&gt; but at that point there was some issues getting the intellisense working consistently because at that time I was using it with an ASP.NET vNext application which didn&amp;rsquo;t have a solution file (*.sln) and the plugin was expecting that.  After speaking to Jason I found out I could change the settings so it wouldn&amp;rsquo;t expect a solution file and give me the intellisense I was after in a text editor.  Eureka, it worked!  I was now on a mission to make Sublime be a first class citizen when writing C#.  Some may question why on earth would I want to edit C# in something other than Visual Studio.  I don&amp;rsquo;t really want to get into that debate here but all I&amp;rsquo;ll say is, it&amp;rsquo;s nice to have other editor options and with Microsoft&amp;rsquo;s mission to provide vNext compatibility with Mono and Visual Studio not running on OSX/Linux it makes sense to have an editor with feature rich C# support (yes I know there is Xamarin Studio but &amp;ldquo;options&amp;rdquo; people, &amp;ldquo;options&amp;rdquo;).&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cookie Authentication &amp; CRSF with AngularJs, Owin &amp; Mono on </title>
+    <link>/2015-04-27-cookie-authentication-angularjs-csrf-owin-mono/</link>
+    <description>Recent content in Cookie Authentication &amp; CRSF with AngularJs, Owin &amp; Mono on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 27 Apr 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/2015-04-27-cookie-authentication-angularjs-csrf-owin-mono/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>

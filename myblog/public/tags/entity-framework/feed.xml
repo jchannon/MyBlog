@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>entity framework on </title>
+    <link>/tags/entity-framework/</link>
+    <description>Recent content in entity framework on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 04 Mar 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/entity-framework/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The many approaches to Entity Framework</title>
+      <link>/2013-03-04-the-many-approaches-to-entity-framework/</link>
+      <pubDate>Mon, 04 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-03-04-the-many-approaches-to-entity-framework/</guid>
+      <description>&lt;p&gt;I recently had a need to look into using &lt;a href=&#34;http://www.asp.net/entity-framework&#34;&gt;Entity Framework (EF)&lt;/a&gt; for a &lt;a href=&#34;http://www.asp.net/mvc&#34;&gt;ASP.NET MVC&lt;/a&gt; project. In the past I have always used &lt;a href=&#34;http://www.toptensoftware.com/petapoco/&#34;&gt;PetaPoco&lt;/a&gt; as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.&lt;/p&gt;
+&lt;p&gt;The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.&lt;/p&gt;
+&lt;p&gt;I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog</title>
+        <meta name="description" content="My description">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.69.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <meta property="og:title" content="">
+<meta property="og:description" content="My description">
+<meta property="og:type" content="website">
+<meta property="og:url" content="/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/dist/site.css">
+        <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+            <link href="/feed.xml" rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog">
+        
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
+                        
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
+
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
+
+                </div>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
+
+
+        
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-10-25-simple-net-twittergooglefacebook-authentication/">Simple .Net Twitter,Google,Facebook Authentication</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">October 25, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-10-25-simple-net-twittergooglefacebook-authentication/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>Logging into websites is no longer a matter of typing in your username and password and clicking the login button. If you already have an account with the main social networks you can log into a site using your credentials from that website saving you having to register your details <em>again</em>. This obviously makes things a bit easier as you don’t have to remember another password. (Although you should all be using a password manager such as <a href="http://www.lastpass.com">LastPass</a>.)</p>
+<h2 id="current-social-login-providers">Current Social Login Providers</h2>
+<p>There are currently providers out there that allow you to use their services to integrate into your website to provide authentication via the social networks. The main two that I know of are <a href="http://janrain.com">Janrain</a> and <a href="http://www.dotnetopenauth.net/">DotNetOpenAuth</a>. I’ve not worked with DotNetOpenAuth but I have with Janrain when building <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/">DinnerParty</a>.</p>
+<p>The process was reasonably easy but not as simple as it could be.</p>
+    </div>
+
+    <p><a class="readmore" href="/2012-10-25-simple-net-twittergooglefacebook-authentication/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-10-25-testing-your-applications-email-logic/">Testing your application’s email logic</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">October 25, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-10-25-testing-your-applications-email-logic/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>If you’ve ever written an application that sends out email you may have written the code and executed it numerous times to check that the logic works and that the email appears as you hope. This obviously means you have to hit your SMTP server each time, open your email client and check your emails each time.</p>
+<h3 id="papercut">Papercut</h3>
+<p>Reading through my Twitter timeline I saw <a href="http://twitter.com/TheCodeJunkie">@TheCodeJunkie</a> asking about the app that you can use to test sending emails from your application.</p>
+<p><img src="/images/blogpostimages/tweet.png" alt="TheCodeJunkie Tweet"></p>
+<p>Intrigued, I kept an eye on my timeline and found that the application in question was <a href="http://papercut.codeplex.com/">Papercut</a></p>
+    </div>
+
+    <p><a class="readmore" href="/2012-10-25-testing-your-applications-email-logic/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-10-08-node-js-express-hello-world-formula-1-style/">Node.js, Express, Hello World Formula 1 Style</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">October 8, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-10-08-node-js-express-hello-world-formula-1-style/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>In my ongoing efforts to be a better developer (plus I just like tinkering) I thought I would take a look at <a href="http://nodejs.org">node.js</a>.</p>
+<p>I did play with node.js about a year ago where I setup a TCP listener to listen to a TCP Server on the network broadcasting XML messages, I then took these, formatted them to JSON and passed it to a browser using <a href="http://socket.io/">Socket.IO</a>. It was pretty cool but the project never came to anything.</p>
+<p>However, I thought I would re-visit and setup a proper development environment on my Mac at home.</p>
+<h2 id="editors">Editors</h2>
+<p>There are many editors/IDE’s that you can use for node.js development such as Vim, Eclipse, WebStorm, Aptana Studio, Emacs and Cloud9 IDE.  As I have used <a href="http://www.sublimetext.com/">Sublime Text 2</a> (ST2) before I thought I would use this because I like it and all the cool kids use it!!</p>
+<p>Coming from a mainly IDE based background I started to find things a bit hard going however ST2 allows plugins to be used to make the user experience a lot nicer.  Below are a list of plugins I have installed:</p>
+    </div>
+
+    <p><a class="readmore" href="/2012-10-08-node-js-express-hello-world-formula-1-style/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-09-28-abstracting-the-file-system/">Abstracting the File System</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 28, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-09-28-abstracting-the-file-system/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>Following on from my post about <a href="http://blog.jonathanchannon.com/2012/09/25/is-oss-good-for-your-career/">OSS</a> I thought I would illustrate how cool OSS can be.</p>
+<p>The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.</p>
+<p>So you have a a method similar to this:</p>
+<pre><code>public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo(&quot;C:\Mytext.txt&quot;)
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine(&quot;This blog post is cool&quot;);
+    w.Close();
+  }
+}
+</code></pre>
+<p>You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.</p>
+    </div>
+
+    <p><a class="readmore" href="/2012-09-28-abstracting-the-file-system/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-09-25-is-oss-good-for-your-career/">Is OSS good for your career?</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 25, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-09-25-is-oss-good-for-your-career/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>Got your attention? Good.</p>
+<p>Let me start by pointing out there are many opinions about the answer to this question. You will have yours and I have mine, that’s called freedom of speech. I would like to hear your opinions so leave it in the comments.</p>
+<p>Let me explain that I have had 4 jobs in the last 10-11 years. 3 of those were via recruitment agents. They check your skills, tick them off and pass you over to the employer if they match and hopefully you get an interview. That process has happened to me in each of those 3 times.</p>
+<p>If you have read my previous blog posts you’ll know I have spent the last year reading a lot of other peoples code and learning all the best practices I can in a bid to become a better software developer as well as give back to the developer community where I can.</p>
+<p>After spending a couple of months porting <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me">NerdDinner over to NancyFX</a> I realised that I had not looked at <a href="http://www.asp.net/mvc">ASP.Net MVC 4</a> and the new features built into it. I felt slightly strange at that point as I was usually an early adopter of these things keen to check out the new stuff. I think this was partly due to the fact I had spent a lot of time learning <a href="http://www.nancyfx.org">NancyFX</a> and really quite enjoying the framework and interacting with the small community of people who use Nancy.</p>
+    </div>
+
+    <p><a class="readmore" href="/2012-09-25-is-oss-good-for-your-career/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-09-21-nancyfx-ravendb-nerddinner-and-me/">NancyFX, RavenDB, NerdDinner and Me</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 21, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-09-21-nancyfx-ravendb-nerddinner-and-me/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>As I said in my <a href="http://blog.jonathanchannon.com/2012/09/17/ive-started-blogging-why/" title="I’ve started blogging. Why?">first post</a>, NancyFX was my first port of call in my OSS adventure.  The reason I had come across it was by following <a href="http://twitter.com/squidge">@squidge</a> and <a href="http://twitter.com/cranialstrain">@cranialstrain</a> on Twitter.  At the time they were talking about it quite a bit so I thought I’d take a look.  I was also keeping track of lots of people talking about <a href="http://ravendb.net">RavenDB</a>.</p>
+<h3 id="what-is-nancyfx">What is NancyFX?</h3>
+<p>From the official docs this explains NancyFX:</p>
+<p><em>Nancy is a lightweight, low-ceremony, framework for building HTTP based services on .Net and Mono. The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.</em></p>
+<p><em>This means that everything in Nancy is setup to have sensible defaults and conventions, instead of making you jump through hoops and go through configuration hell just to get up and running. With Nancy you can go from zero to website in a matter of minutes. Literally.</em></p>
+    </div>
+
+    <p><a class="readmore" href="/2012-09-21-nancyfx-ravendb-nerddinner-and-me/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-09-17-ive-started-blogging-why/">I’ve started blogging. Why?</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 17, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-09-17-ive-started-blogging-why/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>So here I am, Jonathan Channon, blogger.  I never saw the point of blogging before so why now?</p>
+<p>I have read and spoken to many people regarding blogging who were all in favour of it.  I would always argue that I don’t have time, I have nothing to blog about or I’m not that insane to start blogging about stuff I barely understand just so the masses can come and hurl abuse at my ignorance.  However I recently read an <a href="http://buildstarted.com/2012/08/28/how-i-learned-to-stop-worrying-and-love-my-community/">article</a> by <a href="http://twitter.com/buildstarted">Ben Dornis</a> titled “How I learned to stop worrying and love my community”.  He outlined all the reasons why a lot of people don’t publish their code and don’t publish their thoughts online. I thought he was being modest, the man is clearly talented at what he does so he didn’t have to worry however, someone like me still had these fears.</p>
+    </div>
+
+    <p><a class="readmore" href="/2012-09-17-ive-started-blogging-why/">Read more...</a></p>            
+    
+  </div>
+        
+   
+
+    
+        
+
+    <div class="text-center">
+
+        
+            <a href="/page/5/">&larr; Newer Posts</a>
+        
+        
+    </div>
+
+    
+</div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
+</html>

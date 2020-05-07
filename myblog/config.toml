@@ -1,14 +1,17 @@
 baseurl = "/"
-title = "My blog"
+title = ""
 theme = "ghostwriter"
+googleAnalytics = "UA-123-45"
+disqusShortname = "jonathanchannonblogorganization"
 
 [Params]
     mainSections = ["post"]
     intro = true
     headline = "My headline"
     description = "My description"
-    github = "https://github.com/XXX"
-    twitter = "https://twitter.com/XXX"
+    github = "https://github.com/jchannon"
+    twitter = "https://twitter.com/jchannon"
+    linkedin = "http://uk.linkedin.com/in/jonathanchannon"
     email = "XXX@example.com"
     opengraph = true
     shareTwitter = true
@@ -17,3 +20,20 @@ theme = "ghostwriter"
 [Permalinks]
     post = "/:filename/"
     page = "/:filename/"
+
+[Author]
+    name = "Jonathan Channon Blog"
+
+ [outputs]
+    home = [ "HTML", "RSS" ]
+    page = [ "HTML", "RSS" ]
+
+
+ [outputFormats]
+ [outputFormats.RSS]
+    mediatype = "application/rss"
+    baseName = "feed"
+
+[frontmatter]
+date  = [":filename", ":default"]
+publishDate = [":filename", ":default"]

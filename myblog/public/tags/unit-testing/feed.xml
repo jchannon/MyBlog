@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>unit testing on </title>
+    <link>/tags/unit-testing/</link>
+    <description>Recent content in unit testing on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 02 Jan 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/unit-testing/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Unit Testing with SqlException</title>
+      <link>/2014-01-02-unit-testing-with-sqlexception/</link>
+      <pubDate>Thu, 02 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-01-02-unit-testing-with-sqlexception/</guid>
+      <description>&lt;p&gt;So after a nice Christmas break I get to some code that needs some unit testing around a try/catch. Something similar to this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;try
+{
+    myService.DoSomethingThatMightTakeALongTime();
+}
+catch (EntityCommandExecutionException ex)
+{
+    var exception = ex.InnerException as SqlException;
+    if (exception != null)
+    {
+        if (exception.Number == -2)
+        {
+            //Do something special
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Running Mocha tests within Sublime Text</title>
+      <link>/2013-10-21-running-mocha-tests-with-sublime-text/</link>
+      <pubDate>Mon, 21 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-10-21-running-mocha-tests-with-sublime-text/</guid>
+      <description>&lt;p&gt;I spend most of my day in Visual Studio with lots of the goodies an IDE can offer.  One of them being able to run your tests from a keystroke.&lt;/p&gt;
+&lt;p&gt;In a bid to expand my mind I&amp;rsquo;m working on a little project that is made up of JS entirely so I&amp;rsquo;ve dug out &lt;a href=&#34;http://sublimetext.com&#34;&gt;Sublime Text&lt;/a&gt;. It has lots of plugins that are very handy, especially &lt;a href=&#34;https://github.com/victorporof/Sublime-HTMLPrettify&#34;&gt;Sublime-HTMLPrettify&lt;/a&gt; which will tidy your HTML, CSS &amp;amp; JS for you.&lt;/p&gt;
+&lt;p&gt;When writing tests for JS there are many libraries you can use but I&amp;rsquo;ve chosen &lt;a href=&#34;http://visionmedia.github.io/mocha/&#34;&gt;Mocha&lt;/a&gt; for now.  The one thing I couldn&amp;rsquo;t work out was to run my tests within Sublime Text until now.&lt;/p&gt;
+&lt;p&gt;###Build System&lt;/p&gt;
+&lt;p&gt;Sublime allows you to have build systems a bit like an IDE so you can tell it what to do when you invoke it via &lt;!-- raw HTML omitted --&gt;cmd&lt;!-- raw HTML omitted --&gt;+&lt;!-- raw HTML omitted --&gt;B&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;p&gt;To get Mocha to run we need to create a new build system. To do this click Tools - Build System - New Build System and paste in the below:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Returning multiple fake objects with FakeItEasy</title>
+      <link>/2013-09-20-returning-multiple-fake-objects-with-fakeiteasy/</link>
+      <pubDate>Fri, 20 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-09-20-returning-multiple-fake-objects-with-fakeiteasy/</guid>
+      <description>&lt;p&gt;I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.&lt;/p&gt;
+&lt;p&gt;With &lt;a href=&#34;https://github.com/FakeItEasy/FakeItEasy&#34;&gt;FakeItEasy&lt;/a&gt; this is easy:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;A.CallTo(() =&amp;gt; myInterface.GetSomething(1)).Returns(new Something())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All very nice, but now if I have multiple calls to &lt;code&gt;myInterface&lt;/code&gt; I have to execute the above statement &amp;lsquo;x&amp;rsquo; amount of times:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Should_Do_Something()
+{
+  var myInterface = A.Fake&amp;lt;IApplication&amp;gt;();
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(1)).Returns(new Something());
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(2)).Returns(new Something());
+  A.CallTo(() =&amp;gt; myInterface.GetSomething(3)).Returns(new Something());
+  
+  var result = sut.DoSomething(myInterface);
+  
+  Assert.Equal(&amp;quot;Super Duper&amp;quot;, result);
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Comparing object instances with FakeItEasy</title>
+      <link>/2013-09-11-comparing-object-instances-with-fakeiteasy/</link>
+      <pubDate>Wed, 11 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-09-11-comparing-object-instances-with-fakeiteasy/</guid>
+      <description>&lt;p&gt;I had the task of writing a new application recently and of course I chose &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt;.  One of the many great reasons is the testing capabilites it offers (For more on that see &lt;a href=&#34;http://www.marcusoft.net/2013/01/NancyTesting1.html&#34;&gt;this&lt;/a&gt; great series of articles).&lt;/p&gt;
+&lt;p&gt;The basics of a test with Nancy looks like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Should_return_status_ok_when_route_exists()
+{
+    // Given
+    var bootstrapper = new DefaultNancyBootstrapper();
+    var browser = new Browser(bootstrapper);
+     
+    // When
+    var result = browser.Get(&amp;quot;/&amp;quot;, with =&amp;gt; {
+        with.HttpRequest();
+    });
+        
+    // Then
+    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the &lt;code&gt;ConfigurableBootstrapper&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mocking HttpContext with Fake It Easy</title>
+      <link>/2013-04-30-mocking-httpcontext-with-fake-it-easy/</link>
+      <pubDate>Tue, 30 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-30-mocking-httpcontext-with-fake-it-easy/</guid>
+      <description>&lt;p&gt;Lets start with the conclusion first and say “use &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt; for your web applications and APIs” as its brilliant!&lt;/p&gt;
+&lt;p&gt;If you want to continue reading lets crack on.&lt;/p&gt;
+&lt;p&gt;I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, &lt;em&gt;eg. Response.Write(“How will I mock thee?”);&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Having moved over to &lt;a href=&#34;http://xunit.codeplex.com/&#34;&gt;xUnit&lt;/a&gt; and &lt;a href=&#34;https://github.com/FakeItEasy/FakeItEasy&#34;&gt;FakeItEasy&lt;/a&gt; recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.&lt;/p&gt;
+&lt;p&gt;Doing this is no easy feat with MVC (with Nancy its all &lt;a href=&#34;https://github.com/NancyFx/Nancy/wiki/Testing-your-application&#34;&gt;done for you&lt;/a&gt;) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

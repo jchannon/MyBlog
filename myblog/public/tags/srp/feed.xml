@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SRP on </title>
+    <link>/tags/srp/</link>
+    <description>Recent content in SRP on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 04 Mar 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/srp/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The many approaches to Entity Framework</title>
+      <link>/2013-03-04-the-many-approaches-to-entity-framework/</link>
+      <pubDate>Mon, 04 Mar 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-03-04-the-many-approaches-to-entity-framework/</guid>
+      <description>&lt;p&gt;I recently had a need to look into using &lt;a href=&#34;http://www.asp.net/entity-framework&#34;&gt;Entity Framework (EF)&lt;/a&gt; for a &lt;a href=&#34;http://www.asp.net/mvc&#34;&gt;ASP.NET MVC&lt;/a&gt; project. In the past I have always used &lt;a href=&#34;http://www.toptensoftware.com/petapoco/&#34;&gt;PetaPoco&lt;/a&gt; as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.&lt;/p&gt;
+&lt;p&gt;The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.&lt;/p&gt;
+&lt;p&gt;I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Abstracting the File System</title>
+      <link>/2012-09-28-abstracting-the-file-system/</link>
+      <pubDate>Fri, 28 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-09-28-abstracting-the-file-system/</guid>
+      <description>&lt;p&gt;Following on from my post about &lt;a href=&#34;http://blog.jonathanchannon.com/2012/09/25/is-oss-good-for-your-career/&#34;&gt;OSS&lt;/a&gt; I thought I would illustrate how cool OSS can be.&lt;/p&gt;
+&lt;p&gt;The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.&lt;/p&gt;
+&lt;p&gt;So you have a a method similar to this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo(&amp;quot;C:\Mytext.txt&amp;quot;)
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine(&amp;quot;This blog post is cool&amp;quot;);
+    w.Close();
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

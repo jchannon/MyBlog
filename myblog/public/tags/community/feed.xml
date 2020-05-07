@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>community on </title>
+    <link>/tags/community/</link>
+    <description>Recent content in community on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 30 Mar 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/community/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>VQ Communications Funds NancyFX to run on CoreCLR</title>
+      <link>/2016-03-30-vq-communications-funds-coreclr-nancyfx/</link>
+      <pubDate>Wed, 30 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016-03-30-vq-communications-funds-coreclr-nancyfx/</guid>
+      <description>&lt;p&gt;Nearly 2 years ago I was employed by &lt;a href=&#34;http://www.vqcomms.com&#34;&gt;VQ Communications&lt;/a&gt; primarily because of my open source contributions to &lt;a href=&#34;http://nancyfx.org&#34;&gt;NancyFX&lt;/a&gt;.  They had started work on a v2 of their flagship product and had begun work with Nancy and needed someone to help drive a HTTP API and architect a scaling solution as their v2 product was addressing a requirement they had for it cope with large volumes of traffic.  Also of interest to me was their aim to deliver all of this as a black box appliance to customers on a VM running a custom embedded version of Linux using Postgres as the database.  I would work four days a week remotely and go into the office one day a week.  They already had completely remote employees and since I have been there they have taken on more. There are lots more juicy technical examples in the stack I could go into however, this is not the point of this post.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Microsoft Endorsing C# as a First Class Citizen in Sublime Text</title>
+      <link>/2014-11-12-csharp-first-class-citizen-sublime-text/</link>
+      <pubDate>Wed, 12 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-11-12-csharp-first-class-citizen-sublime-text/</guid>
+      <description>&lt;p&gt;At the end of my last &lt;a href=&#34;http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/&#34;&gt;post&lt;/a&gt; on using ASP.Net vNext with Sublime Text I briefly mentioned a &lt;a href=&#34;https://github.com/OmniSharp/omnisharp-sublime&#34;&gt;plugin&lt;/a&gt; that aimed at giving intellisense for C# within the editor.  Well 2 months later and I&amp;rsquo;m happy to announce that intellisense works and I&amp;rsquo;ve added a slew of other features that will hopefully make you feel at home away from Visual Studio.&lt;/p&gt;
+&lt;p&gt;I discovered the plugin thanks to &lt;a href=&#34;http://twitter.com/jasonimison&#34;&gt;Jason Imison&lt;/a&gt; but at that point there was some issues getting the intellisense working consistently because at that time I was using it with an ASP.NET vNext application which didn&amp;rsquo;t have a solution file (*.sln) and the plugin was expecting that.  After speaking to Jason I found out I could change the settings so it wouldn&amp;rsquo;t expect a solution file and give me the intellisense I was after in a text editor.  Eureka, it worked!  I was now on a mission to make Sublime be a first class citizen when writing C#.  Some may question why on earth would I want to edit C# in something other than Visual Studio.  I don&amp;rsquo;t really want to get into that debate here but all I&amp;rsquo;ll say is, it&amp;rsquo;s nice to have other editor options and with Microsoft&amp;rsquo;s mission to provide vNext compatibility with Mono and Visual Studio not running on OSX/Linux it makes sense to have an editor with feature rich C# support (yes I know there is Xamarin Studio but &amp;ldquo;options&amp;rdquo; people, &amp;ldquo;options&amp;rdquo;).&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nancy, ASP.Net vNext, OSX and Sublime Text</title>
+      <link>/2014-08-05-nancy-aspnetvnext-osx-sublime-text/</link>
+      <pubDate>Tue, 05 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-08-05-nancy-aspnetvnext-osx-sublime-text/</guid>
+      <description>&lt;p&gt;One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against &lt;a href=&#34;http://www.mono-project.com/Main_Page&#34;&gt;Mono&lt;/a&gt;.  Along with this MS are developing a web server that is cross platform and goes by the name of &lt;a href=&#34;https://github.com/aspnet/KestrelHttpServer&#34;&gt;Kestrel&lt;/a&gt;.  One thing they aren&amp;rsquo;t doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is &lt;a href=&#34;http://www.sublimetext.com/3&#34;&gt;Sublime Text&lt;/a&gt;.  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UPDATE - As of August 13th 2014 there is a Mono 3.6 release which means you no longer need to compile Mono but you will need to install Homebrew for ASP.Net vNext. &lt;a href=&#34;#vnext&#34;&gt;Skip to nnext section&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;At the time of writing the official binary for Mono is 3.4.0 and this does not include some features needed for ASP.Net vNext to run so we are going to have to manually compile Mono ourselves.  Now I know this sounds scary but its not as bad as it seems and I&amp;rsquo;ve gone through the pain of setting it up so hopefully this blog post should make it easier for you&lt;/p&gt;
+&lt;p&gt;There is a &lt;a href=&#34;http://mono-project.com/Compiling_Mono_on_OSX&#34;&gt;guide&lt;/a&gt; on Mono&amp;rsquo;s website on how to compile but I found some issues with it.  I&amp;rsquo;m running on OSX Mavericks so I&amp;rsquo;m not sure if that resulted in issues but here&amp;rsquo;s my guide to get it compiling.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Nancy, ASP.Net vNext, VS2014 &amp; Azure</title>
+      <link>/2014-06-14-nancy-aspnet-vnext-vs2014-azure/</link>
+      <pubDate>Sat, 14 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/2014-06-14-nancy-aspnet-vnext-vs2014-azure/</guid>
+      <description>&lt;p&gt;By now we know of Microsoft&amp;rsquo;s plans for the next version of ASP.Net and they&amp;rsquo;ve turned it on its head and from the looks of it, its goooooood!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.hanselman.com/blog/IntroducingASPNETVNext.aspx&#34;&gt;Here&lt;/a&gt; is a blog post from Scott Hanselman introducing ASP.Net vNext. There are introductory and deep dive videos available for your perusal which are also well worth a watch.&lt;/p&gt;
+&lt;p&gt;The TL;DR is ASP.Net vNext will take heavy influence from Node.js by using Owin to wire up all the app dependencies and middleware.  It will also remove *.csproj files and use a project.json file similar to Node&amp;rsquo;s package.json and use NuGet to reference the application&amp;rsquo;s dependencies.  It also takes inspiration from Node and Nancy&amp;rsquo;s approach requiring you to opt-in to dependencies rather that traditionally having everything but the kitchen sink.  It also takes influence from Nancy via built in dependency injection and Mono support.  Microsoft announced they will run all their vNext tests against Mono builds ensuring all their code is compatible for cross platform deployments.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a tweet direct from the horses mouth albeit with a typo .&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/XMmMDce.png&#34; alt=&#34;vNext influenced by Node/Nancy&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using SQL Server with node.js</title>
+      <link>/2013-12-20-using-sql-server-with-nodejs/</link>
+      <pubDate>Fri, 20 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-12-20-using-sql-server-with-nodejs/</guid>
+      <description>&lt;p&gt;I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I&amp;rsquo;d heard about &lt;a href=&#34;http://tjanczuk.github.io/edge/#/&#34;&gt;edge.js&lt;/a&gt; many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I&amp;rsquo;ve spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn&amp;rsquo;t like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.&lt;/p&gt;
+&lt;p&gt;I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp;amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</title>
+      <link>/2013-10-01-blogging-with-markdown-and-git/</link>
+      <pubDate>Tue, 01 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-10-01-blogging-with-markdown-and-git/</guid>
+      <description>&lt;p&gt;There are many markdown blogging engines out there such as &lt;a href=&#34;http://calepin.co/&#34;&gt;Calepin&lt;/a&gt;, &lt;a href=&#34;http://scriptogr.am/&#34;&gt;Scriptogram&lt;/a&gt; and even &lt;a href=&#34;http://wordpress.org/&#34;&gt;WordPress&lt;/a&gt; allows you to write blog posts in Markdown but &lt;a href=&#34;https://github.com/Sandra/Sandra.Snow&#34;&gt;Sandra.Snow&lt;/a&gt; tries to add something different.  Firstly, it is written in .Net and &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt;, secondly its a static blog generator and finally it supports Git deployment.&lt;/p&gt;
+&lt;p&gt;Even if you don&amp;rsquo;t want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;layout&amp;rdquo; refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you&amp;rsquo;d prefer.  These &amp;ldquo;layout&amp;rdquo; files should exist in the &amp;ldquo;_layouts&amp;rdquo; folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;category&amp;rdquo; or &amp;ldquo;categories&amp;rdquo; property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;title&amp;rdquo; should hopefully be self explanatory!&lt;/p&gt;
+&lt;p&gt;You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Keeping SQL Data Organised in Integration Tests</title>
+      <link>/2013-09-12-keeping-sql-data-organised-in-integration-tests/</link>
+      <pubDate>Thu, 12 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-09-12-keeping-sql-data-organised-in-integration-tests/</guid>
+      <description>&lt;p&gt;In my latest project I had kept my solution tidy with my main app project, my unit test project and integration test project. I tend to stick with a naming convention such as MainApp, MainApp.Tests.Unit &amp;amp; MainApp.Tests.Integration.&lt;/p&gt;
+&lt;p&gt;I had begun writing my integration tests for a repository that hits the database and returns data. Currently it was one method being called in the repository.  &lt;a href=&#34;http://xunit.codeplex.com/&#34;&gt;xUnit&lt;/a&gt; allows you to setup any test dependencies in the constructor of your test class.  It also allows you to do any tidying up in a Dispose method if you implement IDisposable although this is &lt;a href=&#34;http://xunit.codeplex.com/wikipage?title=Comparisons&amp;amp;referringTitle=Home#note2&#34;&gt;frowned upon&lt;/a&gt;.  However I felt for my needs I would implement this.&lt;/p&gt;
+&lt;p&gt;I  was creating data in the database in the constructor which will get called before the test runs, retrieving data in the test, asserting and then deleting all data and resetting the auto-incrementing from the tables in the Dispose method.&lt;/p&gt;
+&lt;p&gt;This was working perfectly until I wanted to test another method on my repository.&lt;/p&gt;
+&lt;p&gt;I now needed to add data for my new method but realised if I added different data to the database in the constructor, I would be creating unnecessary data unrelated to the test.&lt;/p&gt;
+&lt;p&gt;My options were to move the constructor logic into separate methods and then call the methods in the test or have separate test classes per method in the repo.  Both were a not an ideal solution and quite frankly verbose, ugly and not best practice.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Comparing object instances with FakeItEasy</title>
+      <link>/2013-09-11-comparing-object-instances-with-fakeiteasy/</link>
+      <pubDate>Wed, 11 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-09-11-comparing-object-instances-with-fakeiteasy/</guid>
+      <description>&lt;p&gt;I had the task of writing a new application recently and of course I chose &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt;.  One of the many great reasons is the testing capabilites it offers (For more on that see &lt;a href=&#34;http://www.marcusoft.net/2013/01/NancyTesting1.html&#34;&gt;this&lt;/a&gt; great series of articles).&lt;/p&gt;
+&lt;p&gt;The basics of a test with Nancy looks like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Fact]
+public void Should_return_status_ok_when_route_exists()
+{
+    // Given
+    var bootstrapper = new DefaultNancyBootstrapper();
+    var browser = new Browser(bootstrapper);
+     
+    // When
+    var result = browser.Get(&amp;quot;/&amp;quot;, with =&amp;gt; {
+        with.HttpRequest();
+    });
+        
+    // Then
+    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the &lt;code&gt;ConfigurableBootstrapper&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Async Route Handling with Nancy</title>
+      <link>/2013-08-24-async-route-handling-with-nancy/</link>
+      <pubDate>Sat, 24 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-08-24-async-route-handling-with-nancy/</guid>
+      <description>&lt;p&gt;I don&amp;rsquo;t know about you but all I hear is &amp;ldquo;ASYNC ALL THE THINGS!&amp;quot;, I think this is partly down to its new and shiny and us developers love &amp;ldquo;the shiny&amp;rdquo; and partly a lot of the things we do in our applications are I/O based whether that be database or file system.&lt;/p&gt;
+&lt;p&gt;The problem that comes with the new and shiny bandwagon is you need to understand what you&amp;rsquo;re evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application&amp;rsquo;s performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O.&lt;/p&gt;
+&lt;p&gt;It could also be argued that only &amp;ldquo;use asynchronicity in a web framework if you expect high traffic in your web application&amp;rdquo;. If you only have 10 requests on a small site you&amp;rsquo;re not going to benefit from asynchronous execution as there are plenty of threads available to handle your application.  If you start hitting 1000 concurrent requests (the default IIS limit) then requests will start getting queued up.  If you make your routes asynchronous then any code that is being waited on, the thread that is being used there can be released to process another request thus speeding up the performance of your app and prevent the likely hood of large queues.  I will show how simple it is to make your routes asynchronous with Nancy below.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Why .Net should become independent!</title>
+      <link>/2013-05-29-why-net-should-become-independent/</link>
+      <pubDate>Wed, 29 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-05-29-why-net-should-become-independent/</guid>
+      <description>&lt;p&gt;I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp;amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in &lt;a href=&#34;http://nancyfx.org/&#34;&gt;Nancy&lt;/a&gt; on my first day and paved the way for Git in the first week).&lt;/p&gt;
+&lt;p&gt;My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.&lt;/p&gt;
+&lt;p&gt;These adverts usually contain a list of tech/experience similar to: MVC, Webforms, Visual Studio, SQL Server, Entity Framework, WCF, LINQ.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What’s the common denominator here?&lt;br&gt;
+&lt;strong&gt;A:&lt;/strong&gt; They are all owned by Microsoft.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What operating system do these all run on?&lt;br&gt;
+&lt;strong&gt;A:&lt;/strong&gt; Microsoft Windows&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q:&lt;/strong&gt; What framework and programming language do they run on?&lt;br&gt;
+&lt;strong&gt;A:&lt;/strong&gt; Microsoft .Net and C#&lt;/p&gt;
+&lt;p&gt;Spot a pattern?&lt;/p&gt;
+&lt;p&gt;So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using a Markdown ViewEngine with Nancy</title>
+      <link>/2013-04-08-using-a-markdown-viewengine-with-nancy/</link>
+      <pubDate>Mon, 08 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-08-using-a-markdown-viewengine-with-nancy/</guid>
+      <description>&lt;p&gt;Whilst using &lt;a href=&#34;http://stackoverflow.com&#34;&gt;stackoverflow.com&lt;/a&gt; and &lt;a href=&#34;https://gist.github.com/&#34;&gt;Github gists&lt;/a&gt; I’ve become a frequent user of &lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;Markdown&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For those of you that don’t know what Markdown is, its essentially a shorter/cleaner syntax that can be parsed to produce HTML. Below are a few examples:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Hello World!
+##You&#39;re awesome!
+The quick brown fox jumped over the lazy coder
+What the **hell** is this?
+This is an [example link](http://example.com/)
+
+&amp;lt;h1&amp;gt;Hello World!&amp;lt;/h1&amp;gt;
+&amp;lt;h2&amp;gt;You&#39;re awesome!&amp;lt;/h2&amp;gt;
+&amp;lt;p&amp;gt;The quick brown fox jumped over the lazy coder&amp;lt;/p&amp;gt;
+What the &amp;lt;strong&amp;gt;hell&amp;lt;/strong&amp;gt; is this?
+This is an &amp;lt;a href=&amp;quot;http://example.com/&amp;quot;&amp;gt; example link&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can see more examples in the earlier link.&lt;/p&gt;
+&lt;p&gt;When you’re writing a blog post or a lengthy page in your web app with lots of HTML it maybe easier to use Markdown as your preferred syntax. I currently use WordPress for my blog, it’s ok but its quite bloated for probably what I need. I looked into &lt;a href=&#34;http://calepin.co/&#34;&gt;Calepin&lt;/a&gt; and &lt;a href=&#34;http://scriptogr.am/&#34;&gt;Scriptogr.am&lt;/a&gt; as alternative blogging platforms but I felt it didn’t quite offer what I wanted but the approach was a good idea. It meant you could write a blog post and simply put the file in dropbox and it would appear on your blog.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Why use NancyFX?</title>
+      <link>/2012-12-19-why-use-nancyfx/</link>
+      <pubDate>Wed, 19 Dec 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-12-19-why-use-nancyfx/</guid>
+      <description>&lt;p&gt;When a new project comes along why should you automatically choose ASP.NET MVC? Yes, its Microsoft based so you may have more of your peers fluent already in that architecture but is there an alternative, a better alternative?&lt;/p&gt;
+&lt;p&gt;I believe so and its called &lt;a href=&#34;http://nancyfx.org/&#34;&gt;NancyFX&lt;/a&gt;. Your first reaction, what is so special about Nancy? I also believe you’ll ask what is wrong with ASP.NET MVC but maybe you should look at it differently and ask what is right with Nancy?&lt;/p&gt;
+&lt;h2 id=&#34;what-is-nancy&#34;&gt;What is Nancy?&lt;/h2&gt;
+&lt;p&gt;Nancy is a lightweight framework for building websites / services without getting in your way. It’s heavily inspired by a Ruby project called Sinatra, which happens to identify itself as not being a framework, since it doesn’t include all the plumbing of things such as an ORM, lots of configuration, etc.&lt;/p&gt;
+&lt;h2 id=&#34;does-it-implement-mvc&#34;&gt;Does it implement MVC?&lt;/h2&gt;
+&lt;p&gt;Nancy does not force you to adhere to the model-view-controller pattern, or any other pattern. It’s nothing more than a service endpoint responding to HTTP verbs. Making it ideal for building Websites, Web Services and APIs.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Easily publish a NuGet package</title>
+      <link>/2012-12-07-easily-publish-a-nuget-package/</link>
+      <pubDate>Fri, 07 Dec 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-12-07-easily-publish-a-nuget-package/</guid>
+      <description>&lt;p&gt;I recently published &lt;a href=&#34;http://blog.jonathanchannon.com/2012/11/29/asp-net-web-api-testing/&#34; title=&#34;ASP.NET Web API Testing&#34;&gt;WebAPI.Testing&lt;/a&gt; on &lt;a href=&#34;http://nuget.org/packages/WebAPI.Testing&#34;&gt;Nuget&lt;/a&gt; but found it a bit tricky to build a package ready for NuGet.&lt;/p&gt;
+&lt;p&gt;There is &lt;a href=&#34;http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package&#34;&gt;documentation &lt;/a&gt;about how to do it but I found it hard to follow so I thought I’d document how I finally got my package ready.&lt;/p&gt;
+&lt;p&gt;The easiest way I thought was to have something built into Visual Studio. I spoke to &lt;a href=&#34;https://twitter.com/davidfowl&#34;&gt;David Fowler&lt;/a&gt; and he told me you can edit your *.csproj file and add &lt;code&gt;&amp;lt;BuildPackage&amp;gt;true&amp;lt;/BuildPackage&amp;gt;&lt;/code&gt; to it.&lt;/p&gt;
+&lt;p&gt;When you build your project a *.nupkg is created ready for publishing with NuGet.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASP.NET Web API Testing</title>
+      <link>/2012-11-29-asp-net-web-api-testing/</link>
+      <pubDate>Thu, 29 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-29-asp-net-web-api-testing/</guid>
+      <description>&lt;p&gt;As the need arose to implement some kind of Web Service/HTTP API I thought I would evaluate &lt;a href=&#34;http://nancyfx.org/&#34;&gt;NancyFX&lt;/a&gt;, &lt;a href=&#34;http://www.asp.net/web-api&#34;&gt;ASP.NET Web API&lt;/a&gt; and &lt;a href=&#34;http://www.servicestack.net/&#34;&gt;ServiceStack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Suffice to say all performed as expected and I was actually surprised to find that implementing ASP.NET Web API was easier than ServiceStack (I know that might be a bit of a statement to make to the ServiceStack followers, sorry). I found Nancy easiest to implement. The very simple API demos can be found on &lt;a href=&#34;http://github.com/jchannon&#34;&gt;my Github page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When it came to testing ASP.NET Web API I found it to be wanting slightly in comparison to Nancy. With WebAPI I could make direct calls to the controller methods to make sure data was returned correctly and I could mock a repository and test that the methods in the repository were being called but there was nothing I could see to test the HTTP response I would get.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.gitignore not working – fixed!</title>
+      <link>/2012-11-18-gitignore-not-working-fixed/</link>
+      <pubDate>Sun, 18 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-18-gitignore-not-working-fixed/</guid>
+      <description>&lt;p&gt;This happens to me too often and I always end up googling the answer so this post is probably more of a location I know I can come to find the answer, although by writing it down hopefully it may sink in that I should stop getting too excited on a new project.&lt;/p&gt;
+&lt;h3 id=&#34;new-project-scenario&#34;&gt;New project scenario&lt;/h3&gt;
+&lt;p&gt;You’re all very excited about your new project and you think its about time you committed this to source control. Obviously you’re using &lt;a href=&#34;http://git-scm.com/&#34;&gt;Git&lt;/a&gt; so you initialise a new repository and commit your files. You then setup a remote repository at &lt;a href=&#34;http://github.com&#34;&gt;Github&lt;/a&gt; and it asks you whether you want it create a .gitignore file – you do. So now you have a repository remotely and locally. Easiest thing to do is pull from the remote, setup your remote and push to it. The other scenario might be you’ve committed locally and then realise you need to add a .gitignore file which you do and then commit.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Simple .Net Twitter,Google,Facebook Authentication</title>
+      <link>/2012-10-25-simple-net-twittergooglefacebook-authentication/</link>
+      <pubDate>Thu, 25 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-10-25-simple-net-twittergooglefacebook-authentication/</guid>
+      <description>&lt;p&gt;Logging into websites is no longer a matter of typing in your username and password and clicking the login button. If you already have an account with the main social networks you can log into a site using your credentials from that website saving you having to register your details &lt;em&gt;again&lt;/em&gt;. This obviously makes things a bit easier as you don’t have to remember another password. (Although you should all be using a password manager such as &lt;a href=&#34;http://www.lastpass.com&#34;&gt;LastPass&lt;/a&gt;.)&lt;/p&gt;
+&lt;h2 id=&#34;current-social-login-providers&#34;&gt;Current Social Login Providers&lt;/h2&gt;
+&lt;p&gt;There are currently providers out there that allow you to use their services to integrate into your website to provide authentication via the social networks. The main two that I know of are &lt;a href=&#34;http://janrain.com&#34;&gt;Janrain&lt;/a&gt; and &lt;a href=&#34;http://www.dotnetopenauth.net/&#34;&gt;DotNetOpenAuth&lt;/a&gt;. I’ve not worked with DotNetOpenAuth but I have with Janrain when building &lt;a href=&#34;http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/&#34;&gt;DinnerParty&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The process was reasonably easy but not as simple as it could be.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Is OSS good for your career?</title>
+      <link>/2012-09-25-is-oss-good-for-your-career/</link>
+      <pubDate>Tue, 25 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-09-25-is-oss-good-for-your-career/</guid>
+      <description>&lt;p&gt;Got your attention? Good.&lt;/p&gt;
+&lt;p&gt;Let me start by pointing out there are many opinions about the answer to this question. You will have yours and I have mine, that’s called freedom of speech. I would like to hear your opinions so leave it in the comments.&lt;/p&gt;
+&lt;p&gt;Let me explain that I have had 4 jobs in the last 10-11 years. 3 of those were via recruitment agents. They check your skills, tick them off and pass you over to the employer if they match and hopefully you get an interview. That process has happened to me in each of those 3 times.&lt;/p&gt;
+&lt;p&gt;If you have read my previous blog posts you’ll know I have spent the last year reading a lot of other peoples code and learning all the best practices I can in a bid to become a better software developer as well as give back to the developer community where I can.&lt;/p&gt;
+&lt;p&gt;After spending a couple of months porting &lt;a href=&#34;http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me&#34;&gt;NerdDinner over to NancyFX&lt;/a&gt; I realised that I had not looked at &lt;a href=&#34;http://www.asp.net/mvc&#34;&gt;ASP.Net MVC 4&lt;/a&gt; and the new features built into it. I felt slightly strange at that point as I was usually an early adopter of these things keen to check out the new stuff. I think this was partly due to the fact I had spent a lot of time learning &lt;a href=&#34;http://www.nancyfx.org&#34;&gt;NancyFX&lt;/a&gt; and really quite enjoying the framework and interacting with the small community of people who use Nancy.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>NancyFX, RavenDB, NerdDinner and Me</title>
+      <link>/2012-09-21-nancyfx-ravendb-nerddinner-and-me/</link>
+      <pubDate>Fri, 21 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-09-21-nancyfx-ravendb-nerddinner-and-me/</guid>
+      <description>&lt;p&gt;As I said in my &lt;a href=&#34;http://blog.jonathanchannon.com/2012/09/17/ive-started-blogging-why/&#34; title=&#34;I’ve started blogging. Why?&#34;&gt;first post&lt;/a&gt;, NancyFX was my first port of call in my OSS adventure.  The reason I had come across it was by following &lt;a href=&#34;http://twitter.com/squidge&#34;&gt;@squidge&lt;/a&gt; and &lt;a href=&#34;http://twitter.com/cranialstrain&#34;&gt;@cranialstrain&lt;/a&gt; on Twitter.  At the time they were talking about it quite a bit so I thought I’d take a look.  I was also keeping track of lots of people talking about &lt;a href=&#34;http://ravendb.net&#34;&gt;RavenDB&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;what-is-nancyfx&#34;&gt;What is NancyFX?&lt;/h3&gt;
+&lt;p&gt;From the official docs this explains NancyFX:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Nancy is a lightweight, low-ceremony, framework for building HTTP based services on .Net and Mono. The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This means that everything in Nancy is setup to have sensible defaults and conventions, instead of making you jump through hoops and go through configuration hell just to get up and running. With Nancy you can go from zero to website in a matter of minutes. Literally.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>I’ve started blogging. Why?</title>
+      <link>/2012-09-17-ive-started-blogging-why/</link>
+      <pubDate>Mon, 17 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-09-17-ive-started-blogging-why/</guid>
+      <description>&lt;p&gt;So here I am, Jonathan Channon, blogger.  I never saw the point of blogging before so why now?&lt;/p&gt;
+&lt;p&gt;I have read and spoken to many people regarding blogging who were all in favour of it.  I would always argue that I don’t have time, I have nothing to blog about or I’m not that insane to start blogging about stuff I barely understand just so the masses can come and hurl abuse at my ignorance.  However I recently read an &lt;a href=&#34;http://buildstarted.com/2012/08/28/how-i-learned-to-stop-worrying-and-love-my-community/&#34;&gt;article&lt;/a&gt; by &lt;a href=&#34;http://twitter.com/buildstarted&#34;&gt;Ben Dornis&lt;/a&gt; titled “How I learned to stop worrying and love my community”.  He outlined all the reasons why a lot of people don’t publish their code and don’t publish their thoughts online. I thought he was being modest, the man is clearly talented at what he does so he didn’t have to worry however, someone like me still had these fears.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

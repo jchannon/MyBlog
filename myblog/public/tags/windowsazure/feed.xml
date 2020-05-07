@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>windowsazure on </title>
+    <link>/tags/windowsazure/</link>
+    <description>Recent content in windowsazure on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 06 Nov 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/windowsazure/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Publishing to Windows Azure from Github</title>
+      <link>/2012-11-06-publishing-to-windows-azure-from-github/</link>
+      <pubDate>Tue, 06 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-11-06-publishing-to-windows-azure-from-github/</guid>
+      <description>&lt;p&gt;Back in &lt;a href=&#34;http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx&#34;&gt;July 2012&lt;/a&gt; Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my &lt;a href=&#34;http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/&#34; title=&#34;NancyFX, RavenDB, NerdDinner and Me&#34;&gt;DinnerParty blog post&lt;/a&gt; but have only just looked at implementing it.&lt;/p&gt;
+&lt;h2 id=&#34;preparation&#34;&gt;Preparation&lt;/h2&gt;
+&lt;p&gt;As I said in my previous post Azure supported Git publishing but it was a two step process. You push to Github and then push to Azure and it gets deployed. If you already have Git setup on your Azure account there is nowhere in the dashboard that allows to you setup Github integration. I thought I was going to have reset my deployment credentials and set it all up again when I asked the question on &lt;a href=&#34;http://jabbr.net&#34;&gt;Jabbr&lt;/a&gt;. Luckily &lt;a href=&#34;http://twitter.com/davidfowl&#34;&gt;David Fowler&lt;/a&gt; was online. Why is that lucky? He wrote the Github integration feature of Azure.&lt;/p&gt;
+&lt;p&gt;To setup your Azure account to enable Github integration you have to FTP into your Azure account and delete the deployment history by deleting all contents in the /site/deployments folder.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/blogpostimages/deploymenthistory-620x604.png&#34; alt=&#34;Deployment History&#34; title=&#34;Deployment History&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Deployment History&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

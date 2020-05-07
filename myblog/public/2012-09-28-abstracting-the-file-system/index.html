@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog - Abstracting the File System</title>
+        <meta name="description" content="Following on from my post about OSS I thought I would illustrate how cool OSS can be.
+The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.
+So you have a a method similar to this:
+public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo(&quot;C:\Mytext.txt&quot;)
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine(&quot;This blog post is cool&quot;);
+    w.Close();
+  }
+}
+
+You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.69.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <meta property="og:title" content="Abstracting the File System">
+<meta property="og:description" content="Following on from my post about OSS I thought I would illustrate how cool OSS can be.
+The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.
+So you have a a method similar to this:
+public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo(&quot;C:\Mytext.txt&quot;)
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine(&quot;This blog post is cool&quot;);
+    w.Close();
+  }
+}
+
+You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2012-09-28-abstracting-the-file-system/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/dist/site.css">
+        <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+            <link href="/2012-09-28-abstracting-the-file-system/feed.xml" rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog">
+        
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
+                        
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
+
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
+
+                </div>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
+
+
+<div class="post-item boxed post-detail" itemtype="http://schema.org/BlogPosting">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-09-28-abstracting-the-file-system/">Abstracting the File System</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 28, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-09-28-abstracting-the-file-system/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>Following on from my post about <a href="http://blog.jonathanchannon.com/2012/09/25/is-oss-good-for-your-career/">OSS</a> I thought I would illustrate how cool OSS can be.</p>
+<p>The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.</p>
+<p>So you have a a method similar to this:</p>
+<pre><code>public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo(&quot;C:\Mytext.txt&quot;)
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine(&quot;This blog post is cool&quot;);
+    w.Close();
+  }
+}
+</code></pre>
+<p>You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.</p>
+<p>Simplest way is to hit F12 in Visual Studio and see what interface FileInfo implements.</p>
+<p>We get this:</p>
+<pre><code>public sealed class FileInfo : FileSystemInfo
+</code></pre>
+<p>Hmmm, OK lets hit F12 on FileSystemInfo and we get</p>
+<pre><code>public abstract class FileSystemInfo : MarshalByRefObject, ISerializable
+</code></pre>
+<p>So it looks like the FileInfo class does not implement any interface so now we’re stuck, we have a hard coded dependency and our unit tests are going to be slow.</p>
+<p>The answer is we’ll have to create an interface for all the methods and properties that we are going to use that are in FileInfo. Not too bad I suppose, we’re only using CreateText in the example above so we create:</p>
+<pre><code>public interface IFileInfo
+{
+  StreamWriter CreateText();
+}
+</code></pre>
+<p>We can now pass in IFileInfo to our class’ constructor and hopefully use it like so:</p>
+<pre><code>public class MyClass
+{
+  private readonly IFileInfo fileInfo;
+
+  public MyClass(IFileInfo fileInfo)
+  {
+    this.fileInfo = fileInfo;
+  }
+
+  public void DoSomethingCool()
+  {
+    //do some stuff now write to file
+
+    using(StreamWriter w = fileInfo.CreateText())
+    {
+      w.WriteLine(&quot;This blog post is cool&quot;);
+      w.Close();
+    }
+  }
+}
+</code></pre>
+<p>We could then use <a href="https://code.google.com/p/moq/">Moq</a> in our unit test to successfully mock the filesystem and ensure our method writes to the file:</p>
+<pre><code>[TestFixture]
+public class MyTestClass
+{
+  [Test]
+  public void DoSomethingCool_WhenCalled_WritesToFile()
+  {
+    //Arrange
+    var fileMock = new Moq.Mock&lt;IFileInfo&gt;();
+    var myClass = new MyClass(fileMock.Object);
+       
+    //Act
+    myClass.DoSomethingCool();
+
+    //Assert
+    fileMock.Verify(x =&amp;gt; x.CreateText());
+  }
+}
+</code></pre>
+<p>As you’ve probably spotted there are three issues here. Firstly FileInfo expects a path in its constructor which we haven’t supplied, secondly all we’ve actually verified in our test is that CreateText is called and finally DoSomethingCool still has a dependency on StreamWriter which uses the underlying file system. The solution is to abstract the StreamWriter yourself so the unit test is testing that data is written to the file and do something about the FileInfo dependency.</p>
+<p>It could be done, not a problem, but wouldn’t it be nice if someone has already done that for you? Luckily they have and its called <a href="https://github.com/tathamoddie/System.IO.Abstractions">System.IO.Abstractions</a>.</p>
+<p>A quote from the website &ldquo;<em>At the core of the library is IFileSystem and FileSystem. Instead of calling methods like File.ReadAllText directly, use IFileSystem.File.ReadAllText. We have exactly the same API, except that ours is injectable and testable.</em>&rdquo;</p>
+<p>What this means is that you can now do:</p>
+<pre><code>public class MyClass
+{
+    private readonly IFileSystem fileSystem;
+
+    public MyClass(IFileSystem  fileSystem)
+    {
+      this.fileSystem = fileSystem;
+    }
+
+    public void DoSomethingCool()
+    {
+      //do some stuff now write to file
+
+      var file = fileSystem.FileInfo.FromFileName(&quot;C:\Mytext.txt&quot;);
+      using(IStreamWriter writer = file.CreateText())
+      {
+        writer.WriteLine(&quot;This blog post is cool&quot;);
+        writer.Close();
+      }
+    }
+}
+
+[TestFixture]
+public class MyTestClass
+{
+    [Test]
+    public void DoSomethingCool_WhenCalled_WritesToFile()
+    {
+      //Arrange
+      var filesystemMock = new Moq.Mock&lt;IFileSystem&gt;();
+      var fileinfoFactory = new Moq.Mock&lt;IFileInfoFactory&gt;();
+      var fileinfoMock = new Moq.Mock&lt;FileInfoBase&gt;();
+      var streamWriterMock = new Moq.Mock&lt;IStreamWriter&gt;();
+
+      var myClass = new MyClass(filesystemMock.Object);
+
+      fileinfoMock.Setup(x =&gt; x.CreateText()).Returns(streamWriterMock.Object);
+      fileinfoFactory.Setup(x =&gt; x.FromFileName(&quot;C:\Mytext.txt&quot;)).Returns(fileinfoMock.Object);
+      filesystemMock.Setup(x =&gt; x.FileInfo).Returns(fileinfoFactory.Object);
+
+      //Act
+      myClass.DoSomethingCool();
+
+      //Assert
+      streamWriterMock.Verify(x =&gt; x.WriteLine(&quot;This blog post is cool&quot;));
+    }
+}
+</code></pre>
+<p>You can now still verify your calls to file are getting called but on top of that you can verify the content written to file all without the need for a file system.</p>
+<p>Now some of you may not like all the mocks arranged in the unit test so luckily for you System.IO.Abstractions has a set of its own mocks that you can use. This means we have to modify our class slightly to make the filesystem public so we can read what is written to file:</p>
+<pre><code>public class MyClass
+{
+    public readonly IFileSystem filesystem;
+
+    public MyClass(IFileSystem filesystem)
+    {
+      this.filesystem = filesystem;
+    }
+
+    public void DoSomethingCool()
+    {
+      //do some stuff now write to file
+
+      using(var w = filesystem.FileInfo.FromFileName(&quot;C:\\Mytext.txt&quot;).CreateText())
+      {
+        w.WriteLine(&quot;This blog post is cool&quot;);
+        w.Close();
+      }
+    }
+}
+
+[TestFixture]
+public class MyTestClass
+{
+    [Test]
+    public void DoSomethingCool_WhenCalled_WritesToFile()
+    {
+      //Arrange
+      var fileData = new MockFileData(&quot;&quot;);
+      var fileSystem = new MockFileSystem(new Dictionary&lt;string, MockFileData&gt;
+      {
+          { &quot;C:\\Mytext.txt&quot;, fileData }
+      });
+
+      var myClass = new MyClass(fileSystem);
+        
+      //Act
+      myClass.DoSomethingCool();
+
+      //Assert
+      MockFileInfoFactory factory = (MockFileInfoFactory)myClass.filesystem.FileInfo;
+      var result = factory.FileInfo.OpenText().ReadToEnd();
+      Assert.AreEqual(&quot;This blog post is cool&quot;, result);
+    }
+}
+</code></pre>
+<p>Its a matter of preference which you prefer but either way hopefully this illustrates how and why you should abstract the file system</p>
+<p>One thing to point out is that these file system calls should be in their own class and that DoSomethingCool should be calling something like IFileSystemLogger.Log() which is where the file system calls should be. This illustrates the <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a></p>
+<p><strong>Some of the functionality outlined above is not available yet in the master branch of System.IO.Abstractions but it has been submitted as a pull request from me so hopefully it will be merged soon. I’ve already had one PR merged and it was quick, built and released on NuGet within the hour. I encourage you to take a look at this project and try and contribute. There are a few quirks, for example, I wanted to use Moq v4 syntax in my tests but couldn’t work it out, not sure if that’s me or System.IO.Abstractions. Anyhow the more people that get involved the better it will become.</strong></p>
+    </div> 
+    
+        <div id="tagcloud">   
+            
+            
+                <a href="/tags/file-system/"><span>file system</span></a>
+            
+                <a href="/tags/srp/"><span>SRP</span></a>
+            
+                <a href="/tags/oss/"><span>oss</span></a>
+            
+                <a href="/tags/system.io.abstractions/"><span>System.IO.Abstractions</span></a>
+                     
+        </div>
+    
+    
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    
+<div id="disqus_thread"></div>
+<script>
+
+    
+
+
+    var disqus_config = function () {
+        this.page.url = '\/2012-09-28-abstracting-the-file-system\/';  
+        this.page.identifier = ''; 
+    };
+
+    (function () { 
+        var d = document, s = d.createElement('script');
+        s.src = '//jonathanchannonblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
+</html>

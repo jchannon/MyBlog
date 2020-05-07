@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>editor on </title>
+    <link>/tags/editor/</link>
+    <description>Recent content in editor on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 08 Oct 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/editor/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Node.js, Express, Hello World Formula 1 Style</title>
+      <link>/2012-10-08-node-js-express-hello-world-formula-1-style/</link>
+      <pubDate>Mon, 08 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/2012-10-08-node-js-express-hello-world-formula-1-style/</guid>
+      <description>&lt;p&gt;In my ongoing efforts to be a better developer (plus I just like tinkering) I thought I would take a look at &lt;a href=&#34;http://nodejs.org&#34;&gt;node.js&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I did play with node.js about a year ago where I setup a TCP listener to listen to a TCP Server on the network broadcasting XML messages, I then took these, formatted them to JSON and passed it to a browser using &lt;a href=&#34;http://socket.io/&#34;&gt;Socket.IO&lt;/a&gt;. It was pretty cool but the project never came to anything.&lt;/p&gt;
+&lt;p&gt;However, I thought I would re-visit and setup a proper development environment on my Mac at home.&lt;/p&gt;
+&lt;h2 id=&#34;editors&#34;&gt;Editors&lt;/h2&gt;
+&lt;p&gt;There are many editors/IDE’s that you can use for node.js development such as Vim, Eclipse, WebStorm, Aptana Studio, Emacs and Cloud9 IDE.  As I have used &lt;a href=&#34;http://www.sublimetext.com/&#34;&gt;Sublime Text 2&lt;/a&gt; (ST2) before I thought I would use this because I like it and all the cool kids use it!!&lt;/p&gt;
+&lt;p&gt;Coming from a mainly IDE based background I started to find things a bit hard going however ST2 allows plugins to be used to make the user experience a lot nicer.  Below are a list of plugins I have installed:&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

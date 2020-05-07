@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>datetime on </title>
+    <link>/tags/datetime/</link>
+    <description>Recent content in datetime on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 08 Apr 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/datetime/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Using DateTime in C# and SQL</title>
+      <link>/2013-04-08-using-datetime-in-c-and-sql/</link>
+      <pubDate>Mon, 08 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-04-08-using-datetime-in-c-and-sql/</guid>
+      <description>&lt;p&gt;I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.&lt;/p&gt;
+&lt;p&gt;Store your datetimes in UTC format into the database. Unfortunately this mean executing something like:
+&lt;code&gt;myObject.ExpiryDate = TimeZoneInfo.ConvertTimeToUtc(dateTime, TimeZoneInfo.FindSystemTimeZoneById(“timezoneid of users”)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In every central place where you update/insert DateTime values on your objects you will need the above.&lt;/p&gt;
+&lt;p&gt;When you display any DateTime information it must display as a local datetime value. You can do this by using     &lt;code&gt;myObject.ExpiryDate.ToLocalTime()&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

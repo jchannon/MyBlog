@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog - NancyFX, RavenDB, NerdDinner and Me</title>
+        <meta name="description" content="As I said in my first post, NancyFX was my first port of call in my OSS adventure.  The reason I had come across it was by following @squidge and @cranialstrain on Twitter.  At the time they were talking about it quite a bit so I thought I’d take a look.  I was also keeping track of lots of people talking about RavenDB.
+What is NancyFX?
+From the official docs this explains NancyFX:
+Nancy is a lightweight, low-ceremony, framework for building HTTP based services on .Net and Mono. The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.
+This means that everything in Nancy is setup to have sensible defaults and conventions, instead of making you jump through hoops and go through configuration hell just to get up and running. With Nancy you can go from zero to website in a matter of minutes. Literally.">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.69.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <meta property="og:title" content="NancyFX, RavenDB, NerdDinner and Me">
+<meta property="og:description" content="As I said in my first post, NancyFX was my first port of call in my OSS adventure.  The reason I had come across it was by following @squidge and @cranialstrain on Twitter.  At the time they were talking about it quite a bit so I thought I’d take a look.  I was also keeping track of lots of people talking about RavenDB.
+What is NancyFX?
+From the official docs this explains NancyFX:
+Nancy is a lightweight, low-ceremony, framework for building HTTP based services on .Net and Mono. The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.
+This means that everything in Nancy is setup to have sensible defaults and conventions, instead of making you jump through hoops and go through configuration hell just to get up and running. With Nancy you can go from zero to website in a matter of minutes. Literally.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2012-09-21-nancyfx-ravendb-nerddinner-and-me/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/dist/site.css">
+        <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+            <link href="/2012-09-21-nancyfx-ravendb-nerddinner-and-me/feed.xml" rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog">
+        
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
+                        
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
+
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
+
+                </div>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
+
+
+<div class="post-item boxed post-detail" itemtype="http://schema.org/BlogPosting">
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2012-09-21-nancyfx-ravendb-nerddinner-and-me/">NancyFX, RavenDB, NerdDinner and Me</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">September 21, 2012</span> 
+        
+        <div class="commentcount" data-disqus-url="/2012-09-21-nancyfx-ravendb-nerddinner-and-me/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>As I said in my <a href="http://blog.jonathanchannon.com/2012/09/17/ive-started-blogging-why/" title="I’ve started blogging. Why?">first post</a>, NancyFX was my first port of call in my OSS adventure.  The reason I had come across it was by following <a href="http://twitter.com/squidge">@squidge</a> and <a href="http://twitter.com/cranialstrain">@cranialstrain</a> on Twitter.  At the time they were talking about it quite a bit so I thought I’d take a look.  I was also keeping track of lots of people talking about <a href="http://ravendb.net">RavenDB</a>.</p>
+<h3 id="what-is-nancyfx">What is NancyFX?</h3>
+<p>From the official docs this explains NancyFX:</p>
+<p><em>Nancy is a lightweight, low-ceremony, framework for building HTTP based services on .Net and Mono. The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.</em></p>
+<p><em>This means that everything in Nancy is setup to have sensible defaults and conventions, instead of making you jump through hoops and go through configuration hell just to get up and running. With Nancy you can go from zero to website in a matter of minutes. Literally.</em></p>
+<p>When ASP.Net MVC was first introduced to the world I was hooked on the framework, it seemed so easy and logical in comparison to ASP.Net Webforms plus it had lots more <a href="http://www.asp.net/mvc">benefits</a>.  NancyFX took these benefits and added lots more to them. For example creating a website was very easy:</p>
+<pre><code>public class HelloModule : NancyModule
+{
+  public HelloModule()
+  {
+    Get[&quot;/&quot;] = parameters =&gt; &quot;Hello World&quot;;
+  }
+}
+</code></pre>
+<p>If you have experience using MVC and want to check out how Nancy compares check out <a href="http://twitter.com/jhovgaard">@jhovgaard</a> series of posts titled <em>“From ASP.Net MVC to Nancy”</em> (<a href="http://jhovgaard.net/from-aspnet-mvc-to-nancy-part-1">Part1</a>, <a href="http://jhovgaard.net/from-aspnet-mvc-to-nancy-part-2">2</a> &amp; <a href="http://jhovgaard.net/from-aspnet-mvc-to-nancy-part-3">3</a>)</p>
+<h3 id="what-is-ravendb">What is RavenDB</h3>
+<p>RavenDB is a transactional, open-source Document Database written in .NET. Data in RavenDB is stored schema-less as JSON documents, and can be queried efficiently using Linq queries from .NET code or using RESTful API using other tools.</p>
+<p>What this means is that you no longer have to rely on a RDBMS as your backend data store for your .Net projects. RavenDB is part of a <a href="http://en.wikipedia.org/wiki/NoSQL">NoSQL</a> movement that, in simple terms, stores key-value pairs and does not store data in relational tables. It is also very quick in data retrieval.</p>
+<h3 id="two-birds-one-stone">Two birds, one stone</h3>
+<p>As with anything software related the best way to learn something is to write an application that uses that specific piece of technology. So I sent out a tweet something along the lines of _“I need to find a reason to use NancyFX and RavenDB”._Two minutes later I got a response from <a href="http://twitter.com/TheCodeJunkie">@TheCodeJunkie</a>, one of the lead developers of NancyFX saying he had wanted to port <a href="http://nerddinner.com">NerdDinner</a> to use NancyFX but had not had the time and wondered if I would be interested in doing that and using RavenDB as the data store.  I instantly said yes.</p>
+<p>This was my first jump into actually contributing to OSS and I was very excited and honoured.  I thought this was amazing, I thought I’d made it and believed this was going to change everything.  I went home and told my wife that my newest pet project was going to be this and she gave her usual supportive but ambiguous “that’s nice dear” type response.</p>
+<p>I got stuck in by browsing the NerdDinner source code and began getting the Razor views working with Nancy. I started converting all the ASP.Net MVC controllers into Nancy Modules and then had an idea for Nancy.  A domain specific language (DSL).  Nancy uses various ways to capture querystring arguments, one of them being regex.  To cut a long story short I created <a href="https://github.com/jchannon/Nancy.RouteHelpers">Nancy.Routehelpers</a> and put it on NuGet.  It was a way to define routes in the modules without the need for using Regex because lets be honest no-one <em>likes</em> using Regex!</p>
+<p>It meant I could use this:</p>
+<pre><code>public class HomeModule : NancyModule
+{
+  public HomeModule()
+  {
+    //Yay! Readable routes :)
+    Get[Route.Root().AnyIntAtLeastOnce(&quot;id&quot;)] = parameters =&amp;gt;
+    {
+      return View[&quot;Index&quot;];
+    };
+
+    //Boooo! Regex :(
+    Get[&quot;/(?[\d]%2B)&quot;] = parameters =&amp;gt;
+    {
+      return View[&quot;Index&quot;];
+    };
+  }
+}
+</code></pre>
+<p>So now by helping out and learning stuff at the same time I was already contributing to the community with my own ideas, even though in the small league however, it was all very exciting!</p>
+<p>As the logic started to wind up and I needed to put in the data store I was having teething trouble with Raven.  A quick tweet asking for help and <a href="http://twitter.com/@philjoness88">@philjones88</a> to the rescue.  As we were chatting we both realised we only live 40 miles apart! Small world but no matter how large, another great sign of the active community willing to help. I’ve gone on to chat to Phil numerous times and he’s been a huge help not just in RavenDB. I would highly recommend him for anyone needing any contract work as he is a true professional.</p>
+<p>Luckily integrating RavenDB was fairly painless, if I did have any quick questions I would pester <a href="http://twitter.com/@philjoness88">@philjones88</a> or use RavenDB’s <a href="http://jabbr.net/#/rooms/RavenDB">Jabbr</a> room or use the official <a href="https://groups.google.com/forum/?fromgroups#!forum/ravendb">RavenDB Google group</a>. The only two areas that stand out from memory that caused a few scratches of the head were indexing and clearing out documents of a certain age. The latter was needed due to the database being on a free account with <a href="https://ravenhq.com/">RavenHQ</a> as it had a database size limit of 15mb.  I’ll post the snippet here just in case anyone comes by and wants to  use it to delete all their documents from RavenDB:</p>
+<pre><code>private void CleanUpDB(IDocumentSession DocSession)
+{
+    var configInfo = DocSession.Load(&quot;DinnerParty/Config&quot;);
+
+    if (configInfo == null)
+    {
+        configInfo = [new][18] Config();
+        configInfo.Id = &quot;DinnerParty/Config&quot;;
+        configInfo.LastTruncateDate = DateTime.Now.AddHours(-48); //No need to delete data if config doesnt exist but setup ready for next time
+
+        DocSession.Store(configInfo);
+        DocSession.SaveChanges();
+
+        return;
+    }
+    else
+    {
+        if ((DateTime.Now - configInfo.LastTruncateDate).TotalHours &lt; 24)
+            return;
+
+        configInfo.LastTruncateDate = DateTime.Now;
+        DocSession.SaveChanges();
+
+        //If database size &gt; 15mb or 1000 documents delete documents older than a week
+
+#if DEBUG
+        var jsonData = RavenSessionProvider.DocumentStore.JsonRequestFactory.CreateHttpJsonRequest(null, &quot;http://localhost:8080/database/size&quot;, &quot;GET&quot;, RavenSessionProvider.DocumentStore.Credentials, RavenSessionProvider.DocumentStore.Conventions).ReadResponseJson();
+        
+#else
+        var jsonData = RavenSessionProvider.DocumentStore.JsonRequestFactory.CreateHttpJsonRequest(null, &quot;https://1.ravenhq.com/databases/DinnerParty-DinnerPartyDB/database/size&quot;, &quot;GET&quot;, RavenSessionProvider.DocumentStore.Credentials, RavenSessionProvider.DocumentStore.Conventions).ReadResponseJson();
+
+#endif
+        int dbSize = int.Parse(jsonData.SelectToken(&quot;DatabaseSize&quot;).ToString());
+        long docCount = RavenSessionProvider.DocumentStore.DatabaseCommands.GetStatistics().CountOfDocuments;
+
+       
+        if (docCount &gt; 1000 || dbSize &gt; 15000000) //its actually 14.3mb but goood enough
+        {
+
+            RavenSessionProvider.DocumentStore.DatabaseCommands.DeleteByIndex(&quot;Raven/DocumentsByEntityName&quot;,
+                new IndexQuery
+                {
+                    Query = DocSession.Advanced.LuceneQuery()
+                    .WhereEquals(&quot;Tag&quot;, &quot;Dinners&quot;)
+                    .AndAlso()
+                    .WhereLessThan(&quot;LastModified&quot;, DateTime.Now.AddDays(-7)).ToString()
+                },
+                false);
+        }
+    }
+}
+</code></pre>
+<p>One neat feature of the indexes within RavenDB although initially a tad confusing is the ability to define them in C# so when your application starts you can make a call to <strong>Raven.Client.Indexes.IndexCreation.CreateIndexes</strong> and it will apply them to your database. Slightly cooler than a RDBMS way of creating an index.</p>
+<h3 id="its-all-in-the-name">It’s all in the name</h3>
+<p>As development was winding up we needed to decide upon a name instead of NerdDinner. A couple of ideas were thrown about, FancyNancy, Party with Nancy, Dinner with Nancy, all pretty lame so <a href="http://twitter.com/thecodejunkie">@TheCodeJunkie</a> came up with DinnerParty and that’s what we went with plus its a bit more sophisticated than NerdDinner <img src="http://blog.jonathanchannon.com/wp-includes/images/smilies/icon_wink.gif" alt=";\)"></p>
+<p>The next issue was having a logo for DinnerParty, a large feat for someone who has no design skills whatsoever. I appreciate good design but have no ability in that area, in fact I’m pretty sure a 3 year old has more skills than me. I went through various rubbish designs and it went back and forth in deliberation via Jabbr but in the end the decision was mine and we went what we have today. I apologise!</p>
+<h3 id="hosting">Hosting</h3>
+<p>At the same time I was finishing development <a href="http://www.windowsazure.com">Windows Azure</a> had made a big change to its offerings and were doing all sorts of cool things including free websites! This was another tech toy I could play with so I signed up for an account so I could host DinnerParty. It was all very shiny and fun however I had found a <a href="http://social.msdn.microsoft.com/Forums/en-US/windowsazurewebsitespreview/thread/9ee30e74-7546-4c1e-ac8c-0235e1589920">bug</a>. It wouldn’t let me store a connection string to an external RavenDB database which was hosted at <a href="https://ravenhq.com/">RavenHQ</a>. Up went a forum post and a few back and forths and conversations on Twitter with <a href="https://twitter.com/davidebbo">@davidebbo</a> and he managed to get it working!</p>
+<p>One of the other cool features that Windows Azure was touting was “<a href="http://www.windowsazure.com/en-us/develop/net/common-tasks/publishing-with-git/#Step5">Git Deploy</a>“, the ability to use Git to deploy the website. Essentially it allowed me to push my source code to Windows Azure and then it would build the code and publish the compiled project to the website. Absolutely brilliant! No more FTP-ing, no more Web Deploy projects, this was genius at work. However there were two steps involved to keep the Github repository and the live website up to date, i) Push changes to Github ii) Push changes to Azure. Not a major problem at all however, those eager beavers at Microsoft have managed to get this down to one step with improved <a href="http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx">Continuous Deployment</a> so that when your changes are pushed to Github your Windows Azure account will pick this up, build the project and publish to your website. I highly recommend people check out the new Windows Azure offerings even if you just use the free websites as they offer a lot of cool functionality.</p>
+<h3 id="go-live">Go Live!</h3>
+<p>The code was done, the database was wired up, source control was working, website hosting was in place and a deployment strategy configured. D-day! Excited and nervous at the same time I made DinnerParty live to the world. That moment when it might all go horribly wrong, people would look at the code and laugh or use the website and it would fail. Oh well, no going back now, my time to shine! Luckily it all went well, it was publicised on Jabbr and Twitter and people started to look at it and the odd person played with the website. In my excitement I approached <a href="http://ayende.com/blog">Oren Eini</a> (or Ayende Rahien as others may know him as) about some publicity about this new port of NerdDinner. Oren is the lead developer of RavenDB so I thought he may be interested. He was very open to the idea and offered to publicise it via a <a href="http://ayende.com/blog/156609/reviewing-dinner-party-ndash-nerd-dinner-ported-to-ravendb-on-ravenhq">blog post</a> which I thought was nice of him. I read his article a week before it was due to be published and he pointed out a few things which I took on-board and changed before the blog post went live. At that point I was slightly nervous due to the things he had spotted, what else were people going to find? The day came when it was published and apparently I had faired well in the review according to other people as he is known for speaking his mind.</p>
+<p>I also got word of another <a href="http://www.dvloop.com/effective-ravendb-session-management/">review </a>from the guy who had helped design the NancyFX logo. He was looking at the way DinnerParty was using the per request/per RavenDB session architecture and offered an alternative approach if one was using service layers. DinnerParty only needed access to the RavenDB session in the modules so it didn’t take that approach.</p>
+<p>In reviews of developers code their natural instinct is to go defensive however, after counting to ten and looking at both reviews there was room for improvements and room for discussion in DinnerParty. Its hard to sit back and do that when you spend a lot of time developing something of your own and a lot of people have the tendency to just ignore criticism but I feel this is one area that you can progress as a developer. Letting others look at your code and explain why another approach maybe better is one of the key ways you learn. You don’t have to agree with an alternative approach but it helps your perception if there is more than one way you can look at it rather than stick with the “my way or the highway” attitude.</p>
+<h3 id="dinnerparty-impact">DinnerParty Impact</h3>
+<p>A few months have passed since DinnerParty went live and after the initial reviews and feeling of excitement what has happened? Well various large multi-national corporations approached me to go and work for them with a salary of $10m, a private jet, speedboat, holiday villas and unlimited Apple products. Not bad eh!?</p>
+<p>Unfortunately my imagination took hold there. DinnerParty the website is still up and running at , the <a href="https://github.com/NancyFx/DinnerParty/">Github repository</a> was moved under the NancyFX central repository and I think its become a minor port of call as a reference app for new users using NancyFX to look at, see <a href="http://stackoverflow.com/questions/11532523/nancy-framework-sample-application">here</a> and <a href="http://stackoverflow.com/a/11253466/84539">here</a>. I have also gained a lot of experience using RavenDB and NancyFX and that was my goal at the start of the project so I think I can feel happy about that.</p>
+<p>Had I made it? No.  I wasn’t suddenly being pestered by lots of people offering me highly paid jobs but it felt good to have done something for the community and to be part of something for a while.  That I believe is the key to it all.  You’re giving something which makes you feel good but you are also apart of something with other people interested in the same thing as you and also hopefully making a difference that adds to the feeling of belonging and by rolling all of that into one defines the word ‘community’.</p>
+    </div> 
+    
+        <div id="tagcloud">   
+            
+            
+                <a href="/tags/community/"><span>community</span></a>
+            
+                <a href="/tags/dinner-party/"><span>dinner party</span></a>
+            
+                <a href="/tags/nancyfx/"><span>nancyfx</span></a>
+            
+                <a href="/tags/oss/"><span>oss</span></a>
+            
+                <a href="/tags/ravendb/"><span>ravendb</span></a>
+            
+                <a href="/tags/windows-azure/"><span>windows azure</span></a>
+                     
+        </div>
+    
+    
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="Jonathan Channon">
+    </span>
+    
+<div id="disqus_thread"></div>
+<script>
+
+    
+
+
+    var disqus_config = function () {
+        this.page.url = '\/2012-09-21-nancyfx-ravendb-nerddinner-and-me\/';  
+        this.page.identifier = ''; 
+    };
+
+    (function () { 
+        var d = document, s = d.createElement('script');
+        s.src = '//jonathanchannonblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
+</html>

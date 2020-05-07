@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Jonathan Channon Blog - Posts</title>
+        <meta name="description" content="My description">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.69.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="9bvoj2jXRyykef2Tg72C0Am15YBTqDF0RgeZ84tUytE" />
+        <meta property="og:title" content="Posts">
+<meta property="og:description" content="My description">
+<meta property="og:type" content="website">
+<meta property="og:url" content="/post/">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7CCourgette' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/dist/site.css">
+        <link rel="stylesheet" href="/dist/syntax.css">
+        <link rel="stylesheet" href="/dist/screen.css" media="screen" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+            <link href="/post/feed.xml" rel="alternate" type="application/rss+xml" title="Jonathan Channon Blog">
+        
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div class="body_wrap">
+            <div class="logo">
+                <strong><a href="index.html">Blog</a></strong>
+                <div class="logo_description">curated by Jonathan Channon</div>
+            </div>
+            
+            <div class="header">            
+                <div class="header_inner">
+                        
+                    <nav id="topmenu" class="clearfix">
+                        <ul class="dropdown">
+                            <li class="menu-item-blue"><a href="/"><span>Home</span></a></li>
+                            <li class="menu-item-pink"><a href="/archive"><span>Archive</span></a></li>
+                        </ul>
+                    
+                    <select id="topm-select" onChange="location = this.value">
+                        <option value="">Site Navigation</option>
+                        <option value="/">Home</option>
+                        <option value="/about">About Me</option>
+
+                        <option value="/archive">Archive</option>
+                        <option value="/contact">Contact</option>
+                    </select>
+                    </nav>    
+                    
+
+                </div>
+            </div>
+              
+            
+            <div id="middle" class="full_width">
+                <div class="container clearfix">                        
+                    
+                    <div> 
+            
+
+
+<div id="post-index" class="container">
+    
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name">My headline</h1>
+        <p>My description</p>
+    </header>
+
+
+
+    <ol class="post-list">
+        
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-08-24-async-route-handling-with-nancy/">Async Route Handling with Nancy</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">August 24, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-08-24-async-route-handling-with-nancy/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I don&rsquo;t know about you but all I hear is &ldquo;ASYNC ALL THE THINGS!&quot;, I think this is partly down to its new and shiny and us developers love &ldquo;the shiny&rdquo; and partly a lot of the things we do in our applications are I/O based whether that be database or file system.</p>
+<p>The problem that comes with the new and shiny bandwagon is you need to understand what you&rsquo;re evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application&rsquo;s performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O.</p>
+<p>It could also be argued that only &ldquo;use asynchronicity in a web framework if you expect high traffic in your web application&rdquo;. If you only have 10 requests on a small site you&rsquo;re not going to benefit from asynchronous execution as there are plenty of threads available to handle your application.  If you start hitting 1000 concurrent requests (the default IIS limit) then requests will start getting queued up.  If you make your routes asynchronous then any code that is being waited on, the thread that is being used there can be released to process another request thus speeding up the performance of your app and prevent the likely hood of large queues.  I will show how simple it is to make your routes asynchronous with Nancy below.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-08-24-async-route-handling-with-nancy/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-08-22-a-quick-look-at-visual-node/">A quick look at Visual Node</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">August 22, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-08-22-a-quick-look-at-visual-node/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I came across <a href="http://www.visualnode.info/">Visual Node</a> a few months ago and was excited by the looks of it.  For those that didn&rsquo;t click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what&rsquo;s going on.</p>
+<p>The hipster in me is screaming saying &ldquo;You should be using Sublime Text and <a href="https://github.com/dannycoates/node-inspector">node-inspector</a> for debugging&rdquo; but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that&rsquo;s just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I&rsquo;m never going to touch a dynamic language again, &ldquo;give me a statically typed language every time with a compiler&rdquo;.  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-08-22-a-quick-look-at-visual-node/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-07-03-modifying-files-within-git-history/">Modifying files within Git history</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">July 3, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-07-03-modifying-files-within-git-history/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.</p>
+<p>I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.</p>
+<p>For Sublime Text run this in the command line:</p>
+<pre><code>git config --global core.editor &quot;'C:/Program Files/Sublime Text 2/sublime_text.exe'&quot;
+</code></pre>
+<p>Next up is finding the commit id you want to go back to, to edit:</p>
+<pre><code>git log
+</code></pre>
+<p>Make a note of the parent commit id of the commit you want to edit.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-07-03-modifying-files-within-git-history/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-05-29-why-net-should-become-independent/">Why .Net should become independent!</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">May 29, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-05-29-why-net-should-become-independent/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in <a href="http://nancyfx.org/">Nancy</a> on my first day and paved the way for Git in the first week).</p>
+<p>My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.</p>
+<p>These adverts usually contain a list of tech/experience similar to: MVC, Webforms, Visual Studio, SQL Server, Entity Framework, WCF, LINQ.</p>
+<p><strong>Q:</strong> What’s the common denominator here?<br>
+<strong>A:</strong> They are all owned by Microsoft.</p>
+<p><strong>Q:</strong> What operating system do these all run on?<br>
+<strong>A:</strong> Microsoft Windows</p>
+<p><strong>Q:</strong> What framework and programming language do they run on?<br>
+<strong>A:</strong> Microsoft .Net and C#</p>
+<p>Spot a pattern?</p>
+<p>So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-05-29-why-net-should-become-independent/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-04-30-mocking-httpcontext-with-fake-it-easy/">Mocking HttpContext with Fake It Easy</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">April 30, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-04-30-mocking-httpcontext-with-fake-it-easy/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>Lets start with the conclusion first and say “use <a href="http://nancyfx.org">Nancy</a> for your web applications and APIs” as its brilliant!</p>
+<p>If you want to continue reading lets crack on.</p>
+<p>I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, <em>eg. Response.Write(“How will I mock thee?”);</em></p>
+<p>Having moved over to <a href="http://xunit.codeplex.com/">xUnit</a> and <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.</p>
+<p>Doing this is no easy feat with MVC (with Nancy its all <a href="https://github.com/NancyFx/Nancy/wiki/Testing-your-application">done for you</a>) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-04-30-mocking-httpcontext-with-fake-it-easy/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-04-17-up-running-with-typescript-and-webstorm/">Up &amp; Running with TypeScript and WebStorm</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">April 17, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-04-17-up-running-with-typescript-and-webstorm/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I love my iMac and I’m on a mission to find a language I enjoy that I can use my Mac for (no Windows fan boy jokes please). There’s something in my mind I associate with work and my Windows laptop. Therefore, I don’t feel to excited about getting my laptop out of my bag in the evenings/weekends to play with other stuff.</p>
+<p>As I want to broaden my knowledge I wanted to find something ideally statically typed (although I’m currently looking into Python) that would work on OS X. I’ve said previously that JavaScript seems the way to go in my current situation so I thought I’d take a look at TypeScript and also use <a href="http://www.jetbrains.com/webstorm/">WebStorm</a> from Jetbrains as my IDE seeing as I’ve heard so many great things about them and their products (don’t worry I use ReSharper).</p>
+<h2 id="typescript">TypeScript</h2>
+<p>So I went over to TypeScript’s <a href="http://www.typescriptlang.org/">website</a> and followed the Hello World type code examples under the “Learn” tab.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-04-17-up-running-with-typescript-and-webstorm/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-04-08-using-a-markdown-viewengine-with-nancy/">Using a Markdown ViewEngine with Nancy</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">April 8, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-04-08-using-a-markdown-viewengine-with-nancy/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>Whilst using <a href="http://stackoverflow.com">stackoverflow.com</a> and <a href="https://gist.github.com/">Github gists</a> I’ve become a frequent user of <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.</p>
+<p>For those of you that don’t know what Markdown is, its essentially a shorter/cleaner syntax that can be parsed to produce HTML. Below are a few examples:</p>
+<pre><code>#Hello World!
+##You're awesome!
+The quick brown fox jumped over the lazy coder
+What the **hell** is this?
+This is an [example link](http://example.com/)
+
+&lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;h2&gt;You're awesome!&lt;/h2&gt;
+&lt;p&gt;The quick brown fox jumped over the lazy coder&lt;/p&gt;
+What the &lt;strong&gt;hell&lt;/strong&gt; is this?
+This is an &lt;a href=&quot;http://example.com/&quot;&gt; example link&lt;/a&gt;
+</code></pre>
+<p>You can see more examples in the earlier link.</p>
+<p>When you’re writing a blog post or a lengthy page in your web app with lots of HTML it maybe easier to use Markdown as your preferred syntax. I currently use WordPress for my blog, it’s ok but its quite bloated for probably what I need. I looked into <a href="http://calepin.co/">Calepin</a> and <a href="http://scriptogr.am/">Scriptogr.am</a> as alternative blogging platforms but I felt it didn’t quite offer what I wanted but the approach was a good idea. It meant you could write a blog post and simply put the file in dropbox and it would appear on your blog.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-04-08-using-a-markdown-viewengine-with-nancy/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-04-08-using-datetime-in-c-and-sql/">Using DateTime in C# and SQL</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">April 8, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-04-08-using-datetime-in-c-and-sql/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I’m sure there are millions of blog posts out there that already discuss this but I think its worth noting down even if its just something for me to remember.</p>
+<p>Store your datetimes in UTC format into the database. Unfortunately this mean executing something like:
+<code>myObject.ExpiryDate = TimeZoneInfo.ConvertTimeToUtc(dateTime, TimeZoneInfo.FindSystemTimeZoneById(“timezoneid of users”)</code></p>
+<p>In every central place where you update/insert DateTime values on your objects you will need the above.</p>
+<p>When you display any DateTime information it must display as a local datetime value. You can do this by using     <code>myObject.ExpiryDate.ToLocalTime()</code></p>
+    </div>
+
+    <p><a class="readmore" href="/2013-04-08-using-datetime-in-c-and-sql/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-04-02-the-old-development-language-switcheroo/">The Old Development Language Switcheroo</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">April 2, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-04-02-the-old-development-language-switcheroo/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>As a C# developer I think I’m pretty safe in saying that its not going away any time soon however, its my opinion that to not become irrelevant you need to have options. Some may argue that its better to be master of one than a Jack of all trades but lets just say you can’t find your next job in the primary language you want to work in. What do you do?</p>
+<p>I have looked more into JavaScript recently and with that comes server and client scope for the use of the language so with some understanding of JS that would be probably the best bet for me however, as much as this may annoy some I think I actually prefer statically typed languages.</p>
+<p>Now I know there is <a href="http://www.typescriptlang.org/">TypeScript</a> that I could use for my <a href="http://nodejs.org/">node.js</a> apps but I see that as more of a workaround and not a core feature of JavaScript. I’m not saying anything bad against JS and the libraries/frameworks that I have used I like but I just find it easier to learn and know what I can do when I have decent intellisense showing me what I can do with my code.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-04-02-the-old-development-language-switcheroo/">Read more...</a></p>            
+    
+  </div>
+        
+            <div class="post-item boxed post-detail" itemtype="https://schema.org/Blog">
+
+    <span class="post-label label-quotes"></span>           
+    <div class="post-title">
+      <h1><a href="/2013-03-04-the-many-approaches-to-entity-framework/">The many approaches to Entity Framework</a></h1>
+    </div>
+    <div class="post-meta-top">
+        <span class="post-date">March 4, 2013</span> 
+        
+        <div class="commentcount" data-disqus-url="/2013-03-04-the-many-approaches-to-entity-framework/"></div>
+    </div>
+    
+    <div class="post-descr entry">
+        <p>I recently had a need to look into using <a href="http://www.asp.net/entity-framework">Entity Framework (EF)</a> for a <a href="http://www.asp.net/mvc">ASP.NET MVC</a> project. In the past I have always used <a href="http://www.toptensoftware.com/petapoco/">PetaPoco</a> as my ORM of choice and with hearing nothing but bad things about EF I was a little sceptical. There are various ways to use EF, Code First being one of them and the easiest from what I can gather and luckily the approach I needed to get up to speed on. This means you can define your model in code and EF will turn that into tables in your database.</p>
+<p>The way I was going to see how EF could be architected in an application was to create a MVC application that provided CRUD capabilities for Customers, Orders and Products. Nothing complicated but something enough to see how EF could be fitted in with a MVC application. I would also like to use a unit of work pattern such as instantiate a model class, set some properties and call a save method. I would also like to keep the architecture well enough abstracted so that another ORM could take its place easily enough if needs be.</p>
+<p>I will list the various approaches I took investigating the how EF could be integrated. They are not in any chronological order.</p>
+    </div>
+
+    <p><a class="readmore" href="/2013-03-04-the-many-approaches-to-entity-framework/">Read more...</a></p>            
+    
+  </div>
+        
+    </ol>
+
+    <div class="post-navigation">
+        
+
+    <div class="text-center">
+
+        
+            <a href="/post/page/3/">&larr; Newer Posts</a>
+        
+        
+            <a href="/post/page/5/">Older Posts &rarr;</a>
+        
+    </div>
+
+    </div>
+</div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="footer_social">
+    <div class="footer_social_inner">
+        <div class="container">
+            
+                <a class="social-twitter" data-hint="Twitter" title="Twitter" href="https://twitter.com/jchannon" rel="me">Twitter</a>
+            
+            
+                <a class="social-github" data-hint="Github" title="Github" href="https://github.com/jchannon" rel="me">Github</a>
+            
+            
+                <a class="social-linkedin" data-hint="LinkedIn" title="Linked In" href="http://uk.linkedin.com/in/jonathanchannon" rel="me">Linked In</a>
+            
+            
+                <a href="/feed.xml" class="social-rss">RSS Feed</a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+<script src="//js/libs/modernizr.min.js"></script>
+<script src="//js/libs/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script src="//js/general.js"></script>
+<script src="//js/hoverIntent.js"></script>
+
+<script type='text/javascript'>
+    $(function () {
+        $("pre code").parent().each(function () {
+            if (!$(this).hasClass("prettyprint")) {
+                $(this).addClass("prettyprint");
+                a = true
+            }
+        });
+        
+    });
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</body>
+
+</html>

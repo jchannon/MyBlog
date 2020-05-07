@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>snow on </title>
+    <link>/tags/snow/</link>
+    <description>Recent content in snow on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 01 Oct 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/snow/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Blogging with Markdown &amp; Deploying via Git - Introducing Sandra.Snow</title>
+      <link>/2013-10-01-blogging-with-markdown-and-git/</link>
+      <pubDate>Tue, 01 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/2013-10-01-blogging-with-markdown-and-git/</guid>
+      <description>&lt;p&gt;There are many markdown blogging engines out there such as &lt;a href=&#34;http://calepin.co/&#34;&gt;Calepin&lt;/a&gt;, &lt;a href=&#34;http://scriptogr.am/&#34;&gt;Scriptogram&lt;/a&gt; and even &lt;a href=&#34;http://wordpress.org/&#34;&gt;WordPress&lt;/a&gt; allows you to write blog posts in Markdown but &lt;a href=&#34;https://github.com/Sandra/Sandra.Snow&#34;&gt;Sandra.Snow&lt;/a&gt; tries to add something different.  Firstly, it is written in .Net and &lt;a href=&#34;http://nancyfx.org&#34;&gt;Nancy&lt;/a&gt;, secondly its a static blog generator and finally it supports Git deployment.&lt;/p&gt;
+&lt;p&gt;Even if you don&amp;rsquo;t want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+layout: post
+category: Azure
+title: Setting up a ServiceStack Service
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;layout&amp;rdquo; refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you&amp;rsquo;d prefer.  These &amp;ldquo;layout&amp;rdquo; files should exist in the &amp;ldquo;_layouts&amp;rdquo; folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;category&amp;rdquo; or &amp;ldquo;categories&amp;rdquo; property, you can use both for singular or multiple comma-seperated values that refer to the category/categories of your blog post.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;title&amp;rdquo; should hopefully be self explanatory!&lt;/p&gt;
+&lt;p&gt;You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
