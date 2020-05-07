@@ -68,8 +68,8 @@ For a better understanding here's a video:
 [3]: http://www.visualnode.info/readme
 [4]: https://npmjs.org/
 [5]: http://www.nuget.org/
-[6]: http://www.visualnode.info/images/readme/package.png
-[7]: http://www.visualnode.info/images/readme/new-project.png
+[6]: https://www.visualnode.info/images/readme/package.png
+[7]: https://www.visualnode.info/images/readme/new-project.png
 [8]: /images/blogpostimages/projectlayout.PNG
 [9]: /images/blogpostimages/console.png
 [10]: /images/blogpostimages/helloworldbrowser.PNG

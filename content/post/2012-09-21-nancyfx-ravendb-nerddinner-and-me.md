@@ -168,7 +168,7 @@ Had I made it? No.  I wasn’t suddenly being pestered by lots of people offerin
    [16]: https://groups.google.com/forum/?fromgroups#!forum/ravendb
    [17]: https://ravenhq.com/
    [19]: http://twitter.com/thecodejunkie
-   [20]: http://blog.jonathanchannon.com/wp-includes/images/smilies/icon_wink.gif
+   [20]: https://blog.jonathanchannon.com/wp-includes/images/smilies/icon_wink.gif
    [21]: http://www.windowsazure.com
    [22]: http://social.msdn.microsoft.com/Forums/en-US/windowsazurewebsitespreview/thread/9ee30e74-7546-4c1e-ac8c-0235e1589920
    [23]: https://twitter.com/davidebbo
