@@ -85,83 +85,83 @@ Below I will highlight some of the cool features of [OmniSharpSublime][2] by the
 
 This is probably one of the most important features that springs to mind when editing a C# file in a text editor. 
 
-![Intellisense](http://i.imgur.com/IkirwAE.gif)
+![Intellisense](https://i.imgur.com/IkirwAE.gif)
 
 ###Go To Definition
 
-![Go to definition](http://i.imgur.com/ZClA8qG.gif)
+![Go to definition](https://i.imgur.com/ZClA8qG.gif)
 
 ###Rename
 
-![Rename](http://i.imgur.com/6ByBw5R.gif)
+![Rename](https://i.imgur.com/6ByBw5R.gif)
 
 ###Find Usages
 
-![Find Usages](http://i.imgur.com/yUGl59t.gif)
+![Find Usages](https://i.imgur.com/yUGl59t.gif)
 
 ###Go To Implementation
 
-![Go to Implementation](http://i.imgur.com/3Ypv6H8.gif)
+![Go to Implementation](https://i.imgur.com/3Ypv6H8.gif)
 
 ###Format Document
 
 Checkout the key binding!
 
-![Format Document](http://i.imgur.com/kkkUiRZ.gif)
+![Format Document](https://i.imgur.com/kkkUiRZ.gif)
 
 ###Override
 
-![Override](http://i.imgur.com/EntuVe1.gif)
+![Override](https://i.imgur.com/EntuVe1.gif)
 
 ###Add Reference
 
-![Add Reference](http://i.imgur.com/nWZndb0.gif)
+![Add Reference](https://i.imgur.com/nWZndb0.gif)
 
 ###Syntax Errors
 
-![Syntax Errors](http://i.imgur.com/Ka4tHk6.gif)
+![Syntax Errors](https://i.imgur.com/Ka4tHk6.gif)
 
 ###Semantic Errors
 
-![Semantic Errors](http://i.imgur.com/ljEfdfv.gif)
+![Semantic Errors](https://i.imgur.com/ljEfdfv.gif)
 
 ###Code Issues
 
-![Code Issues](http://i.imgur.com/qRN9ydy.gif)
+![Code Issues](https://i.imgur.com/qRN9ydy.gif)
 
 ###Fix Code Issues
 
-![Fix Code Issues](http://i.imgur.com/xWD8qwn.gif)
+![Fix Code Issues](https://i.imgur.com/xWD8qwn.gif)
 
 ###Fix Using Statements
 
-![Fix Usings](http://i.imgur.com/7fmRFqm.gif)
+![Fix Usings](https://i.imgur.com/7fmRFqm.gif)
 
 ###Code Actions
 
 Checkout the key binding for Resharper lovers!
 
-![Code Actions](http://i.imgur.com/16UsVBf.gif)
+![Code Actions](https://i.imgur.com/16UsVBf.gif)
 
 ###Add New C# File
 
 There is also add new C# interface and you can add [your own templates][28]!
 
-![Add new c# file](http://i.imgur.com/0S5T48f.gif)
+![Add new c# file](https://i.imgur.com/0S5T48f.gif)
 
 ###Type Lookup
 
-![Type Lookup](http://i.imgur.com/5Wu44i5.gif)
+![Type Lookup](https://i.imgur.com/5Wu44i5.gif)
 
 ###Build Solution
 
 You can press F4 & Shift+F4 to cycle through the errors reported!
 
-![Build](http://i.imgur.com/g6Adivm.gif)
+![Build](https://i.imgur.com/g6Adivm.gif)
 
 ###Unit Tests
 
-![Unit Tests](http://i.imgur.com/gSuTami.gif)
+![Unit Tests](https://i.imgur.com/gSuTami.gif)
 
 ###Add/Remove from Project
 
@@ -226,7 +226,7 @@ Martijn Laarman has posted information on the Brackets plugin [here][30]
 
 I've been spiking NuGet support for Sublime and here's a brief intro
 
-![NuGet](http://i.imgur.com/MB7EH6x.gif)
+![NuGet](https://i.imgur.com/MB7EH6x.gif)
 
 
   [1]: http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/

@@ -66,4 +66,4 @@ As you can see it uses reflection to create instances of all the sealed classes 
 
 This approach works and allows me to test my code but all in all its not particualry elegant and the following gif can sum up what we've learnt from sealed methods and classes and thats they're *nasty*: 
 
-![Nasty](http://i.imgur.com/pR3tklc.gif)
+![Nasty](https://i.imgur.com/pR3tklc.gif)

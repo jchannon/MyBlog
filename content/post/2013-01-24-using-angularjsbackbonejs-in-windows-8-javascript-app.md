@@ -59,7 +59,7 @@ One thing to note is that jquery-win8 runs off of jQuery 1.8.2 but appendTo are 
 
    [1]: http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/ (JavaScript is the future…maybe!)
    [2]: http://TodoMVC.com
-   [3]: http://i.stack.imgur.com/DOQl1.png (Unhandled Exception)
+   [3]: https://i.stack.imgur.com/DOQl1.png (Unhandled Exception)
    [4]: http://msdn.microsoft.com/en-gb/library/windows/apps/hh767331.aspx
    [5]: https://github.com/appendto/jquery-win8
    [6]: https://twitter.com/elijahmanor

@@ -165,8 +165,8 @@ For more infomation on Nancy checkout the [website][1] and [documentation.][17]
    [10]: http://twitter.com/GrumpyDev
    [11]: http://nancyfx.spreadshirt.net/
    [13]: http://blog.jonathanchannon.com/2012/11/29/asp-net-web-api-testing/ (ASP.NET Web API Testing)
-   [14]: http://i.imgur.com/tIRwUHo.gif
-   [15]: http://i.imgur.com/Vf8KDu6.gif
-   [16]: http://i.imgur.com/pqv0Xld.gif
+   [14]: https://i.imgur.com/tIRwUHo.gif
+   [15]: https://i.imgur.com/Vf8KDu6.gif
+   [16]: https://i.imgur.com/pqv0Xld.gif
    [17]: https://github.com/NancyFx/Nancy/wiki/Documentation
   

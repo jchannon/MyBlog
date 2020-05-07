@@ -24,7 +24,7 @@ So for example if your project is called MyApp and you have an app.config and ap
 
 Go into VS, Reload All when it prompts you and set the Copy to Output Directory value to Copy Always
 
-![VS Property Window](http://i.imgur.com/E8Kbezh.jpg)
+![VS Property Window](https://i.imgur.com/E8Kbezh.jpg)
 
 Now when you deploy Octopus should run the transformation and replace connection strings etc as you would expect.
 

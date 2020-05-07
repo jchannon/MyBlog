@@ -98,12 +98,12 @@ The current release of Nancy is 0.23 and Nancy has been stable for a long time a
 The future of .Net development is looking good. Go out and code up a storm =)
 
   [1]: http://www.hanselman.com/blog/IntroducingASPNETVNext.aspx
-  [2]: http://i.imgur.com/XMmMDce.png
+  [2]: https://i.imgur.com/XMmMDce.png
   [3]: http://blogs.msdn.com/b/visualstudioalm/archive/2014/06/04/visual-studio-14-ctp-now-available-in-the-virtual-machine-azure-gallery.aspx
-  [4]: http://i.imgur.com/R6QFSjY.png
-  [5]: http://i.imgur.com/9hINknn.png
-  [6]: http://i.imgur.com/Npw77Ar.png
-  [7]: http://i.imgur.com/dkf2HF0.png
+  [4]: https://i.imgur.com/R6QFSjY.png
+  [5]: https://i.imgur.com/9hINknn.png
+  [6]: https://i.imgur.com/Npw77Ar.png
+  [7]: https://i.imgur.com/dkf2HF0.png
   [8]: http://www.asp.net/vnext/overview/aspnet-vnext/getting-started-with-aspnet-vnext-and-visual-studio
   [9]: http://twitter.com/thecodejunkie
   [10]: https://www.myget.org/F/nancyfx/

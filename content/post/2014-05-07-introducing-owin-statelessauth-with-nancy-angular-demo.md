@@ -68,7 +68,7 @@ So we pass in our implementation of ITokenValidator called MySecureTokenValidato
     
             var jwttoken = new JwtToken()
             {
-                Issuer = "http://issuer.com",
+                Issuer = "https://i.suer.com",
                 Audience = "http://mycoolwebsite.com",
                 Claims =
                     new List<Claim>(new[]
@@ -288,5 +288,5 @@ Enjoy!
   [12]: https://github.com/mozilla/localForage
   [13]: http://msdn.microsoft.com/en-us/library/system.identitymodel.claims.claim(v=vs.110).aspx
   [14]: http://msdn.microsoft.com/en-GB/library/system.security.claims.claimsprincipal.aspx
-  [15]: http://i.imgur.com/FlI4NAi.png
-  [16]: http://i.imgur.com/GeCP9IJ.png
+  [15]: https://i.imgur.com/FlI4NAi.png
+  [16]: https://i.imgur.com/GeCP9IJ.png
