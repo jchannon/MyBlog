@@ -1,4 +1,4 @@
-baseurl = "/"
+baseURL = "https://blog.jonathanchannon.com/"
 title = ""
 theme = "ghostwriter"
 googleAnalytics = "UA-123-45"
