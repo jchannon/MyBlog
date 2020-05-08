@@ -8,6 +8,8 @@ As of beginning of April 2018 Botwin has been renamed to Carter.  Whilst I thoug
 
 The last release of Botwin was 3.5.0 but the same package has also been released under Carter 3.5.0
 
+<!--more-->
+
 [https://www.nuget.org/packages/Botwin/3.5.0](https://www.nuget.org/packages/Botwin/3.5.0)
 
 [https://www.nuget.org/packages/Carter/3.5.0](https://www.nuget.org/packages/Carter/3.5.0)
