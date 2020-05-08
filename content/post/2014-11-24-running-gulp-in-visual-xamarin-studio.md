@@ -54,24 +54,24 @@ So here's the code:
 
     </PostBuildEvent>
 
-##Idiosyncrasies
+## Idiosyncrasies
 
 So you can probably see some weird things going on there so I'll explain:
 
-###Separate Build Events for Non-Windows
+### Separate Build Events for Non-Windows
 
 I have a separate post build event for debug and release for non windows builds, I like that, seems correct to keep them separate. However, for Windows builds I have an `if` statement.  I did get separate build events firing but then when it hit the `npm install` line it just wouldn't work for some reason.
 
-###Export PATH for Non-Windows
+### Export PATH for Non-Windows
 
 I spent a long time trying to get gulp running on OSX. I tried it via executable shell scripts and in a post build event but it just wouldn't work but yet in the terminal all was fine.  I'm not sure if `xbuild` gets executed as a different user or with limited privielges but I was stumped until [@yantrio][1] pointed me in the direction of exporting the `PATH`.  As `Gulp` sits in `/usr/local/bin` I had to expose it to the post build event
 
 
-###Changing directory
+### Changing directory
 
 In the post build events I change directory to the folder where the gulp file is located.  I did play quickly on doing it without changing directory but there were some disadvantages so I just went with this approach.  On Windows you'll see that I change directory after each command is executed.  For some reason when executed on Windows when the commands are run the current working directory is changed so you have to change it back to folder where you want to run gulp from.  On OSX & Linux you can set it once and all is fine.
 
-##Conclusion
+## Conclusion
 
 So there you have it.  You're asking why not use the [Visual Studio 2013][2] extension that enables running gulp from VS?  That would only work for those developers using Visual Studio and we have developers using Xamarin Studio so we wanted an across the board solution for all developers.  I know VS 2015 will have Gulp runners baked into it but I'm not sure of Xamarin Studio plans.  If you use this and get it working without a `if` statement for Windows let me know. 
 

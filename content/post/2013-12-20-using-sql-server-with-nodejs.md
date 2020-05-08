@@ -27,7 +27,7 @@ Thats it, you could call `node myscript` and it would log out the values of the 
 
 What this did was in fact send the SQL string to a compiled dll which had a class and async method in it that was setup to respond to calls from node js.  This method essentially returned a C# `List<object>` that was serialized to JSON so the node.js function could interact with it.  The one issue I saw with it was the actual format of the JSON.  It was a 2 dimentional array, with the first array in the parent array containing the column names and the subsequent arrays containing values from the rows in the SQL result.  
 
-##Time to roll up your sleeves
+## Time to roll up your sleeves
 
 Whilst I liked the fact that I could now return data from MSSQL with node its format wasnt quite right.  I forked the project on Github and then looked at the way it was executing the SQL and storing it in a `List<object>`.  Whilst I kept the `List<object>` return type the information inside it differed.  I was now using `var dataObject = new ExpandoObject() as IDictionary<string, Object>;` and for each field in the resulting SQL dataset I populated it like so `dataObject.Add(record.GetName(i), resultRecord[i]);` ie/ the column name and corresponding value.  So this looped over the sql storing objects in a list and then returning it as JSON as it did before.  What this meant was that the API had now changed so I could refer to the column names as object properties on the node object.
 
@@ -41,7 +41,7 @@ Bingo!
 
 So now just out of curisotiy I wanted to right a sample ExpressJS app to see how I could use this to have a JS file that acted as a C# repository to do all the data access.  I'll let you look into setting express up yourself but what I managed to do was this:
 
-####server.js
+#### server.js
 
 	var express = require('express');
 	var edge = require('edge');
@@ -56,7 +56,7 @@ So now just out of curisotiy I wanted to right a sample ExpressJS app to see how
 	console.log('Listening on port 999')
 
 
-####db.js
+#### db.js
 
 	var edge = require('edge');
 
@@ -64,7 +64,7 @@ So now just out of curisotiy I wanted to right a sample ExpressJS app to see how
 					    select top 10 * from Products 
 					 */});
 
-####index.js
+#### index.js
 
 	exports.home = function(db) {
 	    return function(req, res) {
@@ -81,7 +81,7 @@ So now just out of curisotiy I wanted to right a sample ExpressJS app to see how
 
 I fired up a browser and pointed it at http://localhost:999 and it returned showed me my 10 products, then my first item's product name and second item's re-order level. Consider me pleased!
 
-##Conclusion
+## Conclusion
 
 I know some people will think using MSSQL for a node app seems odd but if you want to spike something up and/or only have access to a MSSQL db for whatever reason you can now do it very easily and actually quite elegantly.  You execute your SQL and you get back a JSON object that represents your data, same as any other SQL/NOSQL database.  Give it a whirl and see how you get on!
 

@@ -23,7 +23,7 @@ The "title" should hopefully be self explanatory!
 
 You can optionally add an author and email properties to override the global config settings for example, if you wanted to allow guest author blog posts.  There is also an optional metadescription property you can use for SEO.
 <!--more-->
-###Global Config
+### Global Config
 
 In the root of the site template is a snow.config file which is what Sandra.Snow uses to determine url format, where to look for posts and layouts and other related information. It is JSON formatted and looks like this:
 
@@ -97,17 +97,17 @@ Once you run the Sandra.Snow exe it will output the HTML and you can then FTP yo
 
 Check out the [wiki][12] for more details about other HTMLHelpers such as Google Analytics.
 
-###Git Integration
+### Git Integration
 
 FTP is so 2001 so Sandra.Snow has a website called Sandra.Snow.Barbato which allows you to access it (final URL to be confirmed) and log in with your Github credentials.  It will then give you a list of your repositories, the idea being one of them is your blog with the markdown posts and snow.config etc.  A [base template][11] is available in the Sandra repository for you to fork.  You can then choose whether you'd like to deploy to another Git repository that supports Git deployment eg/Azure, AppHarbor, Heroku or you can select FTP.  In either scenario, enter your details and off you go. The website will use Sandra.Snow to create the output and it will then wire it over to your chosen destination.  
 
 Sandra.Snow.Barbato is also setup to handle Github hooks so in Github if you tell your repository to do a post commit hook to the website, after you write a new blog post and push to Github it will post to the website and know if you've previously logged in and if so generate the HTML and re-deploy your blog.  It will also push the generated content back to your Github repository on the master branch. Very nice!
 
-###Setting up Sandra.Snow.Barbato
+### Setting up Sandra.Snow.Barbato
 
 One you have forked the Barbato template you can begin to style your blog pages.  Obviously every time you want to make a style change you want to see the results.  There are 2 ways to do this.  i) Run Sandra.Snow locally, setup a webserver eg/IISExpress to point to the Snow output directory and open up your browser to see the changes. Keep making changes to the *.cshtml and *.css files until happy ii) Make the changes in your repo, sign up with Sandra.Snow.Barbato and go to your domain to check the changes that were deployed.
 
-####Azure
+#### Azure
 If deploying to Azure you must have a .deployment file in the root of your repository that contains:
 
     [config]
@@ -115,10 +115,10 @@ If deploying to Azure you must have a .deployment file in the root of your repos
     
 This is needed because when your template repository is pushed to Azure it needs to know what to deploy. This simply tells it to use the Website folder ie.the output folder from Sandra.Snow.
 
-####Github Pages
+#### Github Pages
 If deploying to Github you need a few things. Your repository needs to be called `username.github.io`. You then need to create a CNAME file in your repo that has the domain you will be using inside it. Finally you need to setup the DNS on your domain to point to `username.github.io` by creating a CNAME record in your DNS Manager. What you'll have to probably do is clone your `username.github.io` repo and run Snow and set the output setting in snow.config to the path of your `username.github.io` folder. You can then push the changes to Github. 
 
-###Wordpress Migration
+### Wordpress Migration
 
 My blog was previously using Wordpress so I needed to get my data out.  The most common referred to tool was [wp2md][6] which uses Python to go through the exported Wordpress content and then convert to Markdown.  For some reason I didn't go with that choice and went with [http://heckyesmarkdown.com/][7].  Its a bit more work because you have to give it your previous URLs to your blog posts and it reads the source of the page and converts it to Markdown.  It worked brilliantly for me.  I had to make a few changes on the output it provided by generally it was very good.
 
@@ -130,7 +130,7 @@ I then went through and styled the master page `default.cshtml` in the _layouts 
 
 Once done I ran the .exe file to generate my content.  One of the great things about Sandra.Snow is its speed. It takes less than a second to do 100 blog posts, luckily I only have 25 so its really fast.  I opened up a browser and checked my files and if some styling needed tweaking I could do so and re-run.  Once all ok I can deploy or push the template folder to Github, setup the post commit hook and then use Sandra.Snow.Barbato to handle deployment from now on.
 
-###Conclusion
+### Conclusion
 
 If you're a Git and Markdown user and want to create a blog with complete simplicity this is a great tool.  No more messy Wordpress, no more running exe's on your machine (unless you want to), its completely automated apart from writing the blog posts!  In fact I'm so happy with this project, this blog is using it!  Give it a try and if you like the look of it get involved with its development.  [Sandra.Snow][4] the new modern, simplistic and effective tool for blogging.
 

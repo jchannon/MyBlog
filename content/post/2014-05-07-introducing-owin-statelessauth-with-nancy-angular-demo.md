@@ -9,11 +9,11 @@ For those of you who are not quite up to date or unsure what OWIN is let me try 
 
 <!--more-->
 
-###Enter OWIN
+### Enter OWIN
 
 What OWIN introduces is an HTTP abstraction from the host to framework and therefore you have access to the whole request at any point. As an example, [here][6] is a node.js web server (replacing IIS) and then calling out to Nancy.  Pretty cool huh!  As HTTP is abstracted you can have two applications, one in Nancy and one in WebAPI in the same project and via OWIN you can tell it which requests go to Nancy and which go to WebAPI.
 
-###Authentication
+### Authentication
 
 Due to the HTTP abstraction we can now inspect the requests and then determine whether we should return a 401 or let the request continue. So how does that look?
 
@@ -30,7 +30,7 @@ Due to the HTTP abstraction we can now inspect the requests and then determine w
 
 In an OWIN app we need a Startup class to configure our application and we wire up the requests and how they may be handled in order of processing.  So as I stated earlier we want to use SignalR and Nancy and validate the requests before they hit our application, using [Owin.StatelessAuth][7] we can do that.  It takes an implementation of `ITokenValidator` where a method gets called to determine if the request is valid by passing in a token from the `Authorization` header.  How you implement the interface and determine what is a valid request is up to you.  Luckily I have a demo available in the [Github repository][8] which I'll now explain.
 
-###Demo Time
+### Demo Time
 
 About 2 days after publishing [Owin.StatelessAuth][8], Mike Hadlow published a great [blog post][9] on using JWT (JavaScript Web Tokens) & OWIN & Angular so I thought I would do a similar post just to throw my 2 cents in.  Its going to be hard not to say the same things as Mike so I may skip some stuff but it just means you should read his post too!  So lets get the code to do the talking...
 
@@ -257,7 +257,7 @@ My first comment in the code is that the class [Claim][13] won't deserialize whi
     
 Nancy has a CurrentUser property on the NancyContext, if this is not null then we know the user is authenticated.  In the introduction of the blog post I mentioned Nancy.Authentication.Stateless (other Nancy.Authentication libraries are available) which does exactly that, it assigns the the CurrentUser to the validated user.  In our Bootstrapper we use the ClaimsPrincipal instance in the Owin environment that Owin.StatelessAuth put in there for us to assign the properties of `IUserIdentity` in Nancy to assign the current user.  We can then use `RequiresAuthentication` on our Nancy routes to secure routes based on extra security such as claim types.
 
-###Conclusion
+### Conclusion
 What we have now is a way using Owin.StatelessAuth to secure all incoming requests, the option to ignore some requests for authentication, a way for tokens to be issued, a way for them to be validated and the ability to assign Nancy's user to the user we validated using Owin.StatelessAuth.
 
 I enjoyed writing Owin.StatelessAuth middleware component and the demo with it so please take a look, any constructive feedback welcomed along with pull requests :)

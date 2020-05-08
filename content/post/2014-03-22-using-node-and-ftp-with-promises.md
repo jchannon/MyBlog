@@ -5,7 +5,7 @@ tags = ["javascript","nodejs","promises"]
 +++
 I've played with node in the [past][1] but as of the new year I decided to try and make a more concerted effort to get stuck into node properly.  I decided to go back to the beginning to try and get a better appreciation for the language so read "JavaScript: The Good Parts by Douglas Crockford".  I found that exercise fulfilling and resulted in a few light bulb moments that made some dots join up so I'd recommend reading it if you haven't already.
 
-###Real World App
+### Real World App
 
 As I stated earlier I have already played with node in the past using [Express][2] and have read quite a bit on node and read many examples but I wanted to write a non-web app as I felt this would give me a better opportunity to get to grips with the language and Node. Using Express allows you to get up and running very quickly without to much head scratching so I felt a standalone script would give me more exposure to things.
 
@@ -59,7 +59,7 @@ After a bit of [npm][3] research I found the modules I needed and managed to get
 
 However, I originally had that code in a function and wanted to call it and then call another function to read the files that I had downloaded but what I found was callback hell.
 
-###Enter Promises
+### Enter Promises
 
 I needed to know that all the files had downloaded and then I could read the files in a directory ready for zip extraction but I couldn't work out how.  I discovered promises and probably didn't read enough about all the ins and outs of them but I remember [Glenn Block][8] giving a talk about [async programming in node][4] so I pestered him on Twitter and he kindly helped and me out and also pointed me towards his code and slides where I decided to use [Bluebird][5], the promise library.  Unfortunately I just couldn't get the files downloaded. It would download one file but not the other and closed the streams.
 

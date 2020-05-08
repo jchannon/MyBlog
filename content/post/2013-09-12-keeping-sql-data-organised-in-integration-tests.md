@@ -15,7 +15,7 @@ I now needed to add data for my new method but realised if I added different dat
 
 My options were to move the constructor logic into separate methods and then call the methods in the test or have separate test classes per method in the repo.  Both were a not an ideal solution and quite frankly verbose, ugly and not best practice.
 <!--more-->
-##The Solution
+## The Solution
 
 I started playing with the attributes on my tests to see if xUnit offered me something and was chuffed to find the `BeforeAfterTestAttribute`.  This does exactly what it says on the tin.  Its an abstract class that you inherit from for your own implementation and overide the `Before` and `After` methods;
 

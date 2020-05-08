@@ -9,7 +9,7 @@ Whilst using [stackoverflow.com][1] and [Github gists][2] I’ve become a freque
 For those of you that don’t know what Markdown is, its essentially a shorter/cleaner syntax that can be parsed to produce HTML. Below are a few examples:
 
     #Hello World!
-    ##You're awesome!
+    ## You're awesome!
     The quick brown fox jumped over the lazy coder
     What the **hell** is this?
     This is an [example link](http://example.com/)

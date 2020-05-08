@@ -17,7 +17,7 @@ Here's a tweet direct from the horses mouth albeit with a typo .
 
 I also believe the guys at Microsoft are looking at developing an unmanaged code HTTP server to run on Mono to produce ridiculous performance which is great news!
 
-###Azure
+### Azure
 As you'll see from the videos vNext runs via the command prompt which is fine but obviously Microsoft would want to bake all the NuGet and other tooling features into Visual Studio.  A few weeks after the initial vNext details were made public Microsoft announced a pre-release of Visual Studio which had support for ASP.Net vNext.  They also [announced][3] that Azure had a virtual machine in its gallery that had this version of Visual Studio installed.
 
 What this meant was that you could setup a VM in Azure, then use Remote Desktop to connect to the virtual machine and run Visual Studio and have a play with all the new shiny things (they also provided the ISO so you could download it and run it locally if you preferred, pretty cool huh!).
@@ -36,7 +36,7 @@ As you can see there are similar options to what we've had in the past.  Creatin
 
 Microsoft have also [produced][8] a "Getting Started with ASP.NET vNext and Visual Studio 14" guide if you want some more reading material.
 
-###Nancy and vNext
+### Nancy and vNext
 
 As Nancy supported Owin from the very beginning unlike MVC there was a Nancy.Owin package that you could opt-in to your application and use Nancy in an Owin based application.  This also gave you the option to use Nancy in a non-Owin application.  Today you still have that option but as of June 10th 2014 the Nancy team decided to merge a pull request moving Owin as a separate package into the core code base.  This pull request also added extensions to be able to run Nancy in a ASP.Net vNext project.  You can still run Nancy in a non-Owin application but the decision was made to embrace Owin as a first class citizen.  These changes are currently in the master branch and not yet part of an official release but to save building the source and referencing the project we can use Nancy's [nightly builds][10]. 
 
@@ -87,11 +87,11 @@ Hit F5 and ****boom****
 
 ![Nancy running on vNext][7]
 
-###Conclusion
+### Conclusion
 
 ASP.Net vNext has some great changes in terms of solution architecture and developer productivity (see editing a file, pressing save, hitting F5 and the changes appearing not needing a re-compile).  Microsoft's embracing of Mono I hope will lead to a true cross platform development stack we can all work on.  ASP.Net vNext has been influenced by other major players in the OSS world and Microsoft has realised there are some great features that the community have provided for a long time now so Node, Go and Nancy should be flattered.  Its also great to see vNext on Github where poeple can see clearly the commits, issues and pull requests open for ASP.Net.  My personal belief and not an official Nancy statement is that Nancy still offers many great features that MVC and WebAPI (or I should call that MVC6 now that they've merged) doesn't but I think what Microsoft has produced in terms of vNext is awesome work and the features of MVC and new middleware can only add to the options available for .Net developers to choose from and having this choice is what its all about.  Good work Microsoft!
 
-###One more thing!
+### One more thing!
 
 The current release of Nancy is 0.23 and Nancy has been stable for a long time and is used in production for many users yet there are numerous requests for when Nancy will release a v1.0.  The response is usually "why will renaming 0.23 to v1.0 make any difference to the functionality within Nancy" mainly because its felt this is some psychological issue people have regarding version numbers.  I could do File - New Project and make it v1.0 and it could be completely unstable but does that give the perception that its more feature rich than something that is 0.23?  I think its an interesting topic how people perceive version  numbers but that discussion is for another day.  As of June 10th 2014 the Nancy team agreed that the next version of Nancy will not be 0.24 but in fact be v1.0.0.  There are more finer details about the v1.0 release which [TheCodeJunkie][9] will be blogging about soon but hopefully this release will attract more people to use Nancy that may have been put off by the version number in the past.
 

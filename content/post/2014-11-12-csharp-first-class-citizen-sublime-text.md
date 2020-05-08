@@ -9,7 +9,7 @@ I discovered the plugin thanks to [Jason Imison][3] but at that point there was 
 
 <!--more-->
 
-##How does it work?
+## How does it work?
 
 I should really introduce [Jason Imison][3].  Jason is the author of a library called [OmniSharpServer][4] which is a -  
 > HTTP wrapper around NRefactory allowing C# editor plugins to be written in any language.
@@ -20,7 +20,7 @@ In simple terms OmniSharpServer is a local web server (written in [Nancy][5]) th
 
 The editor plugin is responsible for initiating the requests and dealing with the response in order to provide the user a rich user experience for editing C# and this is hopefully what I have done with [OmniSharpSublime][2].
 
-##Getting Started
+## Getting Started
 
 For Mac & Linux users you will need Mono installed.
 
@@ -77,97 +77,97 @@ Paste in the below code and save
 
 Now you're ready to rock!
 
-##Features
+## Features
 
 Below I will highlight some of the cool features of [OmniSharpSublime][2] by the power of animated gifs (hope you have a decent internet connection, sorry!)
 
-###Intellisense
+### Intellisense
 
 This is probably one of the most important features that springs to mind when editing a C# file in a text editor. 
 
 ![Intellisense](https://i.imgur.com/IkirwAE.gif)
 
-###Go To Definition
+### Go To Definition
 
 ![Go to definition](https://i.imgur.com/ZClA8qG.gif)
 
-###Rename
+### Rename
 
 ![Rename](https://i.imgur.com/6ByBw5R.gif)
 
-###Find Usages
+### Find Usages
 
 ![Find Usages](https://i.imgur.com/yUGl59t.gif)
 
-###Go To Implementation
+### Go To Implementation
 
 ![Go to Implementation](https://i.imgur.com/3Ypv6H8.gif)
 
-###Format Document
+### Format Document
 
 Checkout the key binding!
 
 ![Format Document](https://i.imgur.com/kkkUiRZ.gif)
 
-###Override
+### Override
 
 ![Override](https://i.imgur.com/EntuVe1.gif)
 
-###Add Reference
+### Add Reference
 
 ![Add Reference](https://i.imgur.com/nWZndb0.gif)
 
-###Syntax Errors
+### Syntax Errors
 
 ![Syntax Errors](https://i.imgur.com/Ka4tHk6.gif)
 
-###Semantic Errors
+### Semantic Errors
 
 ![Semantic Errors](https://i.imgur.com/ljEfdfv.gif)
 
-###Code Issues
+### Code Issues
 
 ![Code Issues](https://i.imgur.com/qRN9ydy.gif)
 
-###Fix Code Issues
+### Fix Code Issues
 
 ![Fix Code Issues](https://i.imgur.com/xWD8qwn.gif)
 
-###Fix Using Statements
+### Fix Using Statements
 
 ![Fix Usings](https://i.imgur.com/7fmRFqm.gif)
 
-###Code Actions
+### Code Actions
 
 Checkout the key binding for Resharper lovers!
 
 ![Code Actions](https://i.imgur.com/16UsVBf.gif)
 
-###Add New C# File
+### Add New C# File
 
 There is also add new C# interface and you can add [your own templates][28]!
 
 ![Add new c# file](https://i.imgur.com/0S5T48f.gif)
 
-###Type Lookup
+### Type Lookup
 
 ![Type Lookup](https://i.imgur.com/5Wu44i5.gif)
 
-###Build Solution
+### Build Solution
 
 You can press F4 & Shift+F4 to cycle through the errors reported!
 
 ![Build](https://i.imgur.com/g6Adivm.gif)
 
-###Unit Tests
+### Unit Tests
 
 ![Unit Tests](https://i.imgur.com/gSuTami.gif)
 
-###Add/Remove from Project
+### Add/Remove from Project
 
 If you create an empty chsarp file or paste a file into the folder, if you open it up and simple save the file it will be added to the `*csproj` file. You can also right click a file and choose `Remove from Project` and this will remove the file from a `*.csproj` file.  
 
-##OSS FTW!
+## OSS FTW!
 
 Hopefully that's given you a taste of what the plugin can do and I hope you think its as cool as I do.  I believe that this will give users another option when deciding what editor to use when editing C# files.  A big thanks to [Jason Imison][3] for OmniSharpServer which allows the plugin to provide all the code options and for him putting up with my questions.
 
@@ -175,7 +175,7 @@ If you're interested please [download][26] the plugin and enjoy it.  Please let 
 
 Also thanks to the guys who originally came up with the idea of the plugin and to the other contributors who have already submitted pull requests.
 
-##Microsoft & OSS
+## Microsoft & OSS
 
 This blog post and project has been sitting on my file system for probably 4-5 weeks ready to be published but during that time I've had chance to make new friends and add new features which I've shown you above! 
 
@@ -184,7 +184,7 @@ This blog post and project has been sitting on my file system for probably 4-5 w
 
 Since my last [blog post][1] I'd been in touch with the authors of the Kulture plugin ([Sayed Ibrahim Hashimi](18)) who just happened to work for Microsoft.  They liked my [Nancy][5] yeoman generator and I managed to convince them to merge my generator with their ASP.Net generator.  I asked a few questions here and there and [Jason Imison][3] came onboard, then [Martijn Laarman][8] showed some interest in getting intellisense working and soon we started growing something.  [David Fowler][9] was brought in to answer some questions and we started having Skype chats with [Scott Hanselman][10] and we then decided upon the path we were going to take.  OmniSharp was born!
 
-##OmniSharp
+## OmniSharp
 
 Our path was going to be make C# available on all the popular editors.  Soon we had [Stephen James][11] and [Martijn Laarman][8] working on making OmniSharp work with [Atom][22], [Jason Imison][3] working with [Vim][23], [Simon Carter][12], [Mika Vilpas][13] & [Jason Imison][3] on [Emacs][24], [Mat McLoughlin][14] on [Brackets][25] and me on [Sublime][2].
 
@@ -206,12 +206,12 @@ The reason was that Microsoft were going to have a **big** announcement to make 
 
 That's right, .NET is going OSS & cross platform! HUGE NEWS and we were working as part of an OSS team with Microsoft to highlight that you can use any editor you like to build .NET applications on any platform.  It appears Leopards can change their spots. Lets hope this new open Microsoft will continue for many years to come!
 
-###Taking OmniSharp forward
+### Taking OmniSharp forward
 
 Jason has started working with the [Design Time Host][21] that is used for ASP.NET vNext projects which provides information about vnext assemblies and this will be integrated into OmniSharpServer and there are areas already in OmniSharpSublime that I have highlighted that need to become more vNext focused.  [Sayed][18] is making changes to Kulture such as intellisense in project.json for NuGet packages, maybe our two projects will merge.  NRefactory are looking to use Roslyn for the code analysis engine underneath which effects OmniSharpServer. I'm hoping that OmniSharp will become an OSS success for all of us to gain from and I hope you will want to be apart of it.
 
 
-##Conclusion
+## Conclusion
 So there you have it, C# as a first class citizen in Sublime Text, .Net as a cross platform tool and .Net going open source.  What a day! 
 
 Enjoy!
@@ -222,7 +222,7 @@ Mat McLoughlin has posted information on the Brackets plugin [here][29]
 
 Martijn Laarman has posted information on the Brackets plugin [here][30]
 
-##Leave them wanting more!
+## Leave them wanting more!
 
 I've been spiking NuGet support for Sublime and here's a brief intro
 

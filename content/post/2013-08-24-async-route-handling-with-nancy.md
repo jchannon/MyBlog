@@ -11,7 +11,7 @@ It could also be argued that only "use asynchronicity in a web framework if you 
 
 <!--more-->
 
-##Using Async with Nancy
+## Using Async with Nancy
 
 With the introduction of `async/await` in .NET 4.5 the way to do asynchronous execution simplified the previous approaches in .NET.  Having asynchronous execution within a web framework these days seems to be a "must have" so the Nancy team got their freak on (mainly [@grumpydev][2]) and enabled async/await within Nancy.  Its codebase has been kept backward compatible with .NET 4.0 but has been enabled to use the .NET 4.5 `async/await`, pretty impressive! In fact it uses its own version of `ContinueWith` as the default one was considered not quick enough along with other [TPL][1] optimizations.
 
@@ -50,7 +50,7 @@ So what's going on you say?  Well the boolean of "true" on the request path tell
 
 The `CancellationToken` is passed in so you can check the `ct.IsCancellationRequested` property to determine if you want to cooperatively cancel processing in your route handler.  This property may be set for example if there is an internal error or if a piece of middleware decides to cancel the request, or the host is shutting down. If you didn't know Nancy is OWIN compliant and has been pretty much since the OWIN specification came out.
 
-##Demo Time
+## Demo Time
 
 As I stated above, returning "Hello World" from an asynchronous route is pointless so we need something I/O bound to demonstrate a bit better how we would use async/await in an application.
 
@@ -107,7 +107,7 @@ In the view we then have some code that determines when to show the QR image:
 
 You can view this code as a running application in my Github repository [here][4].
 
-##The Guts of it
+## The Guts of it
 
 If you want a bit more of an understanding how `async/await` works in Nancy then lets take a look at the code below that is located in the [DefaultRouteInvoker][7] class:
 
@@ -128,7 +128,7 @@ If you want a bit more of an understanding how `async/await` works in Nancy then
     
 Our route that we are executing is invoked and as we know from above the captured parameters on the route eg/customer/{id} and a CancellationToken is passed in.  We can then see the customized `ContinueWith` known as `WhenCompleted` is setup to resolve what our route returns be that a view or data.  So as we know when using async we need to return a `Task<T>` (you can return void and have a method marked as `async` but those should only be used for fire-and-forget methods like event handlers) and in our routes case it returns a Task<Nancy.Responses.Negotiation.Negotiator>.  The DefaultRouteInvoker then carries on to do its thing getting ready to render a view or serialize our data.
 
-##Conclusion
+## Conclusion
 So there's the scope of async/await in Nancy, all the goodies of Nancy still apply now with the addition of asynchronous routes.  If you have read this blog post and not used Nancy before please read [this blog post][6] which reminds me I need to add "ASYNC ALL THE THINGS" to the list of reasons to use Nancy!
 
 [1]: http://msdn.microsoft.com/en-us/library/dd460717.aspx

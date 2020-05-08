@@ -10,7 +10,7 @@ In a bid to expand my mind I'm working on a little project that is made up of JS
 
 When writing tests for JS there are many libraries you can use but I've chosen [Mocha][3] for now.  The one thing I couldn't work out was to run my tests within Sublime Text until now.
 
-###Build System
+### Build System
 
 Sublime allows you to have build systems a bit like an IDE so you can tell it what to do when you invoke it via <kbd>cmd</kbd>+<kbd>B</kbd>.
 
@@ -34,7 +34,7 @@ Click Save and call it Mocha
 
 Now when you have a project go to Tools - Build System and select Mocha
 
-###Make file
+### Make file
 
 A Make file is a script that allows you to execute various commands and its what our build system looks for when we tell Sublime to build our project. We need a file called `makefile` in the root of our project.  Inside that `makefile` we can invoke Mocha to run our tests.
 

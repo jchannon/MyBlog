@@ -76,7 +76,7 @@ Here's an example of what the route and test might look like:
     
 The test is using [xUnit][3] and [FakeItEasy][4] for creating fakes/mocks or whatever you choose to call them and the test will pass if the call to `fakeScheduleRepository.CheckForConflict` was called with the model object.
 
-##The test fails!
+## The test fails!
 
 The reason for the test failing is because...? That's right, the object that is passed into the call on IScheduleRepository in the route is different to the one in the test.
 
