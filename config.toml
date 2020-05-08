@@ -2,7 +2,7 @@ baseURL = "https://blog.jonathanchannon.com/"
 title = ""
 theme = "ghostwriter"
 googleAnalytics = "UA-123-45"
-disqusShortname = "jonathanchannonblogorganization"
+disqusShortname = "jonathanchannonblog"
 
 [Params]
     mainSections = ["post"]
