@@ -1,6 +1,7 @@
 +++
 
 title = "NancyFX, RavenDB, NerdDinner and Me"
+aliases = ["/2012/09/21/nancyfx-ravendb-nerddinner-and-me/"]
 tags = ["community","dinner party","nancyfx","oss","ravendb","windows azure"]
 +++
 

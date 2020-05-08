@@ -1,6 +1,7 @@
 +++
 
 title = "Unit Testing with SqlException"
+aliases = ["/2014/01/02/unit-testing-with-sqlexception/"]
 tags = ["csharp","unit testing",".net"]
 +++
 

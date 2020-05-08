@@ -1,6 +1,7 @@
 +++
 
 title = "The many approaches to Entity Framework"
+aliases = ["/2013/03/04/the-many-approaches-to-entity-framework/"]
 tags = [".net","asp.net mvc","csharp","entity framework","github","SRP"]
 +++
 

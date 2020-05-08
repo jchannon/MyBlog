@@ -1,6 +1,7 @@
 +++
 
 title = "Using SQL Server with node.js"
+aliases = ["/2013/12/20/using-sql-server-with-nodejs/"]
 tags = ["javascript","node.js","sql","OSS","community"]
 +++
 

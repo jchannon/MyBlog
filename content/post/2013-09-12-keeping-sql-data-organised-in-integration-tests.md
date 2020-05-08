@@ -1,6 +1,7 @@
 +++
 
 title = "Keeping SQL Data Organised in Integration Tests"
+aliases = ["/2013/09/12/keeping-sql-data-organised-in-integration-tests/"]
 tags = ["integration testing","oss","community",".net","xunit"]
 +++
 In my latest project I had kept my solution tidy with my main app project, my unit test project and integration test project. I tend to stick with a naming convention such as MainApp, MainApp.Tests.Unit & MainApp.Tests.Integration.

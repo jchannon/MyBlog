@@ -1,6 +1,7 @@
 +++
 
 title = "What is a Hypermedia client?"
+aliases = ["/2016/04/28/what-is-a-hypermedia-client/"]
 tags = ["hypermedia","REST"]
 +++
 

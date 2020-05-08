@@ -1,6 +1,7 @@
 +++
 
 title = "NancyFX and Hypermedia"
+aliases = ["/2015/08/07/hypermedia-and-nancyfx/"]
 tags = ["REST",".net","hypermedia","nancyfx","oss"]
 +++
 I've been slowly educating my self on hypermedia; what it is, how does it help and how to use it.  I must say I've found it a very interesting topic and I thought it was time I put some information into a blog post just in case the 2 people that read this blog might find it useful.

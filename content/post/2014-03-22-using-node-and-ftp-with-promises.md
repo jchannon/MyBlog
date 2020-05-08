@@ -1,6 +1,7 @@
 +++
 
 title = "Using NodeJS and FTP with Promises"
+aliases = ["/2014/03/22/using-node-and-ftp-with-promises/"]
 tags = ["javascript","nodejs","promises"]
 +++
 I've played with node in the [past][1] but as of the new year I decided to try and make a more concerted effort to get stuck into node properly.  I decided to go back to the beginning to try and get a better appreciation for the language so read "JavaScript: The Good Parts by Douglas Crockford".  I found that exercise fulfilling and resulted in a few light bulb moments that made some dots join up so I'd recommend reading it if you haven't already.

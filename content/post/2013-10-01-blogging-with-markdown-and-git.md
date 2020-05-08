@@ -1,5 +1,6 @@
 +++
 title = "Blogging with Markdown & Deploying via Git - Introducing Sandra.Snow"
+aliases = ["/2013/10/01/blogging-with-markdown-and-git/"]
 tags = ["community","oss","snow","nancyfx","git","csharp",".net"]
 +++
 

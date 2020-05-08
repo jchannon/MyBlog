@@ -1,6 +1,7 @@
 +++
 
 title = "Building all and current dotnet core projects in VSCode"
+aliases = ["/2016/07/13/building-all-current-dotnet-core-projects-vscode/"]
 tags = ["VSCode","ASP.Net"]
 +++
 As you may or may not know I try to work on OSX as much as possible and with .Net that's quite painful to be honest.  Things are moving along nicely with Jetbrains Rider,

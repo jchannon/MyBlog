@@ -1,6 +1,7 @@
 +++
 
 title = "Async Route Handling with Nancy"
+aliases = ["/2013/08/24/async-route-handling-with-nancy/"]
 tags = ["nancyfx","oss","community","async",".net"]
 +++
 I don't know about you but all I hear is "ASYNC ALL THE THINGS!", I think this is partly down to its new and shiny and us developers love "the shiny" and partly a lot of the things we do in our applications are I/O based whether that be database or file system. 

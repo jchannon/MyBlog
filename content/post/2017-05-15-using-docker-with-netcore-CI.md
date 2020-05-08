@@ -1,6 +1,7 @@
 +++
 
 title = "Using Docker with .Net Core in CI for OSS"
+aliases = ["/2017/05/15/using-docker-with-netcore-CI/"]
 tags = ["OSS","ASP.NET","csharp","Docker"]
 +++
 

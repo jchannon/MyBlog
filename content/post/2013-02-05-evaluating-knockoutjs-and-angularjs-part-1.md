@@ -1,6 +1,7 @@
 +++
 
 title = "Evaluating KnockoutJS and AngularJS – Part 1"
+aliases = ["/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/"]
 tags = ["angularjs","handlebars","javascript","knockoutjs","learning","oss","sammyjs"]
 +++
 

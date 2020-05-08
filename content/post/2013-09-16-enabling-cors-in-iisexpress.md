@@ -1,6 +1,7 @@
 +++
 
 title = "Enabling CORS in IISExpress"
+aliases = ["/2013/09/16/enabling-cors-in-iisexpress/"]
 tags = ["integration testing",".net","iis express"]
 +++
 I was playing around with [swagger-ui][1] and was trying to point it to a local endpoint that I started with IIS Express.  I was getting an error saying that it needed the endpoint to accept Access-Control-Allow-Origin requests.

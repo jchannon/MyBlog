@@ -1,6 +1,7 @@
 +++
 
 title = "Nancy, ASP.Net vNext, VS2014 & Azure"
+aliases = ["/2014/06/14/nancy-aspnet-vnext-vs2014-azure/"]
 tags = ["nancyfx","oss",".net","community","owin"]
 +++
 By now we know of Microsoft's plans for the next version of ASP.Net and they've turned it on its head and from the looks of it, its goooooood!

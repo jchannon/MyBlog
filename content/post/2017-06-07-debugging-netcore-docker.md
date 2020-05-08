@@ -1,6 +1,7 @@
 +++
 
 title = "Debugging .Net Core apps inside Docker container with VSCode"
+aliases = ["/2017/06/07/debugging-netcore-docker/"]
 tags = ["OSS","ASP.NET","csharp","Docker"]
 +++
 

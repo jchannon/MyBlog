@@ -1,6 +1,7 @@
 +++
 
 title = "Modifying the bash prompt and adding Git completion to terminal"
+aliases = ["/2014/06/06/modifying-bash-adding-git-auto-completion-to-terminal/"]
 tags = ["osx","terminal","bash","git"]
 +++
 At work we use Git and I use [Console2][1] to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.

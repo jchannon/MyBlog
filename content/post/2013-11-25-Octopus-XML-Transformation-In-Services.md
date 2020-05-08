@@ -1,6 +1,7 @@
 +++
 
 title = "Octopus XML Transformation in Services"
+aliases = ["/2013/11/25/Octopus-XML-Transformation-In-Services/"]
 tags = ["octopusdeploy",".net"]
 +++
 We use [Octopus Deploy][1] at work and its a superb tool for deploying your applications whether they be websites or *.exes.

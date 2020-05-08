@@ -1,6 +1,7 @@
 +++
 
 title = "Abstracting the File System"
+aliases = ["/2012/09/28/abstracting-the-file-system/"]
 tags = ["file system","SRP","oss","System.IO.Abstractions"]
 +++
 

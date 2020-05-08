@@ -1,6 +1,7 @@
 +++
 
 title = "Nancy, ASP.Net vNext, OSX and Sublime Text"
+aliases = ["/2014/08/05/nancy-aspnetvnext-osx-sublime-text/"]
 tags = ["nancyfx","oss",".net","community","osx"]
 +++
 One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against [Mono][2].  Along with this MS are developing a web server that is cross platform and goes by the name of [Kestrel][5].  One thing they aren't doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is [Sublime Text][4].  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.

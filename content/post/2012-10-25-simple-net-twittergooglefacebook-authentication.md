@@ -1,6 +1,7 @@
 +++
 
 title = "Simple .Net Twitter,Google,Facebook Authentication"
+aliases = ["/2012/10/25/simple-net-twittergooglefacebook-authentication/"]
 tags = ["authentication","community","dinnerparty","nancyfx","oss","social","social authentication"]
 +++
 

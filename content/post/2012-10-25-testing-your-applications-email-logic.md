@@ -1,6 +1,7 @@
 +++
 
 title = "Testing your application’s email logic"
+aliases = ["/2012/10/25/testing-your-applications-email-logic/"]
 tags = [".net","oss","csharp","email","node.js","papercut"]
 +++
 

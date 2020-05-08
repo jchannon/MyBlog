@@ -1,6 +1,7 @@
 +++
 
 title = "Mocking HttpContext with Fake It Easy"
+aliases = ["/2013/04/30/mocking-httpcontext-with-fake-it-easy/"]
 tags = [".net","asp.net mvc","fake it easy","nancyfx","oss","unit testing","xunit"]
 +++
 

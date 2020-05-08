@@ -1,6 +1,7 @@
 +++
 
 title = "Up & Running with TypeScript and WebStorm"
+aliases = ["/2013/04/17/up-running-with-typescript-and-webstorm/"]
 tags = ["javascript","oss","osx","typescript","webstorm"]
 +++
 

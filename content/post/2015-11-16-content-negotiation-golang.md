@@ -1,6 +1,7 @@
 +++
 
 title = "Introducing Negotiator  - a GoLang content negotiation library"
+aliases = ["/2015/11/16/content-negotiation-golang/"]
 tags = ["golang","oss","nancyfx"]
 +++
 In my continued experience learning GoLang I started looking at how to best use it when dealing with HTTP.  The idiomatic way to use GoLang and HTTP is to use the standard library which keeps things minimal but there are a few features missing.  The first thing is a router.  OOTB GoLang doesn't have a router and the majority seem to suggest using a package called Mux from Gorilla Toolkit, a set of libraries that aims to improve the standard library from Go.  After having a play with it I didn't really warm to it so spent some time looking into the alternatives (and there are plenty!) and eventually decided upon [Goji][1]

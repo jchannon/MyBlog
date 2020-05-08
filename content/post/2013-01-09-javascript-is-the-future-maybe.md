@@ -1,6 +1,7 @@
 +++
 
 title = "JavaScript is the future…maybe!"
+aliases = ["/2013/01/09/javascript-is-the-future-maybe/"]
 tags = [".net","angularjs","backbonejs","csharp","javascript","knockoutjs","learning","node.js","oss","typescript"]
 +++
 

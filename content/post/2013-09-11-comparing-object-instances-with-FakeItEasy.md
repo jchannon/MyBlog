@@ -1,6 +1,7 @@
 +++
 
 title = "Comparing object instances with FakeItEasy"
+aliases = ["/2013/09/11/comparing-object-instances-with-FakeItEasy/"]
 tags = ["unit testing","oss","community",".net","fake it easy"]
 +++
 I had the task of writing a new application recently and of course I chose [Nancy][1].  One of the many great reasons is the testing capabilites it offers (For more on that see [this][2] great series of articles).

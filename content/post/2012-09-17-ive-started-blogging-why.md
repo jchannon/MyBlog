@@ -1,6 +1,7 @@
 +++
 
 title = "I’ve started blogging. Why?"
+aliases = ["/2012/09/17/ive-started-blogging-why/"]
 tags = ["community","first blog post","nancyfx","oss"]
 +++
 

@@ -1,6 +1,7 @@
 +++
 
 title = "The Old Development Language Switcheroo"
+aliases = ["/2013/04/02/the-old-development-language-switcheroo/"]
 tags = ["csharp","career","Dart","fsharp","javascript","Kotlin","node.js","typescript"]
 +++
 

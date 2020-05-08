@@ -1,6 +1,7 @@
 +++
 
 title = "Why .Net should become independent!"
+aliases = ["/2013/05/29/why-net-should-become-independent/"]
 tags = [".net","csharp","career","community","oss"]
 +++
 

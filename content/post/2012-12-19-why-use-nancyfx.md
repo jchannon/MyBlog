@@ -1,6 +1,7 @@
 +++
 
 title = "Why use NancyFX?"
+aliases = ["/2012/12/19/why-use-nancyfx/"]
 tags = [".net","asp.net mvc","asp.net web api","community","nancyfx","oss"]
 +++
 

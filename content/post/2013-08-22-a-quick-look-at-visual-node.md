@@ -1,6 +1,7 @@
 +++
 
 title = "A quick look at Visual Node"
+aliases = ["/2013/08/22/a-quick-look-at-visual-node/"]
 tags = ["visual studio","javascript","visual node"]
 +++
 I came across [Visual Node][1] a few months ago and was excited by the looks of it.  For those that didn't click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what's going on.  

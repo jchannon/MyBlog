@@ -1,6 +1,7 @@
 +++
 
 title = "Easily publish a NuGet package"
+aliases = ["/2012/12/07/easily-publish-a-nuget-package/"]
 tags = [".net","asp.net web api","community","nuget","oss"]
 +++
 

@@ -1,6 +1,7 @@
 +++
 
 title = "Is OSS good for your career?"
+aliases = ["/2012/09/25/is-oss-good-for-your-career/"]
 tags = ["community","career","oss"]
 +++
 

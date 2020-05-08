@@ -1,6 +1,7 @@
 +++
 
 title = "Using Git to update YouTrack via TeamCity"
+aliases = ["/2013/11/07/using-git-to-update-youtrack-via-teamcity/"]
 tags = ["git","team city","youtrack"]
 +++
 

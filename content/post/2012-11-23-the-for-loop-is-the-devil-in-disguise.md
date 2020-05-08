@@ -1,6 +1,7 @@
 +++
 
 title = "The For Loop is the devil in disguise"
+aliases = ["/2012/11/23/the-for-loop-is-the-devil-in-disguise/"]
 tags = [".net","csharp","learning"]
 +++
 

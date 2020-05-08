@@ -1,6 +1,7 @@
 +++
 
 title = "Node.js, Express, Hello World Formula 1 Style"
+aliases = ["/2012/10/08/node-js-express-hello-world-formula-1-style/"]
 tags = ["editor","express","f1","ide","jade","json","node.js","oss","st2","sublime text 2"]
 +++
 

@@ -1,6 +1,7 @@
 +++
 
 title = "Running Mocha tests within Sublime Text"
+aliases = ["/2013/10/21/running-mocha-tests-with-sublime-text/"]
 tags = ["javascript","sublime text 2","mocha","oss","unit testing"]
 +++
 

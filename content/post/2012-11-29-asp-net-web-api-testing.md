@@ -1,6 +1,7 @@
 +++
 
 title = "ASP.NET Web API Testing"
+aliases = ["/2012/11/29/asp-net-web-api-testing/"]
 tags = [".net","csharp","asp.net web api","community","github","nancyfx","oss"]
 +++
 

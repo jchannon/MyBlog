@@ -1,6 +1,7 @@
 +++
 
 title = "Introducing Owin.StatelessAuth with Nancy/Angular demo"
+aliases = ["/2014/05/07/introducing-owin-statelessauth-with-nancy-angular-demo/"]
 tags = [".net","nancyfx","oss","owin","angularjs"]
 +++
 If you're writing an API, current thinking is to provide a token in the `Authorization` header for your app to validate when the request comes in.  I have used the [Nancy.Authentication.Stateless][1] package in the past for my APIs and even have a demo of it [here][2] if you're interested (there are more Nancy demos at [http://samples.nancyfx.org][3]). This is a great package and does a great job but what if one day you want to use [SignalR][4] v2 that uses [OWIN][5] and you want to validate not just requests to your Nancy app but also the SignalR requests?  You're going to need to validate requests as they come in before they get to SignalR or Nancy.

@@ -1,6 +1,7 @@
 +++
 
 title = "Microsoft Endorsing C# as a First Class Citizen in Sublime Text"
+aliases = ["/2014/11/12/csharp-first-class-citizen-sublime-text/"]
 tags = ["oss",".net","community","sublimetext","csharp"]
 +++
 At the end of my last [post][1] on using ASP.Net vNext with Sublime Text I briefly mentioned a [plugin][2] that aimed at giving intellisense for C# within the editor.  Well 2 months later and I'm happy to announce that intellisense works and I've added a slew of other features that will hopefully make you feel at home away from Visual Studio.

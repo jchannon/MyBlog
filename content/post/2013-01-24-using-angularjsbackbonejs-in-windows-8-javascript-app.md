@@ -1,6 +1,7 @@
 +++
 
 title = "Using AngularJS/BackboneJS in Windows 8 JavaScript app"
+aliases = ["/2013/01/24/using-angularjsbackbonejs-in-windows-8-javascript-app/"]
 tags = ["angularjs","backbonejs","github","javascript","knockoutjs","oss","windows 8","winjs"]
 +++
 

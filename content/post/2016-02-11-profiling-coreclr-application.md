@@ -1,6 +1,7 @@
 +++
 
 title = "Profiling a CoreCLR application with dotMemory"
+aliases = ["/2016/02/11/profiling-coreclr-application/"]
 tags = ["csharp","oss",".net","coreclr"]
 +++
 I had ported an application over to CoreCLR (that's a whole other blog post), along with my colleague [James Humphries](http://twitter.com/yantrio) put it in a docker image and sat back and watched it do its thing.  After 6 hours of running the docker container had crashed.  Ah nuts we thought,  so pulled up the logs from docker and the last line looked like this `2016-02-10T20:18:31.728783069Z Killed`.  I'm pretty sure when you have a log entry with `Killed` in it, things can't be good. To the interweb...

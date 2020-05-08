@@ -1,6 +1,7 @@
 +++
 
 title = ".gitignore not working – fixed!"
+aliases = ["/2012/11/18/gitignore-not-working-fixed/"]
 tags = ["community","git","github","oss","stackoverflow"]
 +++
 

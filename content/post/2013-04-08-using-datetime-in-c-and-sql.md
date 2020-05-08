@@ -1,6 +1,7 @@
 +++
 
 title = "Using DateTime in C# and SQL"
+aliases = ["/2013/04/08/using-datetime-in-c-and-sql/"]
 tags = [".net","csharp","sql","datetime"]
 +++
 

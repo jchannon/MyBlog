@@ -1,6 +1,7 @@
 +++
 
 title = "Publishing to Windows Azure from Github"
+aliases = ["/2012/11/06/publishing-to-windows-azure-from-github/"]
 tags = [".net","deployment","dinnerparty","git","github","windowsazure"]
 +++
 

@@ -1,6 +1,7 @@
 +++
 
 title = "Announcing Carter"
+aliases = ["/2018/04/10/announcing-carter/"]
 tags = ["OSS","ASP.NET","csharp","Botwin","Carter"]
 +++
 

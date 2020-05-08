@@ -1,6 +1,7 @@
 +++
 
 title = "Modifying files within Git history"
+aliases = ["/2013/07/03/modifying-files-within-git-history/"]
 tags = ["git","github","sublime text 2","st2"]
 +++
 

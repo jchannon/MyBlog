@@ -1,6 +1,7 @@
 +++
 
 title = "Introducing PoGo  - a GoLang, Twitter favourites to Pocket importer"
+aliases = ["/2015/10/27/introducting-pogo-golang-twitter-pocket/"]
 tags = ["golang","oss"]
 +++
 I've always kept myself up to date with the latest languages arriving on the scene and I've spent time in the past learning Node and last year I learnt Python by doing the Omnisharp plugin for Sublime.  I have recently been looking for a static language that I can transfer my C# skills too and I had narrowed it down to 3; Swift, Kotlin and GoLang.  I started out with Kotlin and setting up a dev environment with IntelliJ and running the koans that Jetbrains advise you step through to pick up the language.  Whilst it seemed relatively straightforward I got "noob confused" when I saw examples of Java calling into Kotlin with get/set prefixes somehow magically added to Kotlin properties. It turns out the Kotlin compiler does this for Java libraries so it can communicate with it, to me it seemed strange that I code a library in one language and the compiler then exposes these methods and properties slightly differently. Superficial as this sounds I also didn't really like the mammoth that appears to be IntelliJ.  Coming from a predominantly Visual Studio background but working with Omnisharp I wanted a lightweight editor with some refactoring, intellisense and error highlighting.

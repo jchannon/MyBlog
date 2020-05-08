@@ -1,6 +1,7 @@
 +++
 
 title = "Using a Markdown ViewEngine with Nancy"
+aliases = ["/2013/04/08/using-a-markdown-viewengine-with-nancy/"]
 tags = [".net","community","markdown","nancyfx","oss"]
 +++
 

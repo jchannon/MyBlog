@@ -1,6 +1,7 @@
 +++
 
 title = "Cookie Authentication & CRSF with AngularJs, Owin & Mono"
+aliases = ["/2015/04/27/cookie-authentication-angularjs-csrf-owin-mono/"]
 tags = ["mono","owin",".net","angularjs","nancyfx","oss"]
 +++
 I'm currently working on a project that has [Nancy][1] serving up an API.  For the UI there is AngularJS.  We were using JWT for authentication just to get us up and running but then as things became more final in the product we knew it would be better to swap to cookies for security plus we may as well leverage the browser capabilities  for cookie handling. I'm not going to get into the arguments about JWT security vs cookie security, there are advantages/disadvantages for using both in this scenario.  Our API is built on top of OWIN and Microsoft provide cookie middleware so I thought this would be nice and simple to plug in.  Lets just remember I'm working on Mono!

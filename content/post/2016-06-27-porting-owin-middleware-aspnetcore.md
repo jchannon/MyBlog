@@ -1,6 +1,7 @@
 +++
 
 title = "Porting OWIN middleware to ASP.Net Core"
+aliases = ["/2016/06/27/porting-owin-middleware-aspnetcore/"]
 tags = ["OSS","OWIN","ASP.Net"]
 +++
 

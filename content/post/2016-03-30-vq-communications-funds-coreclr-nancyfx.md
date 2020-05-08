@@ -1,6 +1,7 @@
 +++
 
 title = "VQ Communications Funds NancyFX to run on CoreCLR"
+aliases = ["/2016/03/30/vq-communications-funds-coreclr-nancyfx/"]
 tags = ["community",".net","nancyfx","oss","coreclr"]
 +++
 
