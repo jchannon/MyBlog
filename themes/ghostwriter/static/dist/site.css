@@ -880,7 +880,7 @@ img.alignright {
 	font-weight:bold;
 	position:relative; }
 
-.commentcount{position:absolute; top:0; right: 0;}
+.disqus-comment-count{position:absolute; top:0; right: 0;}
 
 .post-date, .post-author, .link-comments {
 	display:inline-block;
