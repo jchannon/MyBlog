@@ -8,15 +8,15 @@ This page will list and describe common words and terms that you might come acro
 
 ### Terms
 
-Cohesion
-Composition Root - 
-Coupling
-Cross-Cutting - 
-KPI - 
-Lift & Shift -
-OKR - 
-Orthogonal - 
-Projection - 
-Shift Left - 
+Cohesion -  
+Composition Root -   
+Coupling -  
+Cross-Cutting -  
+KPI -  
+Lift & Shift -  
+OKR -  
+Orthogonal -   
+Projection -  
+Shift Left -  
 
 <!--more-->
