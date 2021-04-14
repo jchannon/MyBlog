@@ -4,7 +4,7 @@ title = "Terminology Glossary"
 tags = ["glossary","terminology"]
 +++
 
-This page will list and describe common words and terms that you might come across as a software developer which you can refer to at a later date knowing there's a place to go to when someone uses a term that you don't know, are unsure of or can't remember
+This page will list and describe common words and terms that you might come across as a software developer, which you can refer to at a later date, knowing there's a place to go to when someone uses a term that you don't know, are unsure of or can't remember.
 
 ### Terms
 
@@ -18,5 +18,11 @@ OKR -
 Orthogonal -   
 Projection -  
 Shift Left -  
+Synchronous, Asynchronous - 
+Parallelism -
+Invariant vs Validation -
+Invariants - 
+Serialising and Deserialising - 
+Domain Model - 
 
 <!--more-->
