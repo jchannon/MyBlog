@@ -18,5 +18,6 @@ OKR -
 Orthogonal -   
 Projection -  
 Shift Left -  
+DeReferencing - 
 
 <!--more-->
