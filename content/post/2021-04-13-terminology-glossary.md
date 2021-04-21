@@ -18,7 +18,8 @@ OKR -
 Orthogonal -   
 Projection -  
 Shift Left -  
+<!--more-->
 DeReferencing -  
 Mailbox Processor -  
+ETL -  
 
-<!--more-->
