@@ -17,12 +17,7 @@
 		{{ end }}
 
 		{{ $firstPost := first 1 $posts }}
-		{{ $currentPage := .Paginator.PageNumber }}
-		{{ $firstPostnew := slice (index $posts (mul (sub $currentPage 1) $postsPageSize)) }}
-		{{ println $firstPostnew }}
-		{{ println $firstPost }}
-		{{ println $currentPage}}
-
+		
 
 		{{ if and (eq $postsFeaturedPostEnabled true) (gt (len $posts) 1) }}
 			{{ .Scratch.Set "postsForPaging" (after 1 $posts) }}
@@ -32,6 +27,8 @@
 		{{ $postsForPaging := .Scratch.Get "postsForPaging" }}
 
 		{{ $postsPaging := .Paginate $postsForPaging $postsPageSize }}
+		{{ $currentPage := .Paginator.PageNumber }}
+		{{ $firstPostnew := slice (index $posts (mul (sub $currentPage 1) $postsPageSize)) }}
 
 
 		<!-- Wrapper -->
