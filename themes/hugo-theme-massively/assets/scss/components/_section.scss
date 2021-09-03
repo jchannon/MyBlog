@@ -23,9 +23,9 @@
 			position: relative;
 		}
 
-		> p {
+		/* > p {
 			font-style: italic;
-		}
+		} */
 
 		> h1 + p {
 			font-size: 1.1rem;
@@ -58,7 +58,15 @@
 
 			> p {
 				margin-top: 0;
-				text-align: center;
+				text-align: justify;
+			}
+
+			> h3 {
+				text-align: justify;
+			}
+
+			> pre {
+				text-align: justify;
 			}
 
 			> .date {

@@ -1746,15 +1746,16 @@ section.special, article.special {
   text-align: center; }
 
 header {
-  cursor: default; }
+  cursor: default;
+  /* > p {
+			font-style: italic;
+		} */ }
   header > .date {
     display: block;
     font-size: 0.8rem;
     height: 1;
     margin: 0 0 1rem 0;
     position: relative; }
-  header > p {
-    font-style: italic; }
   header > h1 + p {
     font-size: 1.1rem;
     margin-top: -0.5rem;
@@ -1775,7 +1776,11 @@ header {
       margin-bottom: 0; }
     header.major > p {
       margin-top: 0;
-      text-align: center; }
+      text-align: justify; }
+    header.major > h3 {
+      text-align: justify; }
+    header.major > pre {
+      text-align: justify; }
     header.major > .date {
       font-size: 1rem;
       margin: 0 0 4rem 0; }
