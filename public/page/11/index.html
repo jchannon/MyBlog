@@ -1,0 +1,624 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+	<meta name="generator" content="Hugo 0.83.1" />
+		<title>Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+		
+
+		
+		
+		
+
+		
+
+		
+		
+		
+
+		
+		
+
+		
+			
+		
+		
+
+		
+		
+		
+
+
+		
+			<div id="wrapper" class="fade-in" data-pfn="post" data-ps="6" data-pfp="true">
+
+				
+
+				
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+				
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+						
+
+
+<article class="post featured">
+    <header class="major">
+        
+        <span class="date">Fri, Sep 28, 2012</span>
+        
+        <h2><a href="https://blog.jonathanchannon.com/post/abstracting-the-file-system/">Abstracting the File System</a></h2>
+        
+        <p><p>Following on from my post about <a href="http://blog.jonathanchannon.com/2012/09/25/is-oss-good-for-your-career/">OSS</a> I thought I would illustrate how cool OSS can be.</p>
+<p>The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.</p>
+<p>So you have a a method similar to this:</p>
+<pre><code>public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo(&quot;C:\Mytext.txt&quot;)
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine(&quot;This blog post is cool&quot;);
+    w.Close();
+  }
+}
+</code></pre>
+<p>You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.</p></p>
+        
+    </header>
+    
+    <ul class="actions">
+        <li><a href="https://blog.jonathanchannon.com/post/abstracting-the-file-system/" class="button big">Read more</a></li>
+    </ul>
+</article>
+
+
+						
+
+						
+							
+
+<section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">Tue, Sep 25, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/is-oss-good-for-your-career/">Is OSS good for your career?</a></h2>
+        </header>
+        
+        
+        <p><p>Got your attention? Good.</p>
+<p>Let me start by pointing out there are many opinions about the answer to this question. You will have yours and I have mine, that’s called freedom of speech. I would like to hear your opinions so leave it in the comments.</p>
+<p>Let me explain that I have had 4 jobs in the last 10-11 years. 3 of those were via recruitment agents. They check your skills, tick them off and pass you over to the employer if they match and hopefully you get an interview. That process has happened to me in each of those 3 times.</p>
+<p>If you have read my previous blog posts you’ll know I have spent the last year reading a lot of other peoples code and learning all the best practices I can in a bid to become a better software developer as well as give back to the developer community where I can.</p>
+<p>After spending a couple of months porting <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me">NerdDinner over to NancyFX</a> I realised that I had not looked at <a href="http://www.asp.net/mvc">ASP.Net MVC 4</a> and the new features built into it. I felt slightly strange at that point as I was usually an early adopter of these things keen to check out the new stuff. I think this was partly due to the fact I had spent a lot of time learning <a href="http://www.nancyfx.org">NancyFX</a> and really quite enjoying the framework and interacting with the small community of people who use Nancy.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/is-oss-good-for-your-career/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Fri, Sep 21, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/nancyfx-ravendb-nerddinner-and-me/">NancyFX, RavenDB, NerdDinner and Me</a></h2>
+        </header>
+        
+        
+        <p><p>As I said in my <a href="http://blog.jonathanchannon.com/2012/09/17/ive-started-blogging-why/" title="I’ve started blogging. Why?">first post</a>, NancyFX was my first port of call in my OSS adventure.  The reason I had come across it was by following <a href="http://twitter.com/squidge">@squidge</a> and <a href="http://twitter.com/cranialstrain">@cranialstrain</a> on Twitter.  At the time they were talking about it quite a bit so I thought I’d take a look.  I was also keeping track of lots of people talking about <a href="http://ravendb.net">RavenDB</a>.</p>
+<h3 id="what-is-nancyfx">What is NancyFX?</h3>
+<p>From the official docs this explains NancyFX:</p>
+<p><em>Nancy is a lightweight, low-ceremony, framework for building HTTP based services on .Net and Mono. The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.</em></p>
+<p><em>This means that everything in Nancy is setup to have sensible defaults and conventions, instead of making you jump through hoops and go through configuration hell just to get up and running. With Nancy you can go from zero to website in a matter of minutes. Literally.</em></p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/nancyfx-ravendb-nerddinner-and-me/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Mon, Sep 17, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/ive-started-blogging-why/">I’ve started blogging. Why?</a></h2>
+        </header>
+        
+        
+        <p><p>So here I am, Jonathan Channon, blogger.  I never saw the point of blogging before so why now?</p>
+<p>I have read and spoken to many people regarding blogging who were all in favour of it.  I would always argue that I don’t have time, I have nothing to blog about or I’m not that insane to start blogging about stuff I barely understand just so the masses can come and hurl abuse at my ignorance.  However I recently read an <a href="http://buildstarted.com/2012/08/28/how-i-learned-to-stop-worrying-and-love-my-community/">article</a> by <a href="http://twitter.com/buildstarted">Ben Dornis</a> titled “How I learned to stop worrying and love my community”.  He outlined all the reasons why a lot of people don’t publish their code and don’t publish their thoughts online. I thought he was being modest, the man is clearly talented at what he does so he didn’t have to worry however, someone like me still had these fears.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/ive-started-blogging-why/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/archive/">Archive</a></h2>
+        </header>
+        
+        
+        <p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/archive/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+</section>
+
+						
+
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+    <div class="pagination">
+        <ul class="pagination">
+
+            
+            
+                
+                <li>
+                    <a href="/" class="extra first">
+                        First
+                    </a>
+                </li>
+                
+            
+            
+            
+            <li>
+                <a href="/page/10/" class="previous">
+                    Prev
+                </a>
+            </li>
+            
+
+            
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/7/" class="page">
+                        7 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/8/" class="page">
+                        8 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/9/" class="page">
+                        9 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/10/" class="page">
+                        10 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/11/" class="page active">
+                        11 
+                    </a>
+                </li>
+                
+
+            
+
+            
+            
+
+            
+            
+                
+            
+        </ul>
+    </div>
+</footer>
+
+
+					</div>
+
+					
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+					
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+					<a href="#navPanel" id="navPanelToggle">Menu</a>
+			</div>
+
+			
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+			
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+
+	</body>
+</html>

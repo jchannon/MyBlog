@@ -1,0 +1,658 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+	<meta name="generator" content="Hugo 0.83.1" />
+		<title>Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+		
+
+		
+		
+		
+
+		
+
+		
+		
+		
+
+		
+		
+
+		
+			
+		
+		
+
+		
+		
+		
+
+
+		
+			<div id="wrapper" class="fade-in" data-pfn="post" data-ps="6" data-pfp="true">
+
+				
+
+				
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+				
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+						
+
+
+<article class="post featured">
+    <header class="major">
+        
+        <span class="date">Fri, Aug 7, 2015</span>
+        
+        <h2><a href="https://blog.jonathanchannon.com/post/hypermedia-and-nancyfx/">NancyFX and Hypermedia</a></h2>
+        
+        <p><p>I&rsquo;ve been slowly educating my self on hypermedia; what it is, how does it help and how to use it.  I must say I&rsquo;ve found it a very interesting topic and I thought it was time I put some information into a blog post just in case the 2 people that read this blog might find it useful.</p>
+<p>In my day job I&rsquo;m responsible for a HTTP API (notice I didn&rsquo;t use REST) and some months ago I spoke to Glenn Block around a general discussion about hypermedia.  Glenn put this on YouTube if you want to watch it.</p>
+<!-- raw HTML omitted --></p>
+        
+    </header>
+    
+    <ul class="actions">
+        <li><a href="https://blog.jonathanchannon.com/post/hypermedia-and-nancyfx/" class="button big">Read more</a></li>
+    </ul>
+</article>
+
+
+						
+
+						
+							
+
+<section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">Mon, Apr 27, 2015</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/cookie-authentication-angularjs-csrf-owin-mono/">Cookie Authentication &amp; CRSF with AngularJs, Owin &amp; Mono</a></h2>
+        </header>
+        
+        
+        <p><p>I&rsquo;m currently working on a project that has <a href="http://nancyfx.org">Nancy</a> serving up an API.  For the UI there is AngularJS.  We were using JWT for authentication just to get us up and running but then as things became more final in the product we knew it would be better to swap to cookies for security plus we may as well leverage the browser capabilities  for cookie handling. I&rsquo;m not going to get into the arguments about JWT security vs cookie security, there are advantages/disadvantages for using both in this scenario.  Our API is built on top of OWIN and Microsoft provide cookie middleware so I thought this would be nice and simple to plug in.  Lets just remember I&rsquo;m working on Mono!</p>
+<p>In our Startup class I added the below</p>
+<pre><code>app.UseCookieAuthentication(new CookieAuthenticationOptions
+{
+    AuthenticationMode = AuthenticationMode.Active,
+    CookieHttpOnly = true,
+    CookieSecure = Microsoft.Owin.Security.Cookies.CookieSecureOption.SameAsRequest,
+    SlidingExpiration = true,
+    AuthenticationType = &quot;MyCookie&quot;,
+    CookieName = &quot;MyCookie&quot;
+});
+</code></pre>
+<p>Hopefully thats pretty self explanatory. So I fired up my application and BOOM!</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/cookie-authentication-angularjs-csrf-owin-mono/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Mon, Nov 24, 2014</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/running-gulp-in-visual-xamarin-studio/">Running Gulp in Visual &amp; Xamarin Studio</a></h2>
+        </header>
+        
+        
+        <p><p>I was going to write a long post explaining about all the pain I went through to get this working but then realised you probably don&rsquo;t really care and you just want the code!</p>
+<p><img src="https://i.imgur.com/iYjnPK0.png" alt="Show the code"></p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/running-gulp-in-visual-xamarin-studio/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Wed, Nov 12, 2014</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/csharp-first-class-citizen-sublime-text/">Microsoft Endorsing C# as a First Class Citizen in Sublime Text</a></h2>
+        </header>
+        
+        
+        <p><p>At the end of my last <a href="http://blog.jonathanchannon.com/2014/08/05/nancy-aspnetvnext-osx-sublime-text/">post</a> on using ASP.Net vNext with Sublime Text I briefly mentioned a <a href="https://github.com/OmniSharp/omnisharp-sublime">plugin</a> that aimed at giving intellisense for C# within the editor.  Well 2 months later and I&rsquo;m happy to announce that intellisense works and I&rsquo;ve added a slew of other features that will hopefully make you feel at home away from Visual Studio.</p>
+<p>I discovered the plugin thanks to <a href="http://twitter.com/jasonimison">Jason Imison</a> but at that point there was some issues getting the intellisense working consistently because at that time I was using it with an ASP.NET vNext application which didn&rsquo;t have a solution file (*.sln) and the plugin was expecting that.  After speaking to Jason I found out I could change the settings so it wouldn&rsquo;t expect a solution file and give me the intellisense I was after in a text editor.  Eureka, it worked!  I was now on a mission to make Sublime be a first class citizen when writing C#.  Some may question why on earth would I want to edit C# in something other than Visual Studio.  I don&rsquo;t really want to get into that debate here but all I&rsquo;ll say is, it&rsquo;s nice to have other editor options and with Microsoft&rsquo;s mission to provide vNext compatibility with Mono and Visual Studio not running on OSX/Linux it makes sense to have an editor with feature rich C# support (yes I know there is Xamarin Studio but &ldquo;options&rdquo; people, &ldquo;options&rdquo;).</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/csharp-first-class-citizen-sublime-text/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Tue, Aug 5, 2014</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/nancy-aspnetvnext-osx-sublime-text/">Nancy, ASP.Net vNext, OSX and Sublime Text</a></h2>
+        </header>
+        
+        
+        <p><p>One of the great things that ASP.Net vNext is bringing is the ability to use it cross platform with Microsoft actively testing their libraries against <a href="http://www.mono-project.com/Main_Page">Mono</a>.  Along with this MS are developing a web server that is cross platform and goes by the name of <a href="https://github.com/aspnet/KestrelHttpServer">Kestrel</a>.  One thing they aren&rsquo;t doing, yet, is making Visual Studio cross platform so we need something to write our code in.  There a few editors out there but one of the most common is <a href="http://www.sublimetext.com/3">Sublime Text</a>.  This gives you syntax highlighting and build systems that can all be configured so if you are not aware of it check it out.  Obviously before we can start writing code on OSX with our editor we need Mono installed.</p>
+<p><strong>UPDATE - As of August 13th 2014 there is a Mono 3.6 release which means you no longer need to compile Mono but you will need to install Homebrew for ASP.Net vNext. <a href="#vnext">Skip to nnext section</a></strong></p>
+<p>At the time of writing the official binary for Mono is 3.4.0 and this does not include some features needed for ASP.Net vNext to run so we are going to have to manually compile Mono ourselves.  Now I know this sounds scary but its not as bad as it seems and I&rsquo;ve gone through the pain of setting it up so hopefully this blog post should make it easier for you</p>
+<p>There is a <a href="http://mono-project.com/Compiling_Mono_on_OSX">guide</a> on Mono&rsquo;s website on how to compile but I found some issues with it.  I&rsquo;m running on OSX Mavericks so I&rsquo;m not sure if that resulted in issues but here&rsquo;s my guide to get it compiling.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/nancy-aspnetvnext-osx-sublime-text/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Sat, Jun 14, 2014</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/nancy-aspnet-vnext-vs2014-azure/">Nancy, ASP.Net vNext, VS2014 &amp; Azure</a></h2>
+        </header>
+        
+        
+        <p><p>By now we know of Microsoft&rsquo;s plans for the next version of ASP.Net and they&rsquo;ve turned it on its head and from the looks of it, its goooooood!</p>
+<p><a href="http://www.hanselman.com/blog/IntroducingASPNETVNext.aspx">Here</a> is a blog post from Scott Hanselman introducing ASP.Net vNext. There are introductory and deep dive videos available for your perusal which are also well worth a watch.</p>
+<p>The TL;DR is ASP.Net vNext will take heavy influence from Node.js by using Owin to wire up all the app dependencies and middleware.  It will also remove *.csproj files and use a project.json file similar to Node&rsquo;s package.json and use NuGet to reference the application&rsquo;s dependencies.  It also takes inspiration from Node and Nancy&rsquo;s approach requiring you to opt-in to dependencies rather that traditionally having everything but the kitchen sink.  It also takes influence from Nancy via built in dependency injection and Mono support.  Microsoft announced they will run all their vNext tests against Mono builds ensuring all their code is compatible for cross platform deployments.</p>
+<p>Here&rsquo;s a tweet direct from the horses mouth albeit with a typo .</p>
+<p><img src="https://i.imgur.com/XMmMDce.png" alt="vNext influenced by Node/Nancy"></p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/nancy-aspnet-vnext-vs2014-azure/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Fri, Jun 6, 2014</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/modifying-bash-adding-git-auto-completion-to-terminal/">Modifying the bash prompt and adding Git completion to terminal</a></h2>
+        </header>
+        
+        
+        <p><p>At work we use Git and I use <a href="http://sourceforge.net/projects/console/files/">Console2</a> to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.</p>
+<p>Fire up your terminal and type in this command:</p>
+<pre><code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+</code></pre>
+<p>This will download a git completion file into your home folder to a hidden file called git-completion.bash.</p>
+<p>If the file ~/.bash_profile does not already exist create it with the following command.</p>
+<pre><code>touch ~/.bash_profile
+</code></pre>
+<p>Now open it and paste this in:</p>
+<pre><code>if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+</code></pre>
+<p>Now if you type a git command and press tab, BOOM!, you have auto complete for Git!</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/modifying-bash-adding-git-auto-completion-to-terminal/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+</section>
+
+						
+
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+    <div class="pagination">
+        <ul class="pagination">
+
+            
+            
+                
+                <li>
+                    <a href="/" class="extra first">
+                        First
+                    </a>
+                </li>
+                
+            
+            
+            
+            <li>
+                <a href="/page/3/" class="previous">
+                    Prev
+                </a>
+            </li>
+            
+
+            
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/2/" class="page">
+                        2 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/3/" class="page">
+                        3 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/4/" class="page active">
+                        4 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/5/" class="page">
+                        5 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/6/" class="page">
+                        6 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+
+            
+            
+            <li>
+                <a href="/page/5/" class="next">
+                    Next
+                </a>
+            </li>
+            
+
+            
+            
+                
+                <li>
+                    <a href="/page/11/" class="extra last">
+                        Last
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+</footer>
+
+
+					</div>
+
+					
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+					
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+					<a href="#navPanel" id="navPanelToggle">Menu</a>
+			</div>
+
+			
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+			
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+
+	</body>
+</html>

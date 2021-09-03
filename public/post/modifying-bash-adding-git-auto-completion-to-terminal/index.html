@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Modifying the bash prompt and adding Git completion to terminal &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Fri, Jun 6, 2014</span>
+                                
+                                <h1>Modifying the bash prompt and adding Git completion to terminal</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>At work we use Git and I use <a href="http://sourceforge.net/projects/console/files/">Console2</a> to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.</p>
+<p>Fire up your terminal and type in this command:</p>
+<pre><code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+</code></pre>
+<p>This will download a git completion file into your home folder to a hidden file called git-completion.bash.</p>
+<p>If the file ~/.bash_profile does not already exist create it with the following command.</p>
+<pre><code>touch ~/.bash_profile
+</code></pre>
+<p>Now open it and paste this in:</p>
+<pre><code>if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+</code></pre>
+<p>Now if you type a git command and press tab, BOOM!, you have auto complete for Git!</p>
+<p>Also by default if you&rsquo;re in a directory that has a git repository inside it will not show you the branch you&rsquo;re on.  Again in Console2 in Windows it does however we can get the same functionality.</p>
+<p>Open the .bash_profile and paste the below in, save and reopen your terminal and bingo:</p>
+<pre><code># Git branch in prompt.
+parse_git_branch() {
+    git branch 2&gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1=&quot;\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ &quot;
+</code></pre>
+<p>A few days later whilst I was using Console2 I wanted to have the date/time in my prompt so I know when I last used the git command.  If you look at the code above you&rsquo;ll see the PS1 variable which controls what you prompt will look like.  The variables in there eg\ <code>\W</code> all mean different things. Here&rsquo;s a <a href="http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html">link</a> to explain them.</p>
+<p>So in Console to I executed <code>echo $PS1</code> which showed me my current settings. I used the above link to help me and I added the datetime with a color.</p>
+<p>Before :  <code>\[\033]0;$MSYSTEM:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[32m\]\u@\h\[\033[33m\]\w$(__git_ps1)\[\033[0m\]\n\ \[\033[0m\]$ </code></p>
+<p>After :  <code>\[\033]0;$MSYSTEM:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[32m\]\u@\h\[\033[33m\]\w$(__git_ps1)\[\033[0m\]\n\[\033[31m\]\t \[\033[0m\]$ </code></p>
+<p>Now if this is all a bit much for you I was told about <a href="http://www.iterm2.com/#/section/home">iTerm2</a>, a OSX terminal replacement and <a href="https://github.com/robbyrussell/oh-my-zsh">Oh My Zsh</a> a way to configure your terminal that provides lots of plugins and themes.</p>
+<p>Hope this is helpful for someone.</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

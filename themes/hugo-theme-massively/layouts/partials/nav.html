@@ -2,7 +2,8 @@
 {{ $data := index .Site.Data .Site.Language.Lang }}
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='{{ "/" | relLangURL }}'>{{ .Site.Title }}</a></li>
+        <li class="{{ if ne .Title "Archive" }}active{{ end }}"><a href='{{ "/" | relLangURL }}'>{{ .Site.Title }}</a></li>
+        <li class="{{ if eq .Title "Archive" }}active{{ end }}"><a href="/archive">Archive</a></li>
         {{ with $data.contactinfo }}
         <li><a href='{{ "#footer" | relLangURL }}'>{{ i18n "NAV_CONTACT" . }}</a></li>
         {{ end }}

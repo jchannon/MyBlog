@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>The For Loop is the devil in disguise &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Fri, Nov 23, 2012</span>
+                                
+                                <h1>The For Loop is the devil in disguise</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>I recently spoke to someone about the ‘for’ loop who opened my eyes to how unstructured the ‘for’ loop is.</p>
+<p>I have only ever used it in the traditional sense of:</p>
+<pre><code>for(int i = 0; i &lt; 10; i++)
+{
+
+}
+</code></pre>
+<p>I looked into some more and thought I’d show anybody else who may not have known about this innocent little thing in the C# language. It may exist in other languages but I am explicitly talking about C#.</p>
+<pre><code>for (; ; )
+{
+  Console.WriteLine(&quot;Hi&quot;);
+}
+</code></pre>
+<p>For some reason this compiles and executes! Who knew? Smarter people than me obviously. What do you expect it to output?</p>
+<p>The answer is it outputs “Hi” forever as there is nothing to determine when the loop should end however there is nothing to determine when it should start either.</p>
+<p>I continued to investigate what other weird syntax the for loop would take.</p>
+<pre><code>for (int i = 3; ; )
+{
+  Console.WriteLine(&quot;Number &quot; + i);
+}
+</code></pre>
+<p>This will output “Number 3″ forever.</p>
+<pre><code>for (int i = 0; ; )
+{
+  Console.WriteLine(&quot;Hi&quot;);
+}
+</code></pre>
+<p>This will output “Hi” forever.</p>
+<pre><code>for (int i = 0; ; Console.WriteLine(&quot;Hi&quot;))
+{
+
+}
+</code></pre>
+<p>This will output “Hi” forever.</p>
+<pre><code>for (; ; RunThis())
+{
+
+}
+
+private void RunThis()
+{
+  Console.WriteLine(&quot;Hi&quot;);
+}
+</code></pre>
+<p>This will output “Hi” forever.</p>
+<pre><code>for (int i = 0; ; Console.WriteLine(&quot;Hi&quot;))
+{
+  Console.WriteLine(&quot; there&quot;);
+}
+</code></pre>
+<p>This will output “Hi there” forever</p>
+<pre><code>for (string s = &quot;Hi&quot;; ; )
+{
+  Console.WriteLine(s);
+}
+</code></pre>
+<p>This will output “Hi” forever.</p>
+<p>What do you think the below will do?</p>
+<pre><code>for (Initialize(); ; )
+{
+
+}
+
+private void Initialize()
+{
+  Console.WriteLine(&quot;Initialized&quot;);
+}
+</code></pre>
+<p>It actually outputs “Initliazed” and sits in an infinite loop.</p>
+<p>The below probably does what you expect it to by looping 0-9 and exits yet still something I’d never considered doing in the past.</p>
+<pre><code>for (int i = InitializeInt(); i &lt; 10; i++)
+{
+  Console.WriteLine(i);
+}
+
+private static int InitializeInt()
+{
+  return 0;
+}
+</code></pre>
+<p>This is a slight deviation on the above but essentially the same just with a Func</p>
+<pre><code>Func factory = () =&gt; 0;
+
+for (int i = factory(); i &lt; 10; i++)
+{
+  Console.WriteLine(i);
+}
+</code></pre>
+<p>Again the below is possible and something I’d never do but still possible.</p>
+<pre><code>for (var val = Init(); val.MyInt &lt; 10; val.MyInt++)
+{
+  Console.WriteLine(val.MyString);
+}
+
+public struct MyStruct
+{
+  public int MyInt { get; set; }
+  public string MyString { get; set; }
+}
+
+private MyStruct Init()
+{
+  return new MyStruct() { MyInt = 0, MyString = &quot;Hi&quot; };
+}
+</code></pre>
+<p>What do you think the below will do?</p>
+<pre><code>bool ok = true;
+for (; ok; )
+{
+  Console.WriteLine(&quot;Hi&quot;);
+  ok = false;
+}
+</code></pre>
+<p>It will enter the loop once and then exit. It acts as a normal loop just without the initialization of an int i and increasing the value of i on each iteration.</p>
+<p>There may be some other syntaxes it will accept but I’ve not found them.</p>
+<p>In essence the for loop has no expectations, it will execute with no arguments specified infinitely. In each 3 places of a for loop you can do pretty much what you want, I did find you couldn’t initialize an int and a string like so:</p>
+<pre><code>for (string s=&quot;Hi&quot;, int i = 0; i &lt; 10;i++ )
+{
+
+}
+</code></pre>
+<p>Its only really the middle section that determines when the loop should end.</p>
+<p>I’d never thought of using the for loop in these ways but it seems its possible for some reason. I’m starting to wonder if I’m not a good programmer for not knowing this or whether its just one of those things that’s odd but available in the language and if places like Google ask you in interview “What does this do? Does it compile?” to try and almost trick you for some reason. I’m sure there would be some problem solving argument for asking but I’m not sure what that proves as if you were a good developer you would never use it anyway.</p>
+<p>My constant journey of learning continues.</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

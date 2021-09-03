@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Testing your application’s email logic &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Thu, Oct 25, 2012</span>
+                                
+                                <h1>Testing your application’s email logic</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>If you’ve ever written an application that sends out email you may have written the code and executed it numerous times to check that the logic works and that the email appears as you hope. This obviously means you have to hit your SMTP server each time, open your email client and check your emails each time.</p>
+<h3 id="papercut">Papercut</h3>
+<p>Reading through my Twitter timeline I saw <a href="http://twitter.com/TheCodeJunkie">@TheCodeJunkie</a> asking about the app that you can use to test sending emails from your application.</p>
+<p><img src="/images/blogpostimages/tweet.png" alt="TheCodeJunkie Tweet"></p>
+<p>Intrigued, I kept an eye on my timeline and found that the application in question was <a href="http://papercut.codeplex.com/">Papercut</a></p>
+<p>In simple terms you put Papercut on a machine (most likely your development machine) and in your code set the SMTP host to be the IP Address of where Papercut is running and fire up your application and watch Papercut notify you from the system tray that it’s recevied a message.</p>
+<p><img src="/images/blogpostimages/Untitled.png" alt="Papertray System Tray Icon" title="Papertray System Tray Icon"></p>
+<p><em>Papertray System Tray Icon</em></p>
+<p>Lets open it up and see what it says!</p>
+<p><img src="/images/blogpostimages/raw-620x330.png" alt="Raw View" title="Raw View"></p>
+<p><em>Raw View</em></p>
+<p><img src="/images/blogpostimages/body-620x330.png" alt="Body View" title="Body View"></p>
+<p><em>Body View</em></p>
+<p>I’ve tested this with a C# application and a Node.js application. If you don’t believe me, here’s the code:</p>
+<p><strong>C#</strong></p>
+<pre><code>static void Main(string[] args)
+{
+	MailMessage message = new MailMessage(&quot;Jonathan Channon &quot;, &quot;tim.cook@apple.com&quot;)
+	{
+        Subject = &quot;iPhone&quot;,
+        Body = &quot;I would like a free iPhone for work. My boss won't let me have one. How about it?&quot;,
+        BodyEncoding = Encoding.UTF8
+	};
+	
+	message.Bcc.Add(&quot;boss@company.com&quot;);
+	SmtpClient client = new SmtpClient(&quot;127.0.0.1&quot;);
+	NetworkCredential info = new NetworkCredential(&quot;mail@jonathanchannon.com&quot;, &quot;reallysecurepassword&quot;);
+	client.DeliveryMethod = SmtpDeliveryMethod.Network;
+	client.UseDefaultCredentials = false;
+	client.Credentials = info;
+	try
+	{
+        client.Send(message);
+	}
+	catch(Exception ex)
+	{
+        Console.WriteLine(ex.Message);
+	}
+}
+</code></pre>
+<p><strong>Node.js</strong></p>
+<pre><code>var nodemailer = require(&quot;nodemailer&quot;);
+
+var smtpTransport = nodemailer.createTransport(&quot;SMTP&quot;);
+
+var mailOptions = {
+    from: &quot;Jonathan Channon &quot;,
+    to: &quot;tim.cook@apple.com&quot;,
+    cc: &quot;boss@company.com&quot;,
+    subject: &quot;iPhone&quot;,
+    text: &quot;I would like a free iPhone for work. My boss won't let me have one. How about it?&quot;,
+    html: &quot;I would like a free iPhone for work. My boss won't let me have one. How about it?&quot;
+};
+
+smtpTransport.sendMail(mailOptions, function(error, response){
+    if(error)
+    {
+        console.log(error);
+    }else
+    {
+        console.log(&quot;Message sent: &quot; %2B response.message);
+    }
+
+    smtpTransport.close();
+});
+</code></pre>
+<p>I think this is a great little app and a real time saver. I highly recommend that you check it out!</p>
+<p>They also offer a web based version called <a href="http://dummysmtp.com/">DummySMTP</a> which allows you to test an almost live copy of your application but DummySMTP captures the emails sent out to customers, for example.</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

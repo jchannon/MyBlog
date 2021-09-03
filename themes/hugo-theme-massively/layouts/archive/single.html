@@ -1,0 +1,53 @@
+{{ partial "htmlhead" . }}
+
+<body lang='{{ .Site.Language.Lang | default "en-us" }}' class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        {{ partial "header" . }}
+        {{ partial "nav" . }}
+
+        <!-- Main -->
+        <div id="main">
+
+            <div>
+                <article role="article">
+                    <header>
+                        <h1 class="entry-title">
+                            {{ .Title }}
+                            <!-- title, in this case it will be "Archive page" -->
+                        </h1>
+                    </header>
+                    <div id="blog-archives" class="category">
+                        {{ .Content }}
+                        <!-- content of the markdown file. note that inside the range .Content will point to each page's content -->
+                        {{ range (where .Site.Pages "Type" "post") }}
+                        <article>
+                            <time>
+                                <span class="month">{{ .Date | dateFormat "Jan" }}</span> <!-- print publish month -->
+                                <span class="day">{{ .Date | dateFormat "2" }}</span> <!-- print publish day -->
+                                <span class="year">{{ .Date | dateFormat "2006" }}</span> <!-- print publish day -->
+                            </time>
+                            <h3>
+                                <a href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a>
+                            </h3>
+
+                            <!-- if you want pages summary you can print it here {{ .Summary }} -->
+                        </article>
+                        {{ end }}
+                    </div>
+                </article>
+            </div>
+
+        </div>
+
+        {{ partial "footer/index" . }}
+        {{ partial "copyright" . }}
+
+    </div>
+    {{ template "_internal/google_analytics.html" . }}
+    {{ partial "scripts/index" . }}
+</body>
+
+</html>

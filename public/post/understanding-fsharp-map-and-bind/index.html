@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Understanding F# map/bind &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Sun, Jun 28, 2020</span>
+                                
+                                <h1>Understanding F# map/bind</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>This blog post aims to explain map/bind in F# in a code only example. It took me a while so I&rsquo;m writing it up here so I can come back to it and re-read it for the 100th time most likely!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">let</span> add x y <span style="color:#f92672">=</span>
+    x <span style="color:#f92672">+</span> y
+
+<span style="color:#66d9ef">let</span> subtract x y <span style="color:#f92672">=</span>
+    x <span style="color:#f92672">-</span> y
+
+<span style="color:#66d9ef">let</span> multiply x y <span style="color:#f92672">=</span>
+    x <span style="color:#f92672">*</span> y
+
+<span style="color:#66d9ef">let</span> divide x y <span style="color:#f92672">=</span>
+    <span style="color:#66d9ef">try</span>
+        Ok<span style="color:#f92672">(</span>y <span style="color:#f92672">/</span> x<span style="color:#f92672">)</span> <span style="color:#75715e">//This could blow up with DivideByZero exception
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">with</span> ex <span style="color:#f92672">-&gt;</span> Error ex
+
+<span style="color:#66d9ef">let</span> homeRolledMap fn result <span style="color:#f92672">=</span> 
+    <span style="color:#66d9ef">match</span> result <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok s <span style="color:#f92672">-&gt;</span> Ok<span style="color:#f92672">(</span>fn s<span style="color:#f92672">)</span>
+    <span style="color:#f92672">|</span> Error f <span style="color:#f92672">-&gt;</span> Error f
+
+<span style="color:#66d9ef">let</span> homeRolledBind fn result <span style="color:#f92672">=</span>
+    <span style="color:#66d9ef">match</span> result <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok s <span style="color:#f92672">-&gt;</span> fn s
+    <span style="color:#f92672">|</span> Error f <span style="color:#f92672">-&gt;</span> Error f
+
+<span style="color:#f92672">[&lt;</span>EntryPoint<span style="color:#f92672">&gt;]</span>
+<span style="color:#66d9ef">let</span> main argv <span style="color:#f92672">=</span>
+    <span style="color:#75715e">//Understanding Result&lt;int,exn&gt;
+</span><span style="color:#75715e"></span>
+    add 10 5 <span style="color:#f92672">|&gt;</span> printfn <span style="color:#e6db74">&#34;10+5 is %i&#34;</span>
+    subtract 10 5 <span style="color:#f92672">|&gt;</span> printfn <span style="color:#e6db74">&#34;10-5 is %i&#34;</span>
+    multiply 10 5 <span style="color:#f92672">|&gt;</span> printfn <span style="color:#e6db74">&#34;10*5 is %i&#34;</span>
+    
+    <span style="color:#66d9ef">let</span> divResult <span style="color:#f92672">=</span> divide 5 10
+    <span style="color:#75715e">//We have to pattern match the result because it won&#39;t be an int it will be Result&lt;int,exn&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">match</span> divResult <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;10/5 is %i&#34;</span> res
+    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops&#34;</span>
+
+    <span style="color:#75715e">//Let&#39;s chain some method calls together
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">//add wants two integer inputs but because we called divide which returned Result&lt;int,exn&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//we need to call Result.map to match on the success value of a call to divide and then call add and then return a Result type
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//because once we have a Result type in the chain we have to continue with that
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> mapRes <span style="color:#f92672">=</span>
+        multiply 10 10
+        <span style="color:#f92672">|&gt;</span> divide 2
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>add 50<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">match</span> mapRes <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;10*10/2+50 is %i&#34;</span> res
+    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops&#34;</span>
+
+    <span style="color:#75715e">//An example of why that is beneficial is because if we call divide 0 this will also return a Result&lt;int,exn&gt; but this time it will have errored
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//map here will recognise that it doesnt have a success value but an exn/failure value and not call the success function and it will do this numerous times based on the
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//numerous functions we call
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> mapRes <span style="color:#f92672">=</span>
+        multiply 10 10
+        <span style="color:#f92672">|&gt;</span> divide 0
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>add 50<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>subtract 10<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>add 5<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">match</span> mapRes <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;10*10/0+50-10+5 is %i&#34;</span> res
+    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+
+    <span style="color:#75715e">//divide wants two integer inputs but because we called divide previously which returned Result&lt;int,exn&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//we need to call Result.bind to match on the success value of a call to divide and then call divide but then NOT to return a Result type as divide returns us a Result type already
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//if we called Result.map instead of bind we&#39;d get back Result&lt;Result&lt;int,exn&gt;,exn&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> mapRes <span style="color:#f92672">=</span>
+        multiply 10 10
+        <span style="color:#f92672">|&gt;</span> divide 2
+        <span style="color:#f92672">|&gt;</span> Result.bind <span style="color:#f92672">(</span>divide 5<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">match</span> mapRes <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;10*10/2/5 is %i&#34;</span> res
+    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+
+
+    <span style="color:#75715e">//what would it look like if we didnt have map/bind types?
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">//Once you hit divide you will have to pattern match the result and break up the flow of chained function calls
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> multiRes <span style="color:#f92672">=</span> multiply 10 10 <span style="color:#f92672">|&gt;</span> divide 2
+    <span style="color:#66d9ef">match</span> multiRes <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span>
+        <span style="color:#66d9ef">let</span> newres <span style="color:#f92672">=</span> res <span style="color:#f92672">|&gt;</span> add 50
+        printfn <span style="color:#e6db74">&#34;10*10/2+50 is %i&#34;</span> newres
+    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+
+    <span style="color:#75715e">//But what if you want subsequent calls to divide, you&#39;ll have to split up the pattern matching which is ugly
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> multiRes <span style="color:#f92672">=</span> multiply 10 10 <span style="color:#f92672">|&gt;</span> divide 2
+    <span style="color:#66d9ef">match</span> multiRes <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span>
+        <span style="color:#66d9ef">let</span> newres <span style="color:#f92672">=</span>
+            res
+            <span style="color:#f92672">|&gt;</span> add 50
+            <span style="color:#f92672">|&gt;</span> divide 2
+        <span style="color:#66d9ef">match</span> newres <span style="color:#66d9ef">with</span>
+        <span style="color:#f92672">|</span> Ok subsequentres <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;10*10/2+50/2 is %i&#34;</span> subsequentres
+        <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+
+
+    <span style="color:#75715e">//What if you wanted to call divide 5 times, nested hell!
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> firstRes <span style="color:#f92672">=</span> multiply 10 10 <span style="color:#f92672">|&gt;</span> divide 2
+    <span style="color:#66d9ef">match</span> firstRes <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span>
+        <span style="color:#66d9ef">let</span> secondRes <span style="color:#f92672">=</span>
+            res
+            <span style="color:#f92672">|&gt;</span> add 50
+            <span style="color:#f92672">|&gt;</span> divide 2
+        <span style="color:#66d9ef">match</span> secondRes <span style="color:#66d9ef">with</span>
+        <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span>
+            <span style="color:#66d9ef">let</span> thirdRes <span style="color:#f92672">=</span>
+                res
+                <span style="color:#f92672">|&gt;</span> subtract 10
+                <span style="color:#f92672">|&gt;</span> divide 2
+            <span style="color:#66d9ef">match</span> thirdRes <span style="color:#66d9ef">with</span>
+            <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span>
+                <span style="color:#66d9ef">let</span> fourthRes <span style="color:#f92672">=</span>
+                    res
+                    <span style="color:#f92672">|&gt;</span> add 80
+                    <span style="color:#f92672">|&gt;</span> divide 2
+                <span style="color:#66d9ef">match</span> fourthRes <span style="color:#66d9ef">with</span>
+                <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span>
+                    <span style="color:#66d9ef">let</span> fifthRes <span style="color:#f92672">=</span>
+                        res
+                        <span style="color:#f92672">|&gt;</span> add 25
+                        <span style="color:#f92672">|&gt;</span> add 5
+                        <span style="color:#f92672">|&gt;</span> divide 2
+                    <span style="color:#66d9ef">match</span> fifthRes <span style="color:#66d9ef">with</span>
+                    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;10*10/2+50/2+80/2+25+5/2 = %i&#34;</span> res
+                    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+                <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+            <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+        <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+
+
+
+    <span style="color:#75715e">//To understand how map/bind works and allow us to write more terse code we could roll our own functions to cope with all the pattern matching
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//and see what a map/bind looks like
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> homeRolled <span style="color:#f92672">=</span>
+        multiply 10 10
+        <span style="color:#f92672">|&gt;</span> divide 2
+        <span style="color:#f92672">|&gt;</span> homeRolledMap <span style="color:#f92672">(</span>add 50<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> homeRolledBind <span style="color:#f92672">(</span>divide 2<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> homeRolledMap <span style="color:#f92672">(</span>subtract 10<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> homeRolledBind <span style="color:#f92672">(</span>divide 2<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> homeRolledMap <span style="color:#f92672">(</span>add 80<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> homeRolledBind <span style="color:#f92672">(</span>divide 2<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> homeRolledMap <span style="color:#f92672">(</span>add 25<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> homeRolledMap <span style="color:#f92672">(</span>add 5<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> homeRolledBind <span style="color:#f92672">(</span>divide 2<span style="color:#f92672">)</span>
+
+    <span style="color:#75715e">//Luckily as we know there is map and bind on the Result module that we can use rather than rolling our own
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> res <span style="color:#f92672">=</span>
+        multiply 10 10
+        <span style="color:#f92672">|&gt;</span> divide 2
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>add 50<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.bind <span style="color:#f92672">(</span>divide 2<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>subtract 10<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.bind <span style="color:#f92672">(</span>divide 2<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>add 80<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.bind <span style="color:#f92672">(</span>divide 2<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>add 25<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">(</span>add 5<span style="color:#f92672">)</span>
+        <span style="color:#f92672">|&gt;</span> Result.bind <span style="color:#f92672">(</span>divide 2<span style="color:#f92672">)</span>
+
+    <span style="color:#66d9ef">match</span> res <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok res <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;10*10/2+50/2+80/2+25+5/2 = %i&#34;</span> res
+    <span style="color:#f92672">|</span> Error err <span style="color:#f92672">-&gt;</span> printfn <span style="color:#e6db74">&#34;oops %A&#34;</span> err
+
+
+    0 <span style="color:#75715e">// return an integer exit code
+</span><span style="color:#75715e"></span>
+</code></pre></div>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

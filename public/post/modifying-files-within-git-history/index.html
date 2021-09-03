@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Modifying files within Git history &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Wed, Jul 3, 2013</span>
+                                
+                                <h1>Modifying files within Git history</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.</p>
+<p>I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.</p>
+<p>For Sublime Text run this in the command line:</p>
+<pre><code>git config --global core.editor &quot;'C:/Program Files/Sublime Text 2/sublime_text.exe'&quot;
+</code></pre>
+<p>Next up is finding the commit id you want to go back to, to edit:</p>
+<pre><code>git log
+</code></pre>
+<p>Make a note of the parent commit id of the commit you want to edit.</p>
+<p>Run this:</p>
+<pre><code>git rebase --interactive 1185cb0de5d5e5b4c79f83a0c51ed06a5d22d7c4^
+</code></pre>
+<p>This will open Sublime Text and you’ll see lines similar to:</p>
+<pre><code>pick d3adb33 My Commit message
+pick d5bdb67 Other Commit message
+</code></pre>
+<p>Change “pick” to “edit” on the commit you want to modify, save and exit</p>
+<p>You can then make the changes to your files and when ready run:</p>
+<pre><code>git commit --all --amend
+</code></pre>
+<p>Sublime Text will open again so you can edit the commit message, just save, exit and run:</p>
+<pre><code>git rebase --continue
+</code></pre>
+<p>We’re done!</p>
+<p>Your previous commit has been amended and you’re back to where you were with the latest commits ready to be pushed.</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

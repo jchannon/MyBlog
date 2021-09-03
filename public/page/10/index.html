@@ -1,0 +1,694 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+	<meta name="generator" content="Hugo 0.83.1" />
+		<title>Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+		
+
+		
+		
+		
+
+		
+
+		
+		
+		
+
+		
+		
+
+		
+			
+		
+		
+
+		
+		
+		
+
+
+		
+			<div id="wrapper" class="fade-in" data-pfn="post" data-ps="6" data-pfp="true">
+
+				
+
+				
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+				
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+						
+
+
+<article class="post featured">
+    <header class="major">
+        
+        <span class="date">Fri, Nov 23, 2012</span>
+        
+        <h2><a href="https://blog.jonathanchannon.com/post/the-for-loop-is-the-devil-in-disguise/">The For Loop is the devil in disguise</a></h2>
+        
+        <p><p>I recently spoke to someone about the ‘for’ loop who opened my eyes to how unstructured the ‘for’ loop is.</p>
+<p>I have only ever used it in the traditional sense of:</p>
+<pre><code>for(int i = 0; i &lt; 10; i++)
+{
+
+}
+</code></pre>
+<p>I looked into some more and thought I’d show anybody else who may not have known about this innocent little thing in the C# language. It may exist in other languages but I am explicitly talking about C#.</p>
+<pre><code>for (; ; )
+{
+  Console.WriteLine(&quot;Hi&quot;);
+}
+</code></pre>
+<p>For some reason this compiles and executes! Who knew? Smarter people than me obviously. What do you expect it to output?</p>
+<p>The answer is it outputs “Hi” forever as there is nothing to determine when the loop should end however there is nothing to determine when it should start either.</p></p>
+        
+    </header>
+    
+    <ul class="actions">
+        <li><a href="https://blog.jonathanchannon.com/post/the-for-loop-is-the-devil-in-disguise/" class="button big">Read more</a></li>
+    </ul>
+</article>
+
+
+						
+
+						
+							
+
+<section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">Sun, Nov 18, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/gitignore-not-working-fixed/">.gitignore not working – fixed!</a></h2>
+        </header>
+        
+        
+        <p><p>This happens to me too often and I always end up googling the answer so this post is probably more of a location I know I can come to find the answer, although by writing it down hopefully it may sink in that I should stop getting too excited on a new project.</p>
+<h3 id="new-project-scenario">New project scenario</h3>
+<p>You’re all very excited about your new project and you think its about time you committed this to source control. Obviously you’re using <a href="http://git-scm.com/">Git</a> so you initialise a new repository and commit your files. You then setup a remote repository at <a href="http://github.com">Github</a> and it asks you whether you want it create a .gitignore file – you do. So now you have a repository remotely and locally. Easiest thing to do is pull from the remote, setup your remote and push to it. The other scenario might be you’ve committed locally and then realise you need to add a .gitignore file which you do and then commit.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/gitignore-not-working-fixed/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Tue, Nov 6, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/publishing-to-windows-azure-from-github/">Publishing to Windows Azure from Github</a></h2>
+        </header>
+        
+        
+        <p><p>Back in <a href="http://weblogs.asp.net/scottgu/archive/2012/09/17/announcing-great-improvements-to-windows-azure-web-sites.aspx">July 2012</a> Microsoft announced improvements to Azure Web Sites. One of those improvements was to Git publishing so when you pushed changes to your Github repository Azure would automatically pick that up and deploy the project. I even mentioned it in my <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/" title="NancyFX, RavenDB, NerdDinner and Me">DinnerParty blog post</a> but have only just looked at implementing it.</p>
+<h2 id="preparation">Preparation</h2>
+<p>As I said in my previous post Azure supported Git publishing but it was a two step process. You push to Github and then push to Azure and it gets deployed. If you already have Git setup on your Azure account there is nowhere in the dashboard that allows to you setup Github integration. I thought I was going to have reset my deployment credentials and set it all up again when I asked the question on <a href="http://jabbr.net">Jabbr</a>. Luckily <a href="http://twitter.com/davidfowl">David Fowler</a> was online. Why is that lucky? He wrote the Github integration feature of Azure.</p>
+<p>To setup your Azure account to enable Github integration you have to FTP into your Azure account and delete the deployment history by deleting all contents in the /site/deployments folder.</p>
+<p><img src="/images/blogpostimages/deploymenthistory-620x604.png" alt="Deployment History" title="Deployment History"></p>
+<p><em>Deployment History</em></p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/publishing-to-windows-azure-from-github/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Thu, Oct 25, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/simple-net-twittergooglefacebook-authentication/">Simple .Net Twitter,Google,Facebook Authentication</a></h2>
+        </header>
+        
+        
+        <p><p>Logging into websites is no longer a matter of typing in your username and password and clicking the login button. If you already have an account with the main social networks you can log into a site using your credentials from that website saving you having to register your details <em>again</em>. This obviously makes things a bit easier as you don’t have to remember another password. (Although you should all be using a password manager such as <a href="http://www.lastpass.com">LastPass</a>.)</p>
+<h2 id="current-social-login-providers">Current Social Login Providers</h2>
+<p>There are currently providers out there that allow you to use their services to integrate into your website to provide authentication via the social networks. The main two that I know of are <a href="http://janrain.com">Janrain</a> and <a href="http://www.dotnetopenauth.net/">DotNetOpenAuth</a>. I’ve not worked with DotNetOpenAuth but I have with Janrain when building <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/">DinnerParty</a>.</p>
+<p>The process was reasonably easy but not as simple as it could be.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/simple-net-twittergooglefacebook-authentication/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Thu, Oct 25, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/testing-your-applications-email-logic/">Testing your application’s email logic</a></h2>
+        </header>
+        
+        
+        <p><p>If you’ve ever written an application that sends out email you may have written the code and executed it numerous times to check that the logic works and that the email appears as you hope. This obviously means you have to hit your SMTP server each time, open your email client and check your emails each time.</p>
+<h3 id="papercut">Papercut</h3>
+<p>Reading through my Twitter timeline I saw <a href="http://twitter.com/TheCodeJunkie">@TheCodeJunkie</a> asking about the app that you can use to test sending emails from your application.</p>
+<p><img src="/images/blogpostimages/tweet.png" alt="TheCodeJunkie Tweet"></p>
+<p>Intrigued, I kept an eye on my timeline and found that the application in question was <a href="http://papercut.codeplex.com/">Papercut</a></p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/testing-your-applications-email-logic/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Mon, Oct 8, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/node-js-express-hello-world-formula-1-style/">Node.js, Express, Hello World Formula 1 Style</a></h2>
+        </header>
+        
+        
+        <p><p>In my ongoing efforts to be a better developer (plus I just like tinkering) I thought I would take a look at <a href="http://nodejs.org">node.js</a>.</p>
+<p>I did play with node.js about a year ago where I setup a TCP listener to listen to a TCP Server on the network broadcasting XML messages, I then took these, formatted them to JSON and passed it to a browser using <a href="http://socket.io/">Socket.IO</a>. It was pretty cool but the project never came to anything.</p>
+<p>However, I thought I would re-visit and setup a proper development environment on my Mac at home.</p>
+<h2 id="editors">Editors</h2>
+<p>There are many editors/IDE’s that you can use for node.js development such as Vim, Eclipse, WebStorm, Aptana Studio, Emacs and Cloud9 IDE.  As I have used <a href="http://www.sublimetext.com/">Sublime Text 2</a> (ST2) before I thought I would use this because I like it and all the cool kids use it!!</p>
+<p>Coming from a mainly IDE based background I started to find things a bit hard going however ST2 allows plugins to be used to make the user experience a lot nicer.  Below are a list of plugins I have installed:</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/node-js-express-hello-world-formula-1-style/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Fri, Sep 28, 2012</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/abstracting-the-file-system/">Abstracting the File System</a></h2>
+        </header>
+        
+        
+        <p><p>Following on from my post about <a href="http://blog.jonathanchannon.com/2012/09/25/is-oss-good-for-your-career/">OSS</a> I thought I would illustrate how cool OSS can be.</p>
+<p>The day before that post was published I was working on a program that required the file system. All you good developers are going to know that the file system is a dependency and dependencies are bad and this post will probably be a bit like preaching to the choir however I thought it was worth posting.</p>
+<p>So you have a a method similar to this:</p>
+<pre><code>public void DoSomethingCool()
+{
+  //do some stuff now write to file
+
+  FileInfo f = new FileInfo(&quot;C:\Mytext.txt&quot;)
+  using(StreamWriter w = f.CreateText())
+  {
+    w.WriteLine(&quot;This blog post is cool&quot;);
+    w.Close();
+  }
+}
+</code></pre>
+<p>You are writing to a file to record something and need to test your method. Remember, unit tests are supposed to be fast. Typically anything that writes to a database or a file system will be slow however, we also have the problem that our method is now dependent on the file system and dependencies are bad. Wouldn’t it be handy if we could make FileInfo a representation of an interface.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/abstracting-the-file-system/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+</section>
+
+						
+
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+    <div class="pagination">
+        <ul class="pagination">
+
+            
+            
+                
+                <li>
+                    <a href="/" class="extra first">
+                        First
+                    </a>
+                </li>
+                
+            
+            
+            
+            <li>
+                <a href="/page/9/" class="previous">
+                    Prev
+                </a>
+            </li>
+            
+
+            
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/7/" class="page">
+                        7 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/8/" class="page">
+                        8 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/9/" class="page">
+                        9 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/10/" class="page active">
+                        10 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/11/" class="page">
+                        11 
+                    </a>
+                </li>
+                
+
+            
+
+            
+            
+            <li>
+                <a href="/page/11/" class="next">
+                    Next
+                </a>
+            </li>
+            
+
+            
+            
+                
+                <li>
+                    <a href="/page/11/" class="extra last">
+                        Last
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+</footer>
+
+
+					</div>
+
+					
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+					
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+					<a href="#navPanel" id="navPanelToggle">Menu</a>
+			</div>
+
+			
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+			
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+
+	</body>
+</html>

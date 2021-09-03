@@ -1,0 +1,670 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+	<meta name="generator" content="Hugo 0.83.1" />
+		<title>Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+		
+
+		
+		
+		
+
+		
+
+		
+		
+		
+
+		
+		
+
+		
+			
+		
+		
+
+		
+		
+		
+
+
+		
+			<div id="wrapper" class="fade-in" data-pfn="post" data-ps="6" data-pfp="true">
+
+				
+
+				
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+				
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+						
+
+
+<article class="post featured">
+    <header class="major">
+        
+        <span class="date">Wed, Sep 11, 2013</span>
+        
+        <h2><a href="https://blog.jonathanchannon.com/post/comparing-object-instances-with-fakeiteasy/">Comparing object instances with FakeItEasy</a></h2>
+        
+        <p><p>I had the task of writing a new application recently and of course I chose <a href="http://nancyfx.org">Nancy</a>.  One of the many great reasons is the testing capabilites it offers (For more on that see <a href="http://www.marcusoft.net/2013/01/NancyTesting1.html">this</a> great series of articles).</p>
+<p>The basics of a test with Nancy looks like this:</p>
+<pre><code>[Fact]
+public void Should_return_status_ok_when_route_exists()
+{
+    // Given
+    var bootstrapper = new DefaultNancyBootstrapper();
+    var browser = new Browser(bootstrapper);
+     
+    // When
+    var result = browser.Get(&quot;/&quot;, with =&gt; {
+        with.HttpRequest();
+    });
+        
+    // Then
+    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+}
+</code></pre>
+<p>You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the <code>ConfigurableBootstrapper</code>.</p></p>
+        
+    </header>
+    
+    <ul class="actions">
+        <li><a href="https://blog.jonathanchannon.com/post/comparing-object-instances-with-fakeiteasy/" class="button big">Read more</a></li>
+    </ul>
+</article>
+
+
+						
+
+						
+							
+
+<section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">Sat, Aug 24, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/async-route-handling-with-nancy/">Async Route Handling with Nancy</a></h2>
+        </header>
+        
+        
+        <p><p>I don&rsquo;t know about you but all I hear is &ldquo;ASYNC ALL THE THINGS!&rdquo;, I think this is partly down to its new and shiny and us developers love &ldquo;the shiny&rdquo; and partly a lot of the things we do in our applications are I/O based whether that be database or file system.</p>
+<p>The problem that comes with the new and shiny bandwagon is you need to understand what you&rsquo;re evangelising. Making asynchronous methods and executing them with no actual reason will not give your codebase any gains and could actually effect your application&rsquo;s performance.  There is more depth to that argument but for simplicity just remember this, only use asynchronous methods if you are doing some sort of I/O.</p>
+<p>It could also be argued that only &ldquo;use asynchronicity in a web framework if you expect high traffic in your web application&rdquo;. If you only have 10 requests on a small site you&rsquo;re not going to benefit from asynchronous execution as there are plenty of threads available to handle your application.  If you start hitting 1000 concurrent requests (the default IIS limit) then requests will start getting queued up.  If you make your routes asynchronous then any code that is being waited on, the thread that is being used there can be released to process another request thus speeding up the performance of your app and prevent the likely hood of large queues.  I will show how simple it is to make your routes asynchronous with Nancy below.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/async-route-handling-with-nancy/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Thu, Aug 22, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/a-quick-look-at-visual-node/">A quick look at Visual Node</a></h2>
+        </header>
+        
+        
+        <p><p>I came across <a href="http://www.visualnode.info/">Visual Node</a> a few months ago and was excited by the looks of it.  For those that didn&rsquo;t click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what&rsquo;s going on.</p>
+<p>The hipster in me is screaming saying &ldquo;You should be using Sublime Text and <a href="https://github.com/dannycoates/node-inspector">node-inspector</a> for debugging&rdquo; but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that&rsquo;s just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I&rsquo;m never going to touch a dynamic language again, &ldquo;give me a statically typed language every time with a compiler&rdquo;.  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/a-quick-look-at-visual-node/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Wed, Jul 3, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/modifying-files-within-git-history/">Modifying files within Git history</a></h2>
+        </header>
+        
+        
+        <p><p>If you have been doing code changes and committing as you go and then look back at the changes you may see something you don’t like the look of. Assuming no-one has a copy of your code changes you can go back and modify the files at a certain point in time within your commit history.</p>
+<p>I use Git Bash by default but the editor sucks compared to Sublime Text so first things first lets setup the Git editor.</p>
+<p>For Sublime Text run this in the command line:</p>
+<pre><code>git config --global core.editor &quot;'C:/Program Files/Sublime Text 2/sublime_text.exe'&quot;
+</code></pre>
+<p>Next up is finding the commit id you want to go back to, to edit:</p>
+<pre><code>git log
+</code></pre>
+<p>Make a note of the parent commit id of the commit you want to edit.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/modifying-files-within-git-history/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Wed, May 29, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/why-net-should-become-independent/">Why .Net should become independent!</a></h2>
+        </header>
+        
+        
+        <p><p>I recently changed jobs and as usual was at the mercy of recruitment agents. The advert for my job contained things like ASP.Net MVC, Entity Framework &amp; TFS (luckily there were other cool pieces of technology on that list and what the role entailed interested me and once I had joined the company I saw they were open to other tech/approaches that made people’s workflow and output more beneficial to developers as well as the company. In fact I implemented an API written in <a href="http://nancyfx.org/">Nancy</a> on my first day and paved the way for Git in the first week).</p>
+<p>My point being that whenever I hear from recruiters or look for jobs all the adverts basically list the full Microsoft stack. I recently heard from a friend who runs his own company that he gave his CV to a recruitment agent and was basically rejected because his .Net experience was not MS based enough. I know his .Net skills are very good but because those .Net skills were put to good use using OSS projects he is unlikely to get a job in the mainstream .Net market.</p>
+<p>These adverts usually contain a list of tech/experience similar to: MVC, Webforms, Visual Studio, SQL Server, Entity Framework, WCF, LINQ.</p>
+<p><strong>Q:</strong> What’s the common denominator here?<br>
+<strong>A:</strong> They are all owned by Microsoft.</p>
+<p><strong>Q:</strong> What operating system do these all run on?<br>
+<strong>A:</strong> Microsoft Windows</p>
+<p><strong>Q:</strong> What framework and programming language do they run on?<br>
+<strong>A:</strong> Microsoft .Net and C#</p>
+<p>Spot a pattern?</p>
+<p>So lets point out the obvious, the operating system, the frameworks, the language, the tooling and the data storage are all owned and implemented by one company (and they say Apple tries to lock its users in).</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/why-net-should-become-independent/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Tue, Apr 30, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/mocking-httpcontext-with-fake-it-easy/">Mocking HttpContext with Fake It Easy</a></h2>
+        </header>
+        
+        
+        <p><p>Lets start with the conclusion first and say “use <a href="http://nancyfx.org">Nancy</a> for your web applications and APIs” as its brilliant!</p>
+<p>If you want to continue reading lets crack on.</p>
+<p>I’m currently working on a ASP.Net MVC project and one of the controller methods writes directly to the Response, <em>eg. Response.Write(“How will I mock thee?”);</em></p>
+<p>Having moved over to <a href="http://xunit.codeplex.com/">xUnit</a> and <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> recently I wanted to write a unit or integration test depending how you see it to assert against the Http Response.</p>
+<p>Doing this is no easy feat with MVC (with Nancy its all <a href="https://github.com/NancyFx/Nancy/wiki/Testing-your-application">done for you</a>) and you have to mock a lot of things. I’m hoping that in later releases this will be fixed because I know that ASP.Net Web API has made things a bit easier for testing (and wrote a testing library for it) so I assume the two projects will use bits of each other or their roadmap will merge.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/mocking-httpcontext-with-fake-it-easy/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Wed, Apr 17, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/up-running-with-typescript-and-webstorm/">Up &amp; Running with TypeScript and WebStorm</a></h2>
+        </header>
+        
+        
+        <p><p>I love my iMac and I’m on a mission to find a language I enjoy that I can use my Mac for (no Windows fan boy jokes please). There’s something in my mind I associate with work and my Windows laptop. Therefore, I don’t feel to excited about getting my laptop out of my bag in the evenings/weekends to play with other stuff.</p>
+<p>As I want to broaden my knowledge I wanted to find something ideally statically typed (although I’m currently looking into Python) that would work on OS X. I’ve said previously that JavaScript seems the way to go in my current situation so I thought I’d take a look at TypeScript and also use <a href="http://www.jetbrains.com/webstorm/">WebStorm</a> from Jetbrains as my IDE seeing as I’ve heard so many great things about them and their products (don’t worry I use ReSharper).</p>
+<h2 id="typescript">TypeScript</h2>
+<p>So I went over to TypeScript’s <a href="http://www.typescriptlang.org/">website</a> and followed the Hello World type code examples under the “Learn” tab.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/up-running-with-typescript-and-webstorm/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+</section>
+
+						
+
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+    <div class="pagination">
+        <ul class="pagination">
+
+            
+            
+                
+                <li>
+                    <a href="/" class="extra first">
+                        First
+                    </a>
+                </li>
+                
+            
+            
+            
+            <li>
+                <a href="/page/6/" class="previous">
+                    Prev
+                </a>
+            </li>
+            
+
+            
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/5/" class="page">
+                        5 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/6/" class="page">
+                        6 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/7/" class="page active">
+                        7 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/8/" class="page">
+                        8 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/9/" class="page">
+                        9 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+
+            
+            
+            <li>
+                <a href="/page/8/" class="next">
+                    Next
+                </a>
+            </li>
+            
+
+            
+            
+                
+                <li>
+                    <a href="/page/11/" class="extra last">
+                        Last
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+</footer>
+
+
+					</div>
+
+					
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+					
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+					<a href="#navPanel" id="navPanelToggle">Menu</a>
+			</div>
+
+			
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+			
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+
+	</body>
+</html>

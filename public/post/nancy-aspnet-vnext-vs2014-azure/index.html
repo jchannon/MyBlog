@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Nancy, ASP.Net vNext, VS2014 &amp; Azure &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Sat, Jun 14, 2014</span>
+                                
+                                <h1>Nancy, ASP.Net vNext, VS2014 &amp; Azure</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>By now we know of Microsoft&rsquo;s plans for the next version of ASP.Net and they&rsquo;ve turned it on its head and from the looks of it, its goooooood!</p>
+<p><a href="http://www.hanselman.com/blog/IntroducingASPNETVNext.aspx">Here</a> is a blog post from Scott Hanselman introducing ASP.Net vNext. There are introductory and deep dive videos available for your perusal which are also well worth a watch.</p>
+<p>The TL;DR is ASP.Net vNext will take heavy influence from Node.js by using Owin to wire up all the app dependencies and middleware.  It will also remove *.csproj files and use a project.json file similar to Node&rsquo;s package.json and use NuGet to reference the application&rsquo;s dependencies.  It also takes inspiration from Node and Nancy&rsquo;s approach requiring you to opt-in to dependencies rather that traditionally having everything but the kitchen sink.  It also takes influence from Nancy via built in dependency injection and Mono support.  Microsoft announced they will run all their vNext tests against Mono builds ensuring all their code is compatible for cross platform deployments.</p>
+<p>Here&rsquo;s a tweet direct from the horses mouth albeit with a typo .</p>
+<p><img src="https://i.imgur.com/XMmMDce.png" alt="vNext influenced by Node/Nancy"></p>
+<p>I also believe the guys at Microsoft are looking at developing an unmanaged code HTTP server to run on Mono to produce ridiculous performance which is great news!</p>
+<h3 id="azure">Azure</h3>
+<p>As you&rsquo;ll see from the videos vNext runs via the command prompt which is fine but obviously Microsoft would want to bake all the NuGet and other tooling features into Visual Studio.  A few weeks after the initial vNext details were made public Microsoft announced a pre-release of Visual Studio which had support for ASP.Net vNext.  They also <a href="http://blogs.msdn.com/b/visualstudioalm/archive/2014/06/04/visual-studio-14-ctp-now-available-in-the-virtual-machine-azure-gallery.aspx">announced</a> that Azure had a virtual machine in its gallery that had this version of Visual Studio installed.</p>
+<p>What this meant was that you could setup a VM in Azure, then use Remote Desktop to connect to the virtual machine and run Visual Studio and have a play with all the new shiny things (they also provided the ISO so you could download it and run it locally if you preferred, pretty cool huh!).</p>
+<p>After you follow the <a href="http://blogs.msdn.com/b/visualstudioalm/archive/2014/06/04/visual-studio-14-ctp-now-available-in-the-virtual-machine-azure-gallery.aspx">above steps</a> in the blog post announcing the Visual Studio release you&rsquo;ll see in your Azure dashboard that you can connect to the virtual machine.</p>
+<p><img src="https://i.imgur.com/R6QFSjY.png" alt="Coonect to VM"></p>
+<p>Clicking &ldquo;connect&rdquo; will download the information about your virtual machine and Remote Desktop can then use it to connect to it.  As a Mac user I was able to use the OSX Microsoft Remote Desktop app and connect to my Windows virtual machine in the cloud.  This was amazing.  Once connected, on your desktop you&rsquo;ll see a shortcut to Visual Studio.  When you click File - New Project you&rsquo;ll see the vNext project types.</p>
+<p><img src="https://i.imgur.com/9hINknn.png" alt="New vNext project"></p>
+<p>As you can see there are similar options to what we&rsquo;ve had in the past.  Creating a vNext Web Application will setup an application that has MVC and Entity Framework all wired up for you.  This is a blog post about Nancy and vNext so we&rsquo;ll choose <code>ASP.NET vNext Empty Web Application</code>.  The goood news is that choosing this option will actually give is an &ldquo;empty&rdquo; application whereas in the past this option still contained 17 references.</p>
+<p><img src="https://i.imgur.com/Npw77Ar.png" alt="Empty application"></p>
+<p>Microsoft have also <a href="http://www.asp.net/vnext/overview/aspnet-vnext/getting-started-with-aspnet-vnext-and-visual-studio">produced</a> a &ldquo;Getting Started with ASP.NET vNext and Visual Studio 14&rdquo; guide if you want some more reading material.</p>
+<h3 id="nancy-and-vnext">Nancy and vNext</h3>
+<p>As Nancy supported Owin from the very beginning unlike MVC there was a Nancy.Owin package that you could opt-in to your application and use Nancy in an Owin based application.  This also gave you the option to use Nancy in a non-Owin application.  Today you still have that option but as of June 10th 2014 the Nancy team decided to merge a pull request moving Owin as a separate package into the core code base.  This pull request also added extensions to be able to run Nancy in a ASP.Net vNext project.  You can still run Nancy in a non-Owin application but the decision was made to embrace Owin as a first class citizen.  These changes are currently in the master branch and not yet part of an official release but to save building the source and referencing the project we can use Nancy&rsquo;s <a href="https://www.myget.org/F/nancyfx/">nightly builds</a>.</p>
+<p>In our <code>ASP.NET vNext Empty Web Application</code> we can open up the Package Manager Console and run the following commands</p>
+<pre><code>Install-Package DiscoverPackageSources
+Discover-PackageSources -Url &quot;https://www.myget.org/F/nancyfx/&quot;
+</code></pre>
+<p>Now open up <code>project.json</code> and under the dependency node add the below and save the file.</p>
+<pre><code>&quot;Microsoft.AspNet.Owin&quot;: &quot;0.1-alpha-*&quot;,
+&quot;Nancy&quot;: &quot;0.23-Pre1387&quot;
+</code></pre>
+<p>You&rsquo;ll notice in the Solution Explorer under References that these two references have magically appeared.</p>
+<p>Open <code>Startup.cs</code> and make it look like</p>
+<pre><code>namespace WebApplication3
+{
+    using Microsoft.AspNet.Builder;
+    using Nancy.Owin;
+    
+    public class Startup
+    {
+        public void Configure(IBuilder app)
+        {
+            app.UseOwin(x =&gt; x.UseNancy());
+        }
+    }
+}
+</code></pre>
+<p>Now create a class called HomeModule and make it look like this:</p>
+<p>namespace WebApplication3
+{
+using Nancy;</p>
+<pre><code>public class HomeModule : NancyModule
+{
+    public HomeModule()
+    {
+        Get[&quot;/&quot;] = _ =&gt; &quot;Hello World from Nancy in ASP.Net vNext&quot;;
+    }
+}
+</code></pre>
+<p>}</p>
+<p>Hit F5 and <strong><strong>boom</strong></strong></p>
+<p><img src="https://i.imgur.com/dkf2HF0.png" alt="Nancy running on vNext"></p>
+<h3 id="conclusion">Conclusion</h3>
+<p>ASP.Net vNext has some great changes in terms of solution architecture and developer productivity (see editing a file, pressing save, hitting F5 and the changes appearing not needing a re-compile).  Microsoft&rsquo;s embracing of Mono I hope will lead to a true cross platform development stack we can all work on.  ASP.Net vNext has been influenced by other major players in the OSS world and Microsoft has realised there are some great features that the community have provided for a long time now so Node, Go and Nancy should be flattered.  Its also great to see vNext on Github where poeple can see clearly the commits, issues and pull requests open for ASP.Net.  My personal belief and not an official Nancy statement is that Nancy still offers many great features that MVC and WebAPI (or I should call that MVC6 now that they&rsquo;ve merged) doesn&rsquo;t but I think what Microsoft has produced in terms of vNext is awesome work and the features of MVC and new middleware can only add to the options available for .Net developers to choose from and having this choice is what its all about.  Good work Microsoft!</p>
+<h3 id="one-more-thing">One more thing!</h3>
+<p>The current release of Nancy is 0.23 and Nancy has been stable for a long time and is used in production for many users yet there are numerous requests for when Nancy will release a v1.0.  The response is usually &ldquo;why will renaming 0.23 to v1.0 make any difference to the functionality within Nancy&rdquo; mainly because its felt this is some psychological issue people have regarding version numbers.  I could do File - New Project and make it v1.0 and it could be completely unstable but does that give the perception that its more feature rich than something that is 0.23?  I think its an interesting topic how people perceive version  numbers but that discussion is for another day.  As of June 10th 2014 the Nancy team agreed that the next version of Nancy will not be 0.24 but in fact be v1.0.0.  There are more finer details about the v1.0 release which <a href="http://twitter.com/thecodejunkie">TheCodeJunkie</a> will be blogging about soon but hopefully this release will attract more people to use Nancy that may have been put off by the version number in the past.</p>
+<p>The future of .Net development is looking good. Go out and code up a storm =)</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

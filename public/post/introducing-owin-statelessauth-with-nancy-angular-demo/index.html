@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Introducing Owin.StatelessAuth with Nancy/Angular demo &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Wed, May 7, 2014</span>
+                                
+                                <h1>Introducing Owin.StatelessAuth with Nancy/Angular demo</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>If you&rsquo;re writing an API, current thinking is to provide a token in the <code>Authorization</code> header for your app to validate when the request comes in.  I have used the <a href="http://www.nuget.org/packages/Nancy.Authentication.Stateless/">Nancy.Authentication.Stateless</a> package in the past for my APIs and even have a demo of it <a href="https://github.com/jchannon/Nancy.Demo.StatelessAuth">here</a> if you&rsquo;re interested (there are more Nancy demos at <a href="http://samples.nancyfx.org/">http://samples.nancyfx.org</a>). This is a great package and does a great job but what if one day you want to use <a href="http://www.asp.net/signalr">SignalR</a> v2 that uses <a href="http://owin.org/">OWIN</a> and you want to validate not just requests to your Nancy app but also the SignalR requests?  You&rsquo;re going to need to validate requests as they come in before they get to SignalR or Nancy.</p>
+<p>For those of you who are not quite up to date or unsure what OWIN is let me try and give you the tl:dr, no doubt others may say its something slightly different.  Imagine you are asked to create a ASP.Net MVC 3 app (ignore the fact that that person needs a slap) so you fire up Visual Studio and create the app.  So what has it done? Its created an app that runs on IIS and all requests come straight into your app.</p>
+<h3 id="enter-owin">Enter OWIN</h3>
+<p>What OWIN introduces is an HTTP abstraction from the host to framework and therefore you have access to the whole request at any point. As an example, <a href="https://github.com/bbaia/connect-owin-samples/tree/master/Samples.Nancy">here</a> is a node.js web server (replacing IIS) and then calling out to Nancy.  Pretty cool huh!  As HTTP is abstracted you can have two applications, one in Nancy and one in WebAPI in the same project and via OWIN you can tell it which requests go to Nancy and which go to WebAPI.</p>
+<h3 id="authentication">Authentication</h3>
+<p>Due to the HTTP abstraction we can now inspect the requests and then determine whether we should return a 401 or let the request continue. So how does that look?</p>
+<pre><code>public class Startup
+{
+    public void Configuration(IAppBuilder app)
+    {
+         app
+           .RequiresStatelessAuth(new MySecureTokenValidator())
+           .MapSignalR() //This could be WebAPI etc
+           .UseNancy();
+    }
+}
+</code></pre>
+<p>In an OWIN app we need a Startup class to configure our application and we wire up the requests and how they may be handled in order of processing.  So as I stated earlier we want to use SignalR and Nancy and validate the requests before they hit our application, using <a href="https://www.nuget.org/packages/Owin.StatelessAuth/">Owin.StatelessAuth</a> we can do that.  It takes an implementation of <code>ITokenValidator</code> where a method gets called to determine if the request is valid by passing in a token from the <code>Authorization</code> header.  How you implement the interface and determine what is a valid request is up to you.  Luckily I have a demo available in the <a href="https://github.com/jchannon/Owin.StatelessAuth">Github repository</a> which I&rsquo;ll now explain.</p>
+<h3 id="demo-time">Demo Time</h3>
+<p>About 2 days after publishing <a href="https://github.com/jchannon/Owin.StatelessAuth">Owin.StatelessAuth</a>, Mike Hadlow published a great <a href="http://mikehadlow.blogspot.co.uk/2014/04/json-web-tokens-owin-and-angularjs.html">blog post</a> on using JWT (JavaScript Web Tokens) &amp; OWIN &amp; Angular so I thought I would do a similar post just to throw my 2 cents in.  Its going to be hard not to say the same things as Mike so I may skip some stuff but it just means you should read his post too!  So lets get the code to do the talking&hellip;</p>
+<p><strong>Startup.cs</strong></p>
+<pre><code>public class Startup
+{
+    public void Configuration(IAppBuilder app)
+    {
+        app.RequiresStatelessAuth(
+              new MySecureTokenValidator(new ConfigProvider()), 
+              new StatelessAuthOptions() {IgnorePaths = new List&lt;string&gt;(new []{&quot;/login&quot;,&quot;/content&quot;})})
+            .UseNancy();
+
+    }
+}
+</code></pre>
+<p>So we pass in our implementation of ITokenValidator called MySecureTokenValidator and pass in some options to Owin.StatelessAuth which says if the paths contain the items in the list then Owin.StatelessAuth will not try and authenticate those requests.  In the demo we have javascript and images in the content folder so we don&rsquo;t want to authenticate those requests.  We also don&rsquo;t want to authenticate requests to the login path.  Why not? This is the route that will give us the token for all subsequent requests.</p>
+<p><strong>Nancy Module</strong></p>
+<pre><code>public HomeModule(IConfigProvider configProvider, IJwtWrapper jwtWrapper)
+{
+    Get[&quot;/login&quot;] = _ =&gt; View[&quot;Login&quot;];
+
+    Post[&quot;/login&quot;] = _ =&gt;
+    {
+        var user = this.Bind&lt;UserCredentials&gt;();
+        
+        //Verify user/pass
+        if (user.User != &quot;fred&quot; &amp;&amp; user.Password != &quot;securepwd&quot;)
+        {
+            return 401;
+        }
+
+        var jwttoken = new JwtToken()
+        {
+            Issuer = &quot;https://i.suer.com&quot;,
+            Audience = &quot;http://mycoolwebsite.com&quot;,
+            Claims =
+                new List&lt;Claim&gt;(new[]
+                {
+                    new Claim(ClaimTypes.Role, &quot;Administrator&quot;),
+                    new Claim(ClaimTypes.Name, &quot;Fred&quot;)
+                }),
+            Expiry = DateTime.UtcNow.AddDays(7)
+        };
+        
+        var token = jwtWrapper.Encode(jwttoken, configProvider.GetAppSetting(&quot;securekey&quot;), JwtHashAlgorithm.HS256);
+        return Negotiate.WithModel(token);
+    };
+
+    Get[&quot;/&quot;] = _ =&gt; &quot;Hello Secure World!&quot;;
+}
+</code></pre>
+<p>Here on the GET request to login we return a view where Angular wil be used.  On the POST request to login we Bind the posted values to a class called UserCredentials, we then need to validate these credentials (I assume yours will be better than mine) and then create a new instance of JwtToken which is just another class in our application which has properties that relate to the <a href="http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html">JWT spec</a> and then we encode the object to return a token for our user using the <a href="https://www.nuget.org/packages/JWT/">JWT</a> library (I have created a wrapper for it in the demo as they are static methods out of the box).</p>
+<p><strong>Angular View</strong></p>
+<p>Here&rsquo;s the code:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; ng-app=&quot;owinstatelessauthexample&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body ng-controller=&quot;appCtrl&quot;&gt;
+    &lt;h1&gt;Login&lt;/h1&gt;
+    &lt;form ng-submit=&quot;getToken()&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;user&quot; ng-model=&quot;user&quot; /&gt;
+        &lt;input type=&quot;password&quot; name=&quot;password&quot; ng-model=&quot;password&quot; /&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Login&quot; /&gt;
+    &lt;/form&gt;
+    &lt;label&gt;Status: {{loggedinstatus}}&lt;/label&gt;
+    &lt;span&gt;{{secureresponse}}&lt;/span&gt;
+    &lt;button ng-click=&quot;getsecureresponse()&quot;&gt;Get Secure Response&lt;/button&gt;
+
+    &lt;script src=&quot;/content/localforage.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/content/angular-localforage.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;/Content/app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>We have a form that will POST to our login route, a label to show our logged in status, a button to hit our route that should return &ldquo;Hello Secure World&rdquo;</p>
+<p><strong>Angular Code</strong></p>
+<pre><code>(function () {
+    'use strict';
+
+    var app = angular.module('owinstatelessauthexample', ['LocalForageModule'])
+        .controller('appCtrl', ['$scope', '$localForage', '$http', function ($scope, $localForage, $http) {
+            // Start fresh
+            $localForage.clearAll();
+
+            $scope.user = 'fred';
+            $scope.password = 'securepwd';
+            $scope.secureresponse = '';
+            $scope.loggedinstatus = 'Not Logged In';
+
+            $scope.getToken = function () {
+                $http({
+                    method: 'POST',
+                    url: '/login',
+                    data: {
+                        &quot;user&quot;: $scope.user,
+                        &quot;password&quot;: $scope.password,
+                    }
+                })
+                    .success(function (data, status) {
+                        console.log('All ok : ' + data);
+                        $localForage.setItem('mysecuretoken', JSON.parse(data));
+                        $scope.loggedinstatus = 'Logged In';
+                    })
+                    .error(function (data, status) {
+                        console.log('Oops : ' + data);
+                    });
+
+            };
+
+            $scope.getsecureresponse = function () {
+                $localForage.get('mysecuretoken').then(function (data) {
+                    $http({
+                        method: 'GET',
+                        url: '/',
+                        headers: { 'Authorization': data }
+
+                    })
+                   .success(function (data, status) {
+                       console.log('All secure : ' + data);
+                       $scope.secureresponse = data;
+                   })
+                   .error(function (data, status) {
+                       console.log('Oops : ' + data);
+                       $scope.secureresponse = &quot;Oops!&quot; + data;
+                   });
+                });
+
+            };
+        }]);
+
+})();
+</code></pre>
+<p>When the form from our view is posted to our login route we get take the response data and store it in localStorage.  However, here we are using a library called <a href="https://github.com/mozilla/localForage">localForage</a> which has a fallback option if you don&rsquo;t have HTML5 in your browser.  When the user clicks the button to hit our secure route it will retrieve the token from localForage and pass it in the request and hopefully we get the expected response as Owin.StatelessAuth will validate it via MySecureTokenValidator.</p>
+<p><strong>MySecureTokenValidator</strong></p>
+<pre><code>public class MySecureTokenValidator : ITokenValidator
+{
+    private readonly IConfigProvider configProvider;
+
+    public MySecureTokenValidator(IConfigProvider configProvider)
+    {
+        this.configProvider = configProvider;
+    }
+
+    public ClaimsPrincipal ValidateUser(string token)
+    {
+        try
+        {
+            //Claims don't deserialize :(
+            //var jwttoken = JsonWebToken.DecodeToObject&lt;JwtToken&gt;(token, configProvider.GetAppSetting(&quot;securekey&quot;));
+            
+            var decodedtoken = JsonWebToken.DecodeToObject(token, configProvider.GetAppSetting(&quot;securekey&quot;)) as Dictionary&lt;string, object&gt;;
+
+            var jwttoken = new JwtToken()
+            {
+                Audience = (string)decodedtoken[&quot;Audience&quot;],
+                Issuer = (string)decodedtoken[&quot;Issuer&quot;],
+                Expiry = DateTime.Parse(decodedtoken[&quot;Expiry&quot;].ToString()),
+            };
+
+            if (decodedtoken.ContainsKey(&quot;Claims&quot;))
+            {
+                var claims = new List&lt;Claim&gt;();
+
+                for (int i = 0; i &lt; ((ArrayList)decodedtoken[&quot;Claims&quot;]).Count; i++)
+                {
+                    var type = ((Dictionary&lt;string, object&gt;)((ArrayList)decodedtoken[&quot;Claims&quot;])[i])[&quot;Type&quot;].ToString();
+                    var value = ((Dictionary&lt;string, object&gt;)((ArrayList)decodedtoken[&quot;Claims&quot;])[i])[&quot;Value&quot;].ToString();
+                    claims.Add(new Claim(type, value));
+                }
+
+                jwttoken.Claims = claims;
+            }
+
+            if (jwttoken.Expiry &lt; DateTime.UtcNow)
+            {
+                return null;
+            }
+
+            return new ClaimsPrincipal(new ClaimsIdentity(jwttoken.Claims, &quot;Token&quot;));
+        }
+        catch (SignatureVerificationException)
+        {
+            return null;
+        }
+    }
+}
+</code></pre>
+<p>My first comment in the code is that the class <a href="http://msdn.microsoft.com/en-us/library/system.identitymodel.claims.claim(v=vs.110).aspx">Claim</a> won&rsquo;t deserialize which would have made our code a one liner but unfortunately not. Possibly if the JWT library used JSON.Net or ServiceStack.Text it may work but for now I had to do some logic to assign the properties of the JwtToken class.  It really is some ugly code so hopefully a PR or so to JWT it may be cleaned up.  So we decode the token to a dictionary and then assign the values to our class, loop over the claims, see if the expiry date is before now and if so return null which will cause Owin.StatelessAuth to return a 401.  If all is well we return a <a href="http://msdn.microsoft.com/en-GB/library/system.security.claims.claimsprincipal.aspx">ClaimsPrincipal</a> instance.  Owin.StatelessAuth will add it to the Owin environment which can be read further down the request stack.</p>
+<p><strong>Nancy Bootstrapper</strong></p>
+<pre><code>public class Bootstrapper : DefaultNancyBootstrapper
+{
+    protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
+    {
+        base.RequestStartup(container, pipelines, context);
+        var owinEnvironment = context.GetOwinEnvironment();
+        var user = owinEnvironment[&quot;server.User&quot;] as ClaimsPrincipal;
+        if (user != null)
+        {
+            context.CurrentUser = new DemoUserIdentity()
+            {
+                UserName = user.Identity.Name,
+                Claims = user.Claims.Where(x =&gt; x.Type == &quot;http://schemas.microsoft.com/ws/2008/06/identity/claims/role&quot;).Select(x =&gt; x.Value)
+            };
+        }
+    }
+}
+</code></pre>
+<p>Nancy has a CurrentUser property on the NancyContext, if this is not null then we know the user is authenticated.  In the introduction of the blog post I mentioned Nancy.Authentication.Stateless (other Nancy.Authentication libraries are available) which does exactly that, it assigns the the CurrentUser to the validated user.  In our Bootstrapper we use the ClaimsPrincipal instance in the Owin environment that Owin.StatelessAuth put in there for us to assign the properties of <code>IUserIdentity</code> in Nancy to assign the current user.  We can then use <code>RequiresAuthentication</code> on our Nancy routes to secure routes based on extra security such as claim types.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>What we have now is a way using Owin.StatelessAuth to secure all incoming requests, the option to ignore some requests for authentication, a way for tokens to be issued, a way for them to be validated and the ability to assign Nancy&rsquo;s user to the user we validated using Owin.StatelessAuth.</p>
+<p>I enjoyed writing Owin.StatelessAuth middleware component and the demo with it so please take a look, any constructive feedback welcomed along with pull requests :)</p>
+<p>Finally just to prove this works, here&rsquo;s some pretty pictures:</p>
+<p><strong>POST to generate a token</strong></p>
+<p><img src="https://i.imgur.com/FlI4NAi.png" alt="Post Get Token"></p>
+<p><strong>GET with our token</strong></p>
+<p><img src="https://i.imgur.com/GeCP9IJ.png" alt="Get Secure Request"></p>
+<p>Enjoy!</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Using Docker with .Net Core in CI for OSS &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Mon, May 15, 2017</span>
+                                
+                                <h1>Using Docker with .Net Core in CI for OSS</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>I recently wrote a <a href="http://blog.jonathanchannon.com/2017/05/04/announcing-botwin/">project</a> for <a href="https://t.co/kpkdInRgwG">ASP.NET Core 2</a>  and the time had come to get a CI system up and running.  I develop on OSX and mainly test on OSX &amp; Linux and so the defacto place to go is TravisCI.  I&rsquo;ve used it in the past and all has been great but I put out a tweet asking if Travis was still the place to go:</p>
+<!-- raw HTML omitted -->
+<p><a href="http://twitter.com/adron">Adron Hall</a> replied and said he&rsquo;d been using <a href="http://codeship.com">Codeship</a> as a Docker based CI system.  Having experience in Docker I thought I&rsquo;d take a look.  My requirements were simple, I needed the CI to run <code>dotnet restore</code> and <code>dotnet build</code> and <code>dotnet test</code>.  I also thought to myself how am I going to handle releasing a NuGet package? Normally I tend to run a build script locally check everything is ok before I push to NuGet so I can avoid an &ldquo;oh-shit&rdquo; release but it happens!</p>
+<p>I looked at Codeship&rsquo;s basic plan (free) and they supported most things on their systems out of the box but not .NET and so I moved to the pro plan (also free).  At this point Codeship&rsquo;s co-founder &amp; CEO got in touch (<a href="https://twitter.com/moritzplassnig">Moritz Plassnig</a>) and had said he had seen the conversation on Twitter with Adron and was there to help.  I asked him about .NET Core etc and he confirmed that my choice to use the Pro account was the best decision and any other issues to give him a ping. Good stuff I thought!</p>
+<p>I began to read Codeship&rsquo;s <a href="https://documentation.codeship.com/pro/quickstart/getting-started/">documentation</a> and quite comprehensive it is I must say.  Essentially you have three files; a services file, a steps file and a docker file.  The services file describes your service eg a name, the Dockerfile path and things like a path to encrypted envionment variables plus many other settings available.  The steps file is a file where you describe each step in your CI system.  For me the first step was obviously to run <code>dotnet restore</code> then another step for <code>dotnet build</code> then <code>dotnet test</code>.  I pushed my files to my repo and watched on Codeship&rsquo;s dashboard. The dotnet restore worked but the build failed.  The thing I lost some time on was that each step is run in its own container and I couldn&rsquo;t work out why the build was failing after I had successfully installed all the packages required for it to build.  Ironically I was reading the documentation for golang projects where it mentioned this!  During this process and me scratching my head I was tweeting Adron and Codeship to see if they knew why I was having issues and <a href="https://twitter.com/kellyjandrews">Kelly Andrews, Codeship&rsquo;s Developer Advocate</a> starting helping me out which was great.  He suggested I could use my Dockerfile to do the dotnet restore and build and then have a step to do the dotnet test.  That got me thinking and in the end I decided I would put the restore, build and test in the Dockerfile so when each push to the repo or PR is sent it would build the Dockerfile and although not part of the steps file Codeship would still report a failed build if it couldn&rsquo;t build the Docker image.  What I could use the steps file for was releasing to Nuget.  This felt a bit scary as it increased the potential of releasing something I wasn&rsquo;t happy with and I would end up releasing a &ldquo;oh shit&rdquo; patch release but I thought I&rsquo;d just give it a go.  The way I could control this is a feature of Codeship&rsquo;s step files. (The files Codeship use is YAML).  In my steps file I could filter when the step was executed.  Here&rsquo;s the resulting file:</p>
+<pre><code>- service: app
+    tag: ^\d+.\d+.\d+(-.*|$)
+    command: bash -c &quot;dotnet pack -c Release -o /code/artifacts src/Botwin.csproj &amp;&amp; dotnet nuget push -s https://www.nuget.org/api/v2/package -k $NUGETAPIKEY /code/artifacts/Botwin.$CI_BRANCH.nupkg&quot;
+</code></pre>
+<p>This says the service it belongs to is <code>app</code> which is what I define in my services file.  The tag is the way to filter the step so when it sees something in a commit message or git tag then it will execute. (You can also define the inverse using <code>exclude</code>, see the docs for more)  Finally the command to execute if it passes the tag regex.  In my file I have said execute this step if it sees <code>number.number.number</code> or <code>number.number.number-something</code> in a git tag.  So if I&rsquo;ve done a load of work and I&rsquo;m happy that a new version is ready to be released I do a <code>git tag 1.2.69</code> and then a git push and Codeship will see this tag and then build the Docker image then it see the tag and then execute <code>dotnet pack</code> and <code>dotnet nuget push</code>.  Pretty good I thought and started to test it.</p>
+<p>Codeship provides the same tooling that controls the CI process on their servers avaialble as a binary that can be installed via Homebrew so you can test the pipeline locally.  This tooling is called Jet.  So I followed the instructions and away I went.  Again I was lucky as I had Kelly on hand to answer my questions but the documentation was very good.  For example, as I wanted to publish to NuGet I needed to supply my API key and obviously didn&rsquo;t want that sitting in my repo but Codeship&rsquo;s docs described how you could pass in a file with the raw values, encrypt it using Jet, put the encrypted file in your repo and tell the services YAML file to look at the encrypted file to get environment variables out.  So above you can see I use <code>$NUGETAPIKEY</code> and that comes from the encrypted file.  You&rsquo;ll also see that I use <code>$CI_BRANCH</code>.  This is part of a number of environmental variables that Codeship provides that you have access too.  Here I could use the git tag <code>5.6.7-rc79</code> which is found inside the <code>$CI_BRANCH</code> environmental variable, slightly badly named IMO but it means I can get access to the version I have just built in this scenario as just before I do my git tag and push I also change the csproj version number so they need to match, then I tag and push and Codeship builds and tests and releases to NuGet for me.</p>
+<p>The other odd thing I did spot was the need to do <code>bash -c &quot;multiple statements go here&quot;</code> for multiple statements in a steps file because if I ran just <code>dotnet restore</code> all was fine but <code>dotnet restore &amp;&amp; dotnet build</code> it didn&rsquo;t like it so I needed to add the bash prefix.  Thinking about it now I could move the dotnet restore, build and test to another step rather than make it part of the Dockerfile.  I&rsquo;m not sure there are any advantages/disadvantages to either approach really as I don&rsquo;t think the layers in the Dockerfile when doing a restore/build are cached so it doesn&rsquo;t speed up CI time.</p>
+<p>When I got it all working I was pretty impressed and was thankful for the help I got from Kelly.  The project I used it for (<a href="">Botwin</a>) has fairly small requirements and there was lots of documentation I didn&rsquo;t even delve into so I think Codeship can probably provide a solution to much larger projects so please check them out.  I&rsquo;m hoping services like this expand as .NET Core gains more traction in the *nix worlds and the binding to Windows that .NET has always had truly disappears and .NET becomes a proper cross platform runtime.  My next desire is to have a Linux .NET profiler, none exist currently although Jetbrains tell me they have some plans but it&rsquo;s a gap in the market if you&rsquo;re interested!</p>
+<p><a href="https://documentation.codeship.com/pro/quickstart/getting-started/">Link</a> to getting started and defining services and steps YAML</p>
+<p><a href="https://documentation.codeship.com/pro/builds-and-configuration/cli/">Link</a> to JET docs</p>
+<p><a href="https://documentation.codeship.com/pro/builds-and-configuration/environment-variables/#encrypted-environment-variables">Link</a> to environment variables encryption</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

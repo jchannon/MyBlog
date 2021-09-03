@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Simple .Net Twitter,Google,Facebook Authentication &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Thu, Oct 25, 2012</span>
+                                
+                                <h1>Simple .Net Twitter,Google,Facebook Authentication</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>Logging into websites is no longer a matter of typing in your username and password and clicking the login button. If you already have an account with the main social networks you can log into a site using your credentials from that website saving you having to register your details <em>again</em>. This obviously makes things a bit easier as you don’t have to remember another password. (Although you should all be using a password manager such as <a href="http://www.lastpass.com">LastPass</a>.)</p>
+<h2 id="current-social-login-providers">Current Social Login Providers</h2>
+<p>There are currently providers out there that allow you to use their services to integrate into your website to provide authentication via the social networks. The main two that I know of are <a href="http://janrain.com">Janrain</a> and <a href="http://www.dotnetopenauth.net/">DotNetOpenAuth</a>. I’ve not worked with DotNetOpenAuth but I have with Janrain when building <a href="http://blog.jonathanchannon.com/2012/09/21/nancyfx-ravendb-nerddinner-and-me/">DinnerParty</a>.</p>
+<p>The process was reasonably easy but not as simple as it could be.</p>
+<h3 id="net-simple-social-authentication">.Net Simple Social Authentication</h3>
+<p>I was made aware of an OSS project by <a href="http://twitter.com/philliphaydon">@philliphaydon</a> whilst keeping up to speed with the latest <a href="http://nancyfx.org/">NancyFX </a>goings on in <a href="http://jabbr.net">Jabbr</a> that aims to provide a simple way of using social networks to log into a site.</p>
+<p>It started out aimed at ASP.Net MVC but after a bit of arm bending from <a href="http://twitter.com/philliphaydon">@philliphaydon</a> it was refactored to be web framework agnostic so it could be used with <a href="http://nancyfx.org/">NancyFX </a>.</p>
+<p>Being enthusiastic, I asked if any help was needed and I ended up making a simple demo website using <a href="http://nancyfx.org/">NancyFX</a></p>
+<h2 id="code-examples">Code Examples</h2>
+<p>Let me see some code I hear you say so here we go:</p>
+<p><strong>Bootstrapper:</strong></p>
+<pre><code>public class Bootstrapper : DefaultNancyBootstrapper
+{
+    private const string TwitterConsumerKey = &quot;Rb7qNNPUPsRSYkznFTbF6Q&quot;;
+    private const string TwitterConsumerSecret = &quot;pP1jBdYOlmCzo08QFJjGIHY4YSyPdGLPO2m1q47hu9c&quot;;
+    private const string FacebookAppId = &quot;159181340893340&quot;;
+    private const string FacebookAppSecret = &quot;97c4e4d0fa548232cf8f9c68a7adcff9&quot;;
+    private const string GoogleConsumerKey = &quot;587140099194.apps.googleusercontent.com&quot;;
+    private const string GoogleConsumerSecret = &quot;npk1_gx-gqJmLiJRPFooxCEY&quot;;
+
+   protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+   {
+       RegisterAuthenticationProviders(container);
+
+       base.ApplicationStartup(container, pipelines);
+
+       CookieBasedSessions.Enable(pipelines);
+   }
+
+   private static void RegisterAuthenticationProviders(TinyIoCContainer container)
+   {
+       Condition.Requires(container).IsNotNull();
+
+       var twitterProvider = new TwitterProvider(TwitterConsumerKey, TwitterConsumerSecret,
+                                                 new Uri(
+                                                     &quot;http://localhost:6969/AuthenticateCallback?providerKey=Twitter&quot;));
+
+       var facebookProvider = new FacebookProvider(FacebookAppId, FacebookAppSecret,
+                                                   new Uri(
+                                                       &quot;http://localhost:6969/AuthenticateCallback?providerKey=facebook&quot;));
+
+       var googleProvider = new GoogleProvider(GoogleConsumerKey, GoogleConsumerSecret,
+                                               new Uri(
+                                                   &quot;http://localhost:6969/AuthenticateCallback?providerKey=google&quot;));
+
+       var authenticationService = new AuthenticationService();
+       authenticationService.AddProvider(twitterProvider);
+       authenticationService.AddProvider(facebookProvider);
+       authenticationService.AddProvider(googleProvider);
+
+       container.Register(authenticationService);
+   }
+}
+</code></pre>
+<p><strong>HomeModule</strong></p>
+<pre><code>public class HomeModule : NancyModule
+{  
+   private const string SessionGuidKey = &quot;GUIDKey&quot;;
+
+   public HomeModule(IAuthenticationService authenticationService)
+   {
+       Get[&quot;/&quot;] = parameters =&gt; View[&quot;login&quot;];
+
+       Get[&quot;/RedirectToAuthenticate/{providerKey}&quot;] = parameters =&gt;
+              {
+                  Session[SessionGuidKey] = Guid.NewGuid();
+                  Uri uri =
+                      authenticationService.
+                          RedirectToAuthenticationProvider(
+                              parameters.providerKey,
+                              Session[SessionGuidKey].ToString());
+                  
+                  return Response.AsRedirect(uri.AbsoluteUri);
+              };
+
+       Get[&quot;/AuthenticateCallback&quot;] = parameters =&gt;
+              {
+                  if (string.IsNullOrEmpty(Request.Query.providerKey))
+                  {
+                      throw new ArgumentNullException(&quot;providerKey&quot;);
+                  }
+
+                  // It's possible that a person might hit this resource directly, before any session value
+                  // has been set. As such, we should just fake some state up, which will not match the
+                  // CSRF check.
+                  var existingState = (string)(Session[SessionGuidKey] ?? Guid.NewGuid().ToString());
+
+                  var model = new AuthenticateCallbackViewModel();
+
+                  var querystringParameters = new NameValueCollection();
+                  foreach (var item in Request.Query)
+                  {
+                      querystringParameters.Add(item, Request.Query[item]);
+                  }
+
+                  try
+                  {
+                      model.AuthenticatedClient =
+                          authenticationService.CheckCallback(Request.Query.providerKey,
+                                                              querystringParameters,
+                                                              existingState);
+                  }
+                  catch (Exception exception)
+                  {
+                      model.Exception = exception;
+                  }
+
+                  return View[&quot;AuthenticateCallback&quot;, model];
+              };
+   }
+}
+</code></pre>
+<p>This should hopefully be pretty self explanatory as that is the aim of the game but I will go through it.</p>
+<p>Firstly we need to setup our social network key and secret which was provided to us by registering an app at the relevant site. We then setup a IAuthenticationProvider class for Twitter, Google &amp; Facebook with the key, secret and callback URL that the social network will make request to after login. We then register our providers with a IAuthenticationService class.</p>
+<p>We then setup our IOC container to use authenticationService so that when our modules like Home take a dependency of IAuthenticationService it will use that.</p>
+<p>Our root route provides a login page with hyperlinks to the RedirectToAuthenticate route. For example, using Twitter it will be <strong>_<a href="http://mydomain.com/RedirectToAuthenticate/Twitter_">http://mydomain.com/RedirectToAuthenticate/Twitter_</a></strong>.</p>
+<p>We create an item in our session so that it can be retrieved later when <a href="http://twitter.com">Twitter</a> calls the callback URL. This is so we can validate(if needs be) that its a valid request and not some cheeky hacker. We then use the IAuthenticationService to redirect to the social network login page based on the value of providerKey argument. This could also be Facebook or Google.</p>
+<p>The user is redirected to <a href="http://twitter.com">Twitter</a> and logs in and then gets directed back to our website.</p>
+<p>Our AuthenticateCallback route then creates a NameValueCollection from the querystring parameters and passes the providerKey (Twitter,Facebook,Google), NameValueCollection and Session value to the IAuthenticationService to validate all is ok.</p>
+<p>If so it creates a view model and passes it to the view and in this example shows us the logged in user’s details.</p>
+<p>I think that was pretty simple.</p>
+<h2 id="i-want-to-play">I want to play</h2>
+<p>The source code is over at <a href="https://github.com/PureKrome/World-Domination.Web.Authentication">Github</a> and is written by Pure.Krome or <a href="https://twitter.com/lara_eagle">Lara Eagle</a> if you prefer (same person). It’s also available on <a href="http://nuget.org/packages/World-Domination.Web.Authentication">Nuget</a>. Its name you ask? World-Domination.Web.Authentication</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

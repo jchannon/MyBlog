@@ -1,0 +1,210 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Understanding type aliases &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Fri, Aug 7, 2020</span>
+                                
+                                <h1>Understanding type aliases</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>I recently wrote a single case discriminated union which is what I wanted but was also confused why it didn&rsquo;t behave like a type alias and then learnt that these two are different things.</p>
+<p><code>type CustomerId = int</code></p>
+<p><code>type CustomerId = CustomerId of int</code></p>
+<p>I was aware of both syntaxes and from a quick scan they look the same however they behave differently and rightly so.  As I travel the F# road there is more emphasis on creating types for your functions. I have used this approach in C# to enforce type discrimination but it seems less prevalent in the mainstream from my experience. For example think of this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> DoSomething(<span style="color:#66d9ef">string</span> name, <span style="color:#66d9ef">int</span> age, <span style="color:#66d9ef">string</span> address)
+{
+  ...
+}
+</code></pre></div><p>This would become:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> DoSomething(Name name, Age age, Address address)
+{
+  ...
+}
+</code></pre></div><p>This goes someway for example to disallow passing any random string or int value to methods throughout your domain. If everything is a int or string or any other primitive type there&rsquo;s nothing stopping you calling the above method like so:</p>
+<p><code>DoSomething(&quot;10 Downing St&quot;, 21, &quot;Jon for PM&quot;).</code></p>
+<p>This would compile fine and only at runtime are you likely to spot the issue.</p>
+<p>So with this design in mind I wanted to create a type and away I went and created <code>type CustomerId = CustomerId of int</code>. This type was passed into a function and I needed to get the underlying value to convert to SQL.  For some reason I had <code>type CustomerId = int</code> in my mind so I called <code>ToString()</code> on my type assuming that would get the underlying value. In fact what it returned was <code>&quot;CustomerId 2&quot;</code> ie/ a string-ified .NET object.  This didn&rsquo;t raise it&rsquo;s head until runtime however as my SQL statement failed.  Now if I had created my type as an alias and not a type eg. <code>type CustomerId = int</code> it would have worked fine. However, a type alias is just that, an alias and does not give you the design I described above. For example,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Name</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Age</span> <span style="color:#f92672">=</span> int
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Address</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">string</span>
+
+
+<span style="color:#66d9ef">let</span> doSomething <span style="color:#f92672">(</span>name<span style="color:#f92672">:</span>Name<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>age<span style="color:#f92672">:</span>Age<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>address<span style="color:#f92672">:</span>Address<span style="color:#f92672">)</span> <span style="color:#f92672">=</span>
+    age<span style="color:#f92672">.</span>ToString()
+</code></pre></div><p>I can call the function like so <code>doSomething &quot;Jon for PM&quot; 21 &quot;10 Downing St&quot;</code> and also <code>doSomething &quot;10 Downing St&quot; 21 &quot;Jon for PM&quot;</code> and both are valid at compile time but you haven&rsquo;t achieved what you set out to achieve. What you actually want is:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Name</span> <span style="color:#f92672">=</span> Name <span style="color:#66d9ef">of</span> <span style="color:#66d9ef">string</span>
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Age</span> <span style="color:#f92672">=</span> Age <span style="color:#66d9ef">of</span> int
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Address</span> <span style="color:#f92672">=</span> Address <span style="color:#66d9ef">of</span> <span style="color:#66d9ef">string</span>
+
+<span style="color:#66d9ef">let</span> doSomething <span style="color:#f92672">(</span>name<span style="color:#f92672">:</span>Name<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>age<span style="color:#f92672">:</span>Age<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>address<span style="color:#f92672">:</span>Address<span style="color:#f92672">)</span> <span style="color:#f92672">=</span>
+    age<span style="color:#f92672">.</span>ToString()
+</code></pre></div><p>To call this function you have to be much more explicit:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">let</span> res <span style="color:#f92672">=</span> doSomething <span style="color:#f92672">(</span>Name<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Jon for PM&#34;</span><span style="color:#f92672">))</span> <span style="color:#f92672">(</span>Age<span style="color:#f92672">(</span>21<span style="color:#f92672">))</span> <span style="color:#f92672">(</span>Address<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;10 Downing St&#34;</span><span style="color:#f92672">))</span>
+printfn <span style="color:#e6db74">&#34;%s&#34;</span> res
+</code></pre></div><p>There&rsquo;s no way to mix up the arguments however we are still at the original issue I faced, the return value will be a string-ified .NET object. In F# to get the inner value out you have to create a module to take your type and extract the value:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">module</span> Age <span style="color:#f92672">=</span>
+       <span style="color:#66d9ef">let</span> value <span style="color:#f92672">(</span>Age input<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> input
+</code></pre></div><p>We can then amend our function to call it like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">let</span> doSomething <span style="color:#f92672">(</span>name<span style="color:#f92672">:</span>Name<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>age<span style="color:#f92672">:</span>Age<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>address<span style="color:#f92672">:</span>Address<span style="color:#f92672">)</span> <span style="color:#f92672">=</span>
+    <span style="color:#f92672">(</span>Age.value age<span style="color:#f92672">).</span>ToString()
+</code></pre></div><p>Now this might seem a bit of a pain but that is because we have type safety and have to be very explicit if we want to expose that value which is no bad thing really.</p>
+
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

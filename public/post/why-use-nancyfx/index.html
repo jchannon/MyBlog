@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Why use NancyFX? &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Wed, Dec 19, 2012</span>
+                                
+                                <h1>Why use NancyFX?</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>When a new project comes along why should you automatically choose ASP.NET MVC? Yes, its Microsoft based so you may have more of your peers fluent already in that architecture but is there an alternative, a better alternative?</p>
+<p>I believe so and its called <a href="http://nancyfx.org/">NancyFX</a>. Your first reaction, what is so special about Nancy? I also believe you’ll ask what is wrong with ASP.NET MVC but maybe you should look at it differently and ask what is right with Nancy?</p>
+<h2 id="what-is-nancy">What is Nancy?</h2>
+<p>Nancy is a lightweight framework for building websites / services without getting in your way. It’s heavily inspired by a Ruby project called Sinatra, which happens to identify itself as not being a framework, since it doesn’t include all the plumbing of things such as an ORM, lots of configuration, etc.</p>
+<h2 id="does-it-implement-mvc">Does it implement MVC?</h2>
+<p>Nancy does not force you to adhere to the model-view-controller pattern, or any other pattern. It’s nothing more than a service endpoint responding to HTTP verbs. Making it ideal for building Websites, Web Services and APIs.</p>
+<p>That doesn’t mean you can’t apply the MVC pattern to Nancy. You can define Views and put them in a Views folder, create Models to return from your endpoints, and map requests to Models, just like you currently do with ASP.NET MVC.</p>
+<h2 id="key-considerations">Key Considerations</h2>
+<p><strong>Easier Testing</strong> – Nancy provides a testing library that allows you to test the full request/response cycle so not only can you test that your request returns the model you expect you can test that when you pass in accept headers the response is in the format you expect. For example:</p>
+<pre><code>[Fact]
+public void GetData_WhenRequested_ShouldReturnOKStatusCode()
+{
+	var browser = new Browser();
+	var response = browser.Get(&quot;/GetData&quot;, (with) =&gt;
+	{
+        with.Header(&quot;Authorization&quot;, &quot;Bearer johnsmith&quot;);
+        with.Header(&quot;Accept&quot;, &quot;application/json&quot;);
+        with.HttpRequest();
+	});
+
+	Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+}
+</code></pre>
+<p>I am unaware of how you would be able to test this in MVC without it being a full integration test whereas Nancy has no dependencies on System.Web or MVC so it can provide us with a Response without hitting a server.</p>
+<p><strong>Automatic Dependency Resolution</strong> – Nancy provides an in built IOC container called <a href="https://github.com/grumpydev/TinyIoC">TinyIOC</a> which will find all your dependencies automatically for you or if you want/need to configure something you can do so at various points in your application. This is done in a Bootstrapper class that exposes various methods and properties to allow you to configure Nancy.</p>
+<pre><code>protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+{
+	base.ConfigureApplicationContainer(container);
+
+	var store = new EmbeddableDocumentStore()
+	{
+        ConnectionStringName = &quot;RavenDB&quot;
+	};
+
+	store.Initialize();
+
+	container.Register(store);
+}
+
+protected override void ConfigureRequestContainer(TinyIoCContainer container, NancyContext context)
+{
+	base.ConfigureRequestContainer(container, context);
+
+	var store = container.Resolve();
+	var documentSession = store.OpenSession();
+
+	container.Register(documentSession);
+}
+</code></pre>
+<p>Here the IOC container is used in different places within an application’s lifecycle. Once at the startup and once per request. It registers a DocumentStore which should be done only once in an application and then on every request it finds the DocumentStore and uses it to open a session and registers it with the IOC. If you have a service that has a IDocumentSession dependency then it will come via this.</p>
+<p>If for some reason you’re being stubborn and want to use your preferred IOC container, Nancy supports all the main IOC players allowing you to register your dependencies with them instead.</p>
+<p><strong>Completely Customisable, Conventions &amp; Better Extension Points</strong> – One of Nancy’s core features is its extensibility. It it designed to allow you to replace any part you want. You can have custom model binders, view renderers, serializers in fact you can implement your own INancyEngine and completely change how Nancy handles requests etc. There are also a set of pre-defined conventions that you can swap in/out if you want Nancy to do something different than what comes as standard. Everything is complete customisable and very easy to modify Nancy’s behaviour which offers great extensibility points if you wanted to create a 3rd party library for example.</p>
+<p><strong>Terse Syntax &amp; Less Ceremony</strong> – Nancy provides a nice terse syntax that does not get in the way of your application and leaves you to write your code. What I have found is that due to the terse syntax it encourages you to make your application code nice and neat too. One example of less ceremony and terseness is that you can get a full Nancy application running inside a 140 character tweet!</p>
+<pre><code>public class HelloModule : NancyModule
+{
+	public HelloModule()
+	{
+        Get[&quot;/&quot;] = parameters =&gt; &quot;Hello World&quot;;
+	}
+}
+</code></pre>
+<p><strong>Runs on Mono</strong> – Nancy does not tie itself down to Windows it works just as well on OSX and Linux under <a href="http://www.mono-project.com/Main_Page">Mono</a> which allows your team to work on multiple platforms. In fact Nancy can even run on a <a href="http://www.raspberrypi.org/quick-start-guide">Raspberry Pi</a> I would like to see ASP.NET MVC do that!</p>
+<p><strong>Content Negotiation</strong> – Content Negotiation is built into Nancy and runs out of the box. This means Nancy can be used in an API type application as well as a website application. In fact if you wanted you could have it do both very easily.</p>
+<pre><code>Get[&quot;/&quot;] = parameters =&gt; {
+	return Negotiate
+	.WithModel(new RatPack {FirstName = &quot;Nancy &quot;})
+	.WithMediaRangeModel(&quot;text/html&quot;, new RatPack {FirstName = &quot;Nancy fancy pants&quot;})
+	.WithView(&quot;negotiatedview&quot;)
+	.WithHeader(&quot;X-Custom&quot;, &quot;SomeValue&quot;);
+};
+</code></pre>
+<p>This demo highlights that if you made a request to “/” in your application by a web browser it will return a specific model with a property name of “Nancy fancy pants”, return a view called “negotiatedview” and return a custom header. However, if your API client made a request to “/” it would return a model with “Nancy” and a custom header. The resulting model would then be serialized into JSON, JSONP, XML or any other variation specified in the Accept header from your client. This example is possibly contrived somewhat but Nancy supplies conneg from all routes so something like the below would be serialized based on the headers.</p>
+<pre><code>Get[&quot;/&quot;] = parameters =&gt; {
+	var model = MyModel();
+	return model;
+};
+</code></pre>
+<p><strong>No Config</strong> – To get Nancy up and running there is no config required, no nasty XML files to modify, nothing. As its host agnostic you don’t have to modify anything in web.config to have it running via IIS for example.</p>
+<p><strong>Runs Anywhere</strong> – As I just mentioned Nancy is host agnostic which means you can run it in IIS, WCF, embedded within a EXE, as a windows service or within a self hosted application. Pretty much everywhere!</p>
+<p><strong>Pipeline Hooks</strong> – Nancy allows you to modify the pipeline ie.the request and response before and after they are invoked. One simple example is saving your data at the end of a request.</p>
+<pre><code>protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
+{
+	base.RequestStartup(container, pipelines, context);
+
+	pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =&gt;
+	{
+        var documentSession = container.Resolve();
+
+        if (ctx.Response.StatusCode != HttpStatusCode.InternalServerError)
+        {
+            documentSession.SaveChanges();
+        }
+
+        documentSession.Dispose();
+	});
+}
+</code></pre>
+<p>Here we configure the AfterRequest delegate to find the IDocumentSession used in the request, save the changes to the database and then dispose of the IDocumentSession (although TinyIOC would actually dispose of this for you).</p>
+<p>A more complex example could be that you modify the way the Request.Form is populated on a HTTP POST, it is that extensible and configurable you could do that quite easily.</p>
+<p><strong>No ties to System.Web and a Freely Designed Framework</strong> – System.Web is the core DLL based in ASP.Net. It contains the whole kitchen sink of the framework so you get everything bundled into your application even if you only use 25% of the possibilities. Nancy is architected the other way in that there are <a href="http://nuget.org/packages?q=nancy">numerous plugins</a> that supply additional and alternative functionality. Nancy is also not bound to any specific implementation or framework and all requests and responses are built from the ground up allowing it to be loosely coupled and free. This also means that Nancy can run in the .Net client profile environments without the added requirement for .Net full profile that ASP.NET MVC does require.</p>
+<p><strong>Support &amp; Community</strong> – One of the great things about Nancy is its community and support. They have a very active <a href="https://groups.google.com/forum/?fromgroups#!forum/nancy-web-framework">Google group</a> and you’ll find loads of help in <a href="http://jabbr.net/#/rooms/nancyfx">Jabbr</a> to get your questions answered ASAP. There is a real feeling of community and support because people want to spread the good word about Nancy. It has over 100 contributors to the project but keep in mind the vision, impetus and most of the work is done by 2 guys, <a href="http://twitter.com/TheCodeJunkie">@TheCodeJunkie</a> and <a href="http://twitter.com/GrumpyDev">@GrumpyDev</a> not a huge team sitting in Redmond. One final thing the <a href="http://nancyfx.spreadshirt.net/">swag </a>is a lot more stylish than Microsoft t-shirts :)</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In one of my last <a href="http://blog.jonathanchannon.com/2012/11/29/asp-net-web-api-testing/" title="ASP.NET Web API Testing">blog posts</a> I described how you could test the full pipeline in ASP.NET Web API because Microsoft don’t supply a nice way to do it. This blog post got the attention of Microsoft and at the time of writing this blog post it has had over 3150 hits and appeared on the home page of ASP.NET. The core of the code in that post was taken out of Nancy. So please if you liked what you saw there, give Nancy a try I think you’ll find there many benefits described above as well as others I’ve not mentioned. It is your duty as software developers to try new things and investigate tools.</p>
+<p>So when your next project comes about and your manager says “Ok lets write our new app in ASP.NET MVC” your reactions should be reflected by these animated GIFs.</p>
+<p><strong>Should we really use ASP.NET MVC?</strong></p>
+<p><img src="https://i.imgur.com/tIRwUHo.gif" alt="Should we use ASP.NET MVC?"></p>
+<p><strong>The boss says we can use Nancy!</strong></p>
+<p><img src="https://i.imgur.com/Vf8KDu6.gif" alt="All systems go"></p>
+<p><strong>We have our new Nancy app up and running in no time!</strong></p>
+<p><img src="https://i.imgur.com/pqv0Xld.gif" alt="Up and Running"></p>
+<p>For more infomation on Nancy checkout the <a href="http://nancyfx.org/">website</a> and <a href="https://github.com/NancyFx/Nancy/wiki/Documentation">documentation.</a></p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

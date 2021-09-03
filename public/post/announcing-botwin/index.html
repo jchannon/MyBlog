@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Announcing Botwin &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Thu, May 4, 2017</span>
+                                
+                                <h1>Announcing Botwin</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>Whilst keeping my eye on what&rsquo;s going on in .NET Core v2 I came across some planned changes for ASP.NET Core regarding the <a href="https://github.com/aspnet/Routing/blob/dev/src/Microsoft.AspNetCore.Routing/RequestDelegateRouteBuilderExtensions.cs">routing</a>.  I had also read this <a href="https://www.strathweb.com/2017/01/building-microservices-with-asp-net-core-without-mvc/">blog post</a> from <a href="https://twitter.com/filip_woj">Filip</a> about using the planned changes for microservices and a lightbulb went off in my head.  I thought to myself I wonder if I could adapt the new extensions to create Nancy-esque routing.  Turns out, I could!</p>
+<h3 id="sample">Sample</h3>
+<pre><code>public class ActorsModule : BotwinModule
+{
+    public ActorsModule()
+    {
+        this.Get(&quot;/&quot;, async (req, res, routeData) =&gt;
+        {
+            await res.WriteAsync(&quot;Hello World!&quot;);
+        });
+    }
+}
+</code></pre>
+<p>Whilst the extensions in the routing allowed users to create some funcs I thought to myself once you get above 3 or 4 of them you are going to want to put them in their own file which tidies things up but then you would still have to register all the routes in your application at one central location ie. in a Startup class or as part of the WebHostBuilder setup.  Whilst that&rsquo;s ok for some I didn&rsquo;t like it particularly so I came up with the BotwinModule.  Now I&rsquo;m sure many of you who are <a href="http://nancyfx.org">Nancy</a> lovers are thinking this looks exactly the same as a NancyModule and you&rsquo;d be correct but sometimes you can&rsquo;t improve on perfection so I took what I knew from Nancy and made it work in a similar fashion.  Each BotwinModule is found and each route is registered with ASP.NET Core.  This is all under the hood, all the user has to do is below:</p>
+<pre><code>public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddBotwin();
+    }
+
+    public void Configure(IApplicationBuilder app)
+    {
+        app.UseBotwin();
+    }
+}
+</code></pre>
+<h2 id="extensions">Extensions</h2>
+<p>When I had got the initial routing complete I then started going through some simple scenarios and realised I needed to add some extensions to make usability better.  At the moment this comes at a cost of dependencies and an opinionated approach.</p>
+<h3 id="binding--validating">Binding &amp; Validating</h3>
+<pre><code>this.Put(&quot;/actors/{id:int}&quot;, async (req, res, routeData) =&gt;
+{
+    var result = req.BindAndValidate&lt;Actor&gt;();
+
+    if (!result.ValidationResult.IsValid)
+    {
+        res.StatusCode = 422;
+        await res.Negotiate(result.ValidationResult.GetFormattedErrors());
+        return;
+    }
+
+    //Update the user in your database
+
+    res.StatusCode = 204;
+});
+</code></pre>
+<p>The above code uses FluentValidation under the hood and validates the incoming request body to <code>Actor</code>. The result of BindAndValidate is a Tuple of ValidationResult and T.  At the moment the ValidationResult is from FV so that probably needs abstracting at some point however, as you can see you can check if validation is valid and if not act accordingly.  In this example I return the errors from the validation result using an extension <code>GetFormattedErrors</code> and also use a <code>HttpRequest</code> extension that negotiates the result ie. if the user asked for JSON with their <code>Accept</code> header they get JSON, if they asked for XML or PDF they get that (as long as they implement a <code>IResponseNegotiator</code>). Out of the box Botwin will return JSON.</p>
+<p>If the user doesn&rsquo;t want to validate incoming data but does want the body deserialized they can simply use <code>req.Bind&lt;Actor&gt;()</code>.</p>
+<h3 id="global-before--after-hooks">Global Before &amp; After Hooks</h3>
+<p>There may be circumstances where you want to check something in the request before it hits the route handler or you may want to do something after the route handler has been executed.  This can be setup via options:</p>
+<pre><code>public void Configure(IApplicationBuilder app)
+{
+    app.UseBotwin(new BotwinOptions(
+        async (ctx) =&gt; { await ctx.Response.WriteAsync(&quot;GlobalBefore&quot;); return true; }, 
+        async (ctx) =&gt; await ctx.Response.WriteAsync(&quot;GlobalAfter&quot;)
+    ));
+}
+</code></pre>
+<p>Here we setup that for each route it will write to the response body on the before and after hook.  Notice that the before hook has a boolean to signify if the routing should continue.  You may not want to continue the route execution for some reason after inspecting it in the Global before hook so can return false.</p>
+<h3 id="module-before--after-hooks">Module Before &amp; After Hooks</h3>
+<p>Like the global before &amp; after hooks these can be applied at a module level:</p>
+<pre><code>public class TestModule : BotwinModule
+{
+	public TestModule()
+	{
+        this.Before = async (req, res, routeData) =&gt; { await res.WriteAsync(&quot;Before&quot;); return res; };
+		
+        this.After = async (req, res, routeData) =&gt; { await res.WriteAsync(&quot;After&quot;); };
+		
+        this.Get(&quot;/&quot;, async (request, response, routeData) =&gt; { await response.WriteAsync(&quot;Hello&quot;); });
+	}
+}
+</code></pre>
+<p>Again fairly similar to the global hook but you can return the response object to continue execution or return null to stop the request in the before hook.</p>
+<h3 id="istatuscodehandler">IStatusCodeHandler</h3>
+<p>An implementation of <code>IStatusCodeHandler</code> means you can determine what happens if your route returns a certain status code. ASP.NET Core provides middleware called <code>UseStatusCodePages</code> but it is not very elegant for users to use so I felt this was a cleaner option:</p>
+<pre><code>public class ConflictStatusCodeHandler : IStatusCodeHandler
+{
+	public bool CanHandle(int statusCode)
+	{
+        return statusCode == 409;
+	}
+
+	public async Task Handle(HttpContext ctx)
+	{
+        await ctx.Response.WriteAsync(&quot;Can't we all just get along?&quot;);
+	}
+}
+</code></pre>
+<p>You can obviously do whatever you want in the Handle method.</p>
+<h3 id="iresponsenegotiator">IResponseNegotiator</h3>
+<p>Mentioned previously, implementing this interface allows you to handle content negotiation if selected in the route:</p>
+<pre><code>public class TestResponseNegotiator : IResponseNegotiator
+{
+	public bool CanHandle(IList&lt;MediaTypeHeaderValue&gt; accept)
+	{
+        return accept.Any(x =&gt; x.MediaType.IndexOf(&quot;foo/bar&quot;, StringComparison.OrdinalIgnoreCase) &gt;= 0);
+	}
+
+	public async Task Handle(HttpRequest req, HttpResponse res, object model)
+	{
+        await res.WriteAsync(&quot;FOOBAR&quot;);
+	}
+}
+</code></pre>
+<p>Obviously here you can make your response return CSV, PDF etc etc.  If you call <code>response.Negotiate</code> and Botwin can&rsquo;t find a relevant implementation it will default to JSON.</p>
+<p>If you explicitly want to return JSON from your route you can use another extension like so:</p>
+<pre><code>this.Get(&quot;/actors&quot;, async (req, res, routeData) =&gt;
+{
+	var people = actorProvider.Get();
+	await res.AsJson(people);
+});
+</code></pre>
+<h3 id="dependency-injection">Dependency Injection</h3>
+<p>You can inject dependencies into Botwin modules and these are resolved automatically via the ASP.NET Core built in DI so if you use Structuremap, Autofac etc that is plugged into ASP.NET Core then it will work fine:</p>
+<pre><code>public class ActorsModule : BotwinModule
+{
+    public ActorsModule(IActorProvider actorProvider)
+    {
+       //Do stuff
+    }
+}
+</code></pre>
+<h2 id="summary">Summary</h2>
+<p>So what have we got here? This is not Nancy re-imagined on ASP.NET Core, this is me wondering whether I could easily and quickly use some of the lower level parts of the routing to use Nancy-esque style routing.  It runs on pre-released binaries from Microsoft so just a warning for now!  The one thing I have never liked about ASP.NET is the routing whether that be configured in Global.asax or attribute routing or convention based methods in controllers.  This is not a framework.  Things like authentication and error handling etc should be handled by other middleware that comes with ASP.NET Core but Botwin contains enough functionality to get a decent sized app running.  My commitment to Nancy is still as strong but these days finding time to contribute to it is difficult so kind of makes me sad that there is no choice for web frameworks for .NET.  The performance is very good as it sits directly within the ASP.NET Core pipeline.  If you&rsquo;d like to help out or have some ideas please visit the repo <a href="https://github.com/jchannon/Botwin">here</a> but today I&rsquo;m happy to announce Botwin!</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

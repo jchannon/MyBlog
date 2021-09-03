@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Understanding F# applicatives and custom operators &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Fri, Jul 17, 2020</span>
+                                
+                                <h1>Understanding F# applicatives and custom operators</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>After discussing something with Ian Russell he suggested I take some time to read through another fine <a href="https://www.softwarepark.cc/blog/2019/12/8/functional-validation-in-f-using-applicatives">blog post</a> he has written and understand F# applicatives and custom operators.  I found myself in familiar territory when reading F# blog posts and it&rsquo;s something similar to the five stages of grief. Nod, Nod, I understand what&rsquo;s going on, Umm, WTF is going on.  As Ian did in his <a href="https://www.softwarepark.cc/blog/2019/9/12/introduction-to-functional-programming-in-f">Intro to F#</a> series he sets out a simple domain problem and goes about how to address it.  We want to return a <code>ValidatedUser</code> from a function but if the user fails validation we return a list of validation errors.</p>
+<p>The code in the blog post was pretty self explanatory until, it wasn&rsquo;t, which I have pasted below:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UnvalidatedUser</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+    Name <span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+    Email <span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+    DateOfBirth <span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ValidatedUser</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>   
+    Name <span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+    Email <span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>
+    DateOfBirth <span style="color:#f92672">:</span> DateTime
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ValidationFailure</span> <span style="color:#f92672">=</span>
+    <span style="color:#f92672">|</span> NameIsInvalidFailure
+    <span style="color:#f92672">|</span> EmailIsInvalidFailure
+    <span style="color:#f92672">|</span> DateOfBirthIsInvalidFailure
+
+<span style="color:#66d9ef">let</span> <span style="color:#f92672">(|</span>ParseRegex<span style="color:#f92672">|_|)</span> regex str <span style="color:#f92672">=</span>
+   <span style="color:#66d9ef">let</span> m <span style="color:#f92672">=</span> Regex<span style="color:#f92672">(</span>regex<span style="color:#f92672">).</span>Match<span style="color:#f92672">(</span>str<span style="color:#f92672">)</span>
+   <span style="color:#66d9ef">if</span> m<span style="color:#f92672">.</span>Success <span style="color:#66d9ef">then</span> Some <span style="color:#f92672">(</span>List.tail <span style="color:#f92672">[</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> m<span style="color:#f92672">.</span>Groups <span style="color:#f92672">-&gt;</span> x<span style="color:#f92672">.</span>Value <span style="color:#f92672">])</span>
+   <span style="color:#66d9ef">else</span> None
+
+<span style="color:#66d9ef">let</span> <span style="color:#f92672">(|</span>IsValidName<span style="color:#f92672">|_|)</span> input <span style="color:#f92672">=</span>
+    <span style="color:#66d9ef">if</span> input <span style="color:#f92672">&lt;&gt;</span> String.Empty <span style="color:#66d9ef">then</span> Some () <span style="color:#66d9ef">else</span> None
+
+<span style="color:#66d9ef">let</span> <span style="color:#f92672">(|</span>IsValidEmail<span style="color:#f92672">|_|)</span> input <span style="color:#f92672">=</span>
+    <span style="color:#66d9ef">match</span> input <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> ParseRegex <span style="color:#e6db74">&#34;.*?@(.*)&#34;</span> <span style="color:#f92672">[</span> <span style="color:#f92672">_</span> <span style="color:#f92672">]</span> <span style="color:#f92672">-&gt;</span> Some input
+    <span style="color:#f92672">|</span> <span style="color:#f92672">_</span> <span style="color:#f92672">-&gt;</span> None
+
+<span style="color:#66d9ef">let</span> <span style="color:#f92672">(|</span>IsValidDate<span style="color:#f92672">|_|)</span> <span style="color:#f92672">(</span>input<span style="color:#f92672">:</span><span style="color:#66d9ef">string</span><span style="color:#f92672">)</span> <span style="color:#f92672">=</span>
+    <span style="color:#66d9ef">let</span> <span style="color:#f92672">(</span>success<span style="color:#f92672">,</span> value<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> DateTime.TryParse<span style="color:#f92672">(</span>input<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">if</span> success <span style="color:#66d9ef">then</span> Some value <span style="color:#66d9ef">else</span> None
+
+<span style="color:#66d9ef">let</span> validateName input <span style="color:#f92672">=</span> <span style="color:#75715e">// string -&gt; Result&lt;string, ValidationFailure list&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">match</span> input <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> IsValidName <span style="color:#f92672">-&gt;</span> Ok input
+    <span style="color:#f92672">|</span> <span style="color:#f92672">_</span> <span style="color:#f92672">-&gt;</span> Error <span style="color:#f92672">[</span> NameIsInvalidFailure <span style="color:#f92672">]</span>
+
+<span style="color:#66d9ef">let</span> validateEmail input <span style="color:#f92672">=</span> <span style="color:#75715e">// string -&gt; Result&lt;string, ValidationFailure list&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">match</span> input <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> IsValidEmail email <span style="color:#f92672">-&gt;</span> Ok email
+    <span style="color:#f92672">|</span> <span style="color:#f92672">_</span> <span style="color:#f92672">-&gt;</span> Error <span style="color:#f92672">[</span> EmailIsInvalidFailure <span style="color:#f92672">]</span>
+
+<span style="color:#66d9ef">let</span> validateDateOfBirth input <span style="color:#f92672">=</span> <span style="color:#75715e">// string -&gt; Result&lt;DateTime, ValidationFailure list&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">match</span> input <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> IsValidDate dob <span style="color:#f92672">-&gt;</span> Ok dob <span style="color:#75715e">//Add logic for DOB
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">|</span> <span style="color:#f92672">_</span> <span style="color:#f92672">-&gt;</span> Error <span style="color:#f92672">[</span> DateOfBirthIsInvalidFailure <span style="color:#f92672">]</span>
+
+<span style="color:#66d9ef">let</span> apply fResult xResult <span style="color:#f92672">=</span> <span style="color:#75715e">// Result&lt;(&#39;a -&gt; &#39;b), &#39;c list&gt; -&gt; Result&lt;&#39;a,&#39;c list&gt; -&gt; Result&lt;&#39;b,&#39;c list&gt;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">match</span> fResult<span style="color:#f92672">,</span>xResult <span style="color:#66d9ef">with</span>
+    <span style="color:#f92672">|</span> Ok f<span style="color:#f92672">,</span> Ok x <span style="color:#f92672">-&gt;</span> Ok <span style="color:#f92672">(</span>f x<span style="color:#f92672">)</span>
+    <span style="color:#f92672">|</span> Error ex<span style="color:#f92672">,</span> Ok <span style="color:#f92672">_</span> <span style="color:#f92672">-&gt;</span> Error ex
+    <span style="color:#f92672">|</span> Ok <span style="color:#f92672">_,</span> Error ex <span style="color:#f92672">-&gt;</span> Error ex
+    <span style="color:#f92672">|</span> Error ex1<span style="color:#f92672">,</span> Error ex2 <span style="color:#f92672">-&gt;</span> Error <span style="color:#f92672">(</span>List.concat <span style="color:#f92672">[</span>ex1<span style="color:#f92672">;</span> ex2<span style="color:#f92672">])</span>
+
+<span style="color:#66d9ef">let</span> <span style="color:#f92672">(&lt;!&gt;)</span> <span style="color:#f92672">=</span> Result.map
+<span style="color:#66d9ef">let</span> <span style="color:#f92672">(&lt;*&gt;)</span> <span style="color:#f92672">=</span> apply
+
+<span style="color:#66d9ef">let</span> create name email dateOfBirth <span style="color:#f92672">=</span>
+    <span style="color:#f92672">{</span> Name <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span> Email <span style="color:#f92672">=</span> email<span style="color:#f92672">;</span> DateOfBirth <span style="color:#f92672">=</span> dateOfBirth <span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">let</span> validate <span style="color:#f92672">(</span>input<span style="color:#f92672">:</span>UnvalidatedUser<span style="color:#f92672">)</span> <span style="color:#f92672">:</span> Result<span style="color:#f92672">&lt;</span>ValidatedUser<span style="color:#f92672">,</span>ValidationFailure <span style="color:#66d9ef">list</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span>
+    <span style="color:#66d9ef">let</span> validatedName <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>Name <span style="color:#f92672">|&gt;</span> validateName
+    <span style="color:#66d9ef">let</span> validatedEmail <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>Email <span style="color:#f92672">|&gt;</span> validateEmail
+    <span style="color:#66d9ef">let</span> validatedDateOfBirth <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>DateOfBirth <span style="color:#f92672">|&gt;</span> validateDateOfBirth
+    <span style="color:#75715e">// create validatedName validatedEmail validatedDateOfBirth
+</span></code></pre></div><p>As you can see, there is commented out code on the last line because he has lined up the 3 arguments that are required to call the <code>create</code> function but calling it as-is won&rsquo;t work because the function takes in <code>string,string,DateTime</code> and we have <code>Result&lt;string, ValidationFailure list&gt;, Result&lt;string, ValidationFailure list&gt;,Result&lt;DateTime, ValidationFailure list&gt;</code>.  As we know from my <a href="https://blog.jonathanchannon.com/2020-06-28-understanding-fsharp-map-and-bind/">previous blog post</a> we can use the <code>Result.map</code> function to do this sort of thing.</p>
+<p>I will skip to the solution to this and work backwards because this is where I started to scratch my head a lot! Luckily the F# Software Foundation slack channel helped a lot in particular <a href="https://twitter.com/pblasucci">Paul Blasucci</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp">create
+    <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">&lt;|</span> validatedName
+    <span style="color:#f92672">|&gt;</span> apply <span style="color:#f92672">&lt;|</span> validatedEmail
+    <span style="color:#f92672">|&gt;</span> apply <span style="color:#f92672">&lt;|</span> validatedDateOfBirth
+</code></pre></div><p>From the <a href="(https://blog.jonathanchannon.com/2020-06-28-understanding-fsharp-map-and-bind/)">last blog post</a> I showed how to call functions in a chain of functions where <code>Result</code> types needed to be unwrapped and their values passed to the next function.  So my first thought looking at this was <code>validatedName</code> is a value not a function so how is <code>Result.map</code> working? I also didn&rsquo;t quite understand the precedence of <code>|&gt;</code> and <code>|&lt;</code> how that worked.  As part of my investigation, or some may say my learning and understanding, I was told Don Syme regretted making the back pipe and that using forward and back pipes together can make code unreadable.  The take away there is to be careful about it&rsquo;s usage.  The good thing here is that we only have one usage of it but it still didn&rsquo;t make sense to me.  So I tried to split it up:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">let</span> foo <span style="color:#f92672">=</span> create <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">&lt;|</span> validatedName
+</code></pre></div><p>I still didn&rsquo;t quite get it, <code>foo</code> is a type of <code>Result&lt;(string -&gt; DateTime -&gt; ValidatedUser), ValidationFailure list&gt;</code> which means it&rsquo;s taken the name argument and now wants the email and date of birth passed to it.  I understood partial application but still it didn&rsquo;t click.  I went back to the <a href="(https://blog.jonathanchannon.com/2020-06-28-understanding-fsharp-map-and-bind/)">previous blog post</a> and looked at what the function signature of <code>Result.map</code> is.  It takes in a function and a <code>Result&lt;'a,'b&gt;</code>.  If the <code>Result</code> is <code>OK</code> it calls the passed in function with the unwrapped <code>Result</code> of <code>'a</code> and returns a <code>Result</code> type of <code>Ok(fn a)</code> otherwise it returns <code>Error e</code> Here&rsquo;s the code for it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">let</span> map mapping result <span style="color:#f92672">=</span> <span style="color:#66d9ef">match</span> result <span style="color:#66d9ef">with</span> Error e <span style="color:#f92672">-&gt;</span> Error e <span style="color:#f92672">|</span> Ok x <span style="color:#f92672">-&gt;</span> Ok <span style="color:#f92672">(</span>mapping x<span style="color:#f92672">)</span>
+</code></pre></div><p>I then went back to the line of code after being informed that <code>|&lt;</code> will always get called after <code>|&gt;</code>.  So what we have is <code>create</code> is passed in as the function to call in <code>Result.map</code> and the <code>Result</code> type is the <code>validatedName</code> variable. PARTIAL APPLICATION!!! Ok I get it now!</p>
+<p>So once I could see what was happening it was time to understand what the <code>apply</code> function was doing.  The first argument is a <code>Result</code> type whose generic args were a function and a list of validation failures, the second argument was a <code>Result</code> type whose generic args were a value and a list of validation failures. What <code>apply</code> does is match the two Result types together to check for <code>(Ok, Ok)</code> or <code>(Ok, Error)</code> etc and on success call the unwrapped function of the first arg with the unwrapped value of the second arg.</p>
+<p>What confused me here was F# compiler magic.  Now I knew about partial application but what I didn&rsquo;t understand was that when you assign a variable by calling a function using partial application the resulting type is not the result of the function being called. It&rsquo;s just a type of the function with one less argument to call, the compiler knows when to call the actual function once all arguments have been passed to it.  What the function is doing is chaining argument calls to a partial application function.  So we can see:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">let</span> foo <span style="color:#f92672">=</span> create <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">&lt;|</span> validatedName <span style="color:#75715e">// Result.map create validatedName
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> bar <span style="color:#f92672">=</span> foo <span style="color:#f92672">|&gt;</span> apply <span style="color:#f92672">&lt;|</span> validatedEmail <span style="color:#75715e">// apply foo validatedEmail
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> baz <span style="color:#f92672">=</span> bar <span style="color:#f92672">|&gt;</span> apply <span style="color:#f92672">&lt;|</span> validatedDateOfBirth <span style="color:#75715e">// apply bar validatedDateOfBirth
+</span></code></pre></div><p><code>baz</code> now is the final result of a call to execute the <code>create</code> function.</p>
+<p>We can then remove the <code>let</code>s above and get to the final solution I mentioned previously:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp">create
+    <span style="color:#f92672">|&gt;</span> Result.map <span style="color:#f92672">&lt;|</span> validatedName
+    <span style="color:#f92672">|&gt;</span> apply <span style="color:#f92672">&lt;|</span> validatedEmail
+    <span style="color:#f92672">|&gt;</span> apply <span style="color:#f92672">&lt;|</span> validatedDateOfBirth
+</code></pre></div><p>As mentioned above it&rsquo;s advised not to use back pipes and so what we could end up with is :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp">create <span style="color:#f92672">&lt;!&gt;</span> validatedName <span style="color:#f92672">&lt;*&gt;</span> validatedEmail <span style="color:#f92672">&lt;*&gt;</span> validatedDateOfBirth
+</code></pre></div><p>If like me you were totally confused by this then please see Ian&rsquo;s <a href="https://www.softwarepark.cc/blog/2019/12/8/functional-validation-in-f-using-applicatives">blog post</a> for a full explanation but here&rsquo;s my take away.</p>
+<p>As we saw above the apply function takes an <a href="https://fsharpforfunandprofit.com/posts/elevated-world">&ldquo;elevated&rdquo;</a> function and <a href="https://fsharpforfunandprofit.com/posts/elevated-world">&ldquo;elevated&rdquo;</a> value and then calls the function with the value and returns an elevated result. So we know in long hand version we have:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp">apply <span style="color:#f92672">(</span>apply <span style="color:#f92672">(</span>Result.map create validatedName<span style="color:#f92672">)</span> validatedEmail<span style="color:#f92672">)</span> validatedDateOfBirth
+</code></pre></div><p>We can also use operators to replace function names to tidy things up so we end up with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#66d9ef">let</span> <span style="color:#f92672">(&lt;!&gt;)</span> <span style="color:#f92672">=</span> Result.map
+<span style="color:#66d9ef">let</span> <span style="color:#f92672">(&lt;*&gt;)</span> <span style="color:#f92672">=</span> apply
+</code></pre></div><p>And we can make the above look like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp"><span style="color:#f92672">(&lt;*&gt;)</span> <span style="color:#f92672">((&lt;*&gt;)</span> <span style="color:#f92672">((&lt;!&gt;)</span> create validatedName<span style="color:#f92672">)</span> validatedEmail<span style="color:#f92672">)</span> validatedDateOfBirth
+</code></pre></div><p>This hopefully all makes sense, but now a slight lesson in math notation which blew my mind.  We know the signature <code>1 + 1 = 2</code>. However, <code>+</code> is actually a function that takes two numbers, so in that regard what you have known since you were aged three should look like <code>+ 1 1</code> if we were to apply common programming signatures.  Interestingly, you could also call the <code>+</code> function like <code>1 1 +</code>.  Where the <code>+</code> sits in the signature is called notation.  Typically programming languages will use &ldquo;prefix notation&rdquo; <code>function arg1 arg2</code> and some may use &ldquo;postfix notation&rdquo; <code>arg1 arg2 function</code> and arithmetic generally uses &ldquo;infix notation&rdquo; <code>arg1 function arg2</code>.  However, in F# you can use &ldquo;infix notation&rdquo; which looks like the typical <code>1 + 1</code> signature which is <code>let add x y = x + y</code>. If we replace <code>x + y</code> knowing that the <code>+</code> is the function we can go from &ldquo;prefix notation&rdquo; <code>(&lt;!&gt;) create validatedName</code> to &ldquo;infix notation&rdquo; <code>create &lt;!&gt; validatedName</code> and apply it to our functions above.  As we apply the calls to our infixed functions what we end up with is:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fsharp" data-lang="fsharp">create <span style="color:#f92672">&lt;!&gt;</span> validatedName <span style="color:#f92672">&lt;*&gt;</span> validatedEmail <span style="color:#f92672">&lt;*&gt;</span> validatedDateOfBirth
+</code></pre></div><p>This looks much neater than <code>apply (apply (Result.map create validatedName) validatedEmail) validatedDateOfBirth</code> but it does take a bit of learning and re-thinking to work out how the final solution <code>create &lt;!&gt; validatedName &lt;*&gt; validatedEmail &lt;*&gt; validatedDateOfBirth</code> actually works.  I know this has been quite a learning curve for me but thankfully there are resources, people in the F# community and colleagues (thanks Ian!) that are keen to help and I thank them very much for this!</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>ASP.NET Web API Testing &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Thu, Nov 29, 2012</span>
+                                
+                                <h1>ASP.NET Web API Testing</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>As the need arose to implement some kind of Web Service/HTTP API I thought I would evaluate <a href="http://nancyfx.org/">NancyFX</a>, <a href="http://www.asp.net/web-api">ASP.NET Web API</a> and <a href="http://www.servicestack.net/">ServiceStack</a>.</p>
+<p>Suffice to say all performed as expected and I was actually surprised to find that implementing ASP.NET Web API was easier than ServiceStack (I know that might be a bit of a statement to make to the ServiceStack followers, sorry). I found Nancy easiest to implement. The very simple API demos can be found on <a href="http://github.com/jchannon">my Github page</a>.</p>
+<p>When it came to testing ASP.NET Web API I found it to be wanting slightly in comparison to Nancy. With WebAPI I could make direct calls to the controller methods to make sure data was returned correctly and I could mock a repository and test that the methods in the repository were being called but there was nothing I could see to test the HTTP response I would get.</p>
+<p>I found that you could configure a lot of stuff to get a HttpResponseMessage back as shown below however in my opinion it wasn’t particularly easy on the eye and seemed a bit over the top just to get a response back.</p>
+<pre><code>//Arrange
+var config = new HttpConfiguration();
+var request = new HttpRequestMessage(HttpMethod.Post, &quot;http://localhost/api/products&quot;);
+var route = config.Routes.MapHttpRoute(&quot;DefaultApi&quot;, &quot;api/{controller}/{id}&quot;);
+var routeData = new HttpRouteData(route, new HttpRouteValueDictionary { { &quot;controller&quot;, &quot;products&quot; } });
+var controller = new ProductsController(repo);
+controller.ControllerContext = new HttpControllerContext(config, routeData, request);
+controller.Request = request;
+controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
+</code></pre>
+<p>Then you can call your controller method and assert against it.</p>
+<pre><code>// Act
+var result = controller.PostProduct(new Product { Id = 1 });
+
+// Assert
+Assert.Equal(HttpStatusCode.Created, result.StatusCode);
+</code></pre>
+<p>I can’t take credit for finding this out though. I found it on <a href="http://www.peterprovost.org/blog/2012/06/16/unit-testing-asp-dot-net-web-api/">Peter Provost</a> blog post where he says <a href="http://bradwilson.typepad.com/">Brad Wilson</a> helped him construct the code.</p>
+<p>I wasn’t positive whether the HTTP response returned was as pure as if the request was actually made to a server. By understanding the <a href="https://github.com/NancyFx/Nancy/tree/master/src/Nancy.Testing">Nancy.Testing</a> library I knew that the response given there was an exact copy of what would be given if hitting a server.</p>
+<p>I then investigated a bit more and found a great blog post by <a href="http://www.strathweb.com/2012/06/asp-net-web-api-integration-testing-with-in-memory-hosting/">Filip W</a> about in-memory hosting. This essentially mirrors a server in terms of receiving a request and issuing a response.</p>
+<p>Knowing what I knew from Nancy I thought I could apply it to Web API. What this meant was you could submit requests and test against the response. I’m not sure how you would classify it in terms of unit testing or integration testing because the tests run very quickly but I suppose you are hitting an actual server albeit in memory.</p>
+<p>Here’s what a simple test looks like:</p>
+<pre><code>public class GetDataTests
+{
+    [Fact]
+    public void GetData_WhenRequested_ShouldReturnJSON()
+    {
+        var browser = new Browser();
+        var response = browser.Get(&quot;/GetData&quot;, (with) =&gt;
+        {
+            with.Header(&quot;Accept&quot;, &quot;application/json&quot;);
+            with.HttpRequest();
+        });
+
+        Assert.Equal(&quot;application/json&quot;, response.Content.Headers.ContentType.MediaType);
+    }
+
+    [Fact]
+    public void GetData_WhenRequested_ShouldReturnOKStatusCode()
+    {
+        var browser = new Browser();
+        var response = browser.Get(&quot;/GetData&quot;, (with) =&gt;
+        {
+            with.Header(&quot;Authorization&quot;, &quot;Bearer johnsmith&quot;);
+            with.Header(&quot;Accept&quot;, &quot;application/json&quot;);
+            with.HttpRequest();
+        });
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+    }
+}
+</code></pre>
+<p>You define your test, in this case <a href="http://xunit.codeplex.com/">xUnit</a>. You create an instance of the Browser class. This is just a class name there is no browser, it doesn’t fire up IE or anything like that. You then call a method named after a HTTP verb with a path specified. You also have the ability to specify items within the request such as headers, form values and cookies using a delegate. The methods in the Browser class will return a HttpResponseMessage which is what Web API server returns and you can then assert against the response.</p>
+<p>Delving a little deeper into the code, the Browser class takes an optional HttpConfiguration constructor argument or if one is not supplied it uses the below configuration. It then creates an instance of HttpServer and passes the configuration into it.</p>
+<pre><code>private readonly HttpServer _server;
+
+public Browser()
+{
+    var config = new HttpConfiguration();
+    config.Routes.MapHttpRoute(name: &quot;Default&quot;, routeTemplate: &quot;api/{controller}/{action}/{id}&quot;, defaults: new { id = RouteParameter.Optional });
+    config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+    _server = new HttpServer(config);
+}
+</code></pre>
+<p>When a method is called it then builds up a HttpRequestMessage using the items defined in the delegate in the unit test and passes it to the server variable and the HttpResponseMessage is returned.</p>
+<pre><code>public HttpResponseMessage Get(string path, Action browserContext = null)
+{
+  return this.HandleRequest(HttpMethod.Get, path, browserContext);
+}
+
+private HttpResponseMessage HandleRequest(HttpMethod method, string path, Action browserContext)
+{
+    var request = CreateRequest(method, path, browserContext ?? this.DefaultBrowserContext);
+
+    if (BrowserHttpClient == null)
+        BrowserHttpClient = new HttpClient(_server);
+
+    HttpResponseMessage response = BrowserHttpClient.SendAsync(request).Result;
+   
+    request.Dispose();
+
+    if (_server != null)
+    {
+        _server.Dispose();
+    }
+
+    return response;
+}
+</code></pre>
+<p>This gives you the ability to pretty much test the full pipeline of a request and response.</p>
+<p>The Github repository is located <a href="https://github.com/jchannon/WebAPI.Testing">here</a> and if you like what you see please take a closer look into <a href="http://nancyfx.org/">NancyFX</a>.</p>
+<p><img src="/images/blogpostimages/nancy-horizontal-framed-bf-wb-620x240.png" alt="NancyFX" title="NancyFX"></p>
+<p><em>NancyFX</em></p>
+<p><strong>UPDATE 7th Dec 2012:</strong> The project is available on <a href="http://nuget.org/packages/WebAPI.Testing">Nuget</a></p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

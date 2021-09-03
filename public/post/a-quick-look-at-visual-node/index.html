@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>A quick look at Visual Node &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Thu, Aug 22, 2013</span>
+                                
+                                <h1>A quick look at Visual Node</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>I came across <a href="http://www.visualnode.info/">Visual Node</a> a few months ago and was excited by the looks of it.  For those that didn&rsquo;t click that link, it basically brings the power of Visual Studio debugging to a node.js app.  You can write your node.js app in Visual Studio, fire up the debugger by hitting F5 and use breakpoints and watches to see what&rsquo;s going on.</p>
+<p>The hipster in me is screaming saying &ldquo;You should be using Sublime Text and <a href="https://github.com/dannycoates/node-inspector">node-inspector</a> for debugging&rdquo; but to be honest I found it a bit hackety-hack and it seemed a bit odd debugging my server app in Chrome but maybe that&rsquo;s just something I need to get over.  JavaScript is getting a huge surge in popularity recently so its your duty as a developer to investigate this.  I want to learn and understand JS better but I always get frustrated with it after 10mins and swear that I&rsquo;m never going to touch a dynamic language again, &ldquo;give me a statically typed language every time with a compiler&rdquo;.  I have a bit of a Jekyll and Hyde situation going on that I need to overcome.</p>
+<p>When I saw Visual Node it appeared to my statically typed side. &ldquo;Ooooh, proper debugging, this looks interesting&rdquo;.  So I signed up to be kept up to date when they were ready for beta testers and yesterday I got my email saying I could download a private beta version and give it a whirl. So that&rsquo;s what I did.</p>
+<p>I went over to their <a href="http://www.visualnode.info/readme">README</a> page which explained how to install it and some of the features.  I installed a VSIX which gives me a project template to choose from when creating a project in Visual Studio(VS).</p>
+<p><img src="https://www.visualnode.info/images/readme/new-project.png" alt="Project Template"></p>
+<p>Selecting this gives you a basic http server app template.</p>
+<p><img src="/images/blogpostimages/projectlayout.PNG" alt="Project Layout"></p>
+<p>I like that they have tried to bring a <a href="http://www.nuget.org/">NuGet</a> style dialog for searching packages in <a href="https://npmjs.org/">NPM</a>.</p>
+<p><img src="https://www.visualnode.info/images/readme/package.png" alt="NPM Picture"></p>
+<p>This brings a sense of familiarity to Visual Studio users which is great. It orders its results alphabetically. I found the searching a bit slow but I&rsquo;m not sure if that&rsquo;s down to my internet connection or how NPM handles searching.</p>
+<p>The code in the template is:</p>
+<pre><code>// Load the http module to create an http server.
+var http = require('http');
+
+// Configure our HTTP server to respond with Hello World to all requests.
+var server = http.createServer(function (request, response) {
+    response.writeHead(200, { &quot;Content-Type&quot;: &quot;text/plain&quot; });
+    response.end(&quot;Hello World\n&quot;);
+});
+
+// Listen on port 8000, IP defaults to 127.0.0.1
+server.listen(8000);
+
+// Put a friendly message on the terminal
+console.log(&quot;Server running at http://127.0.0.1:8000/&quot;);
+</code></pre>
+<p>I then pressed F5 to see what happened.</p>
+<p>It fires up a console app and a browser:</p>
+<p><img src="/images/blogpostimages/console.png" alt="Console">
+<img src="/images/blogpostimages/helloworldbrowser.PNG" alt="Browser"></p>
+<p>I then went back to Visual Studio and put a breakpoint on the <code>response.end(&quot;Hello World\n&quot;);&quot;</code> to see what would happen when I refreshed my browser.</p>
+<p><img src="/images/blogpostimages/debugging.png" alt="Debugging"></p>
+<p>It stopped on the breakpoint and gives me information about the objects in scope etc and let me step into the current line.</p>
+<p><img src="/images/blogpostimages/f11.png" alt="F11"></p>
+<p>That&rsquo;s a pretty basic hello world style of seeing what Visual Node can do but that static language side of me really likes the look of this and the potential it can bring. I believe <a href="http://www.jetbrains.com/webstorm">WebStorm</a> also provides node.js debugging so check that out but for pure familiarity reasons I like the look of this.</p>
+<p>For a better understanding here&rsquo;s a video:</p>
+<!-- raw HTML omitted -->
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Evaluating KnockoutJS and AngularJS – Part 2 &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Tue, Feb 5, 2013</span>
+                                
+                                <h1>Evaluating KnockoutJS and AngularJS – Part 2</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>In <a href="http://blog.jonathanchannon.com/2013/02/05/evaluating-knockoutjs-and-angularjs-part-1/" title="Evaluating KnockoutJS and AngularJS – Part 1">Part 1</a>, I described how I was using the demo tutorial from <a href="http://sammyjs.org/">SammyJS</a> to get a better understanding of <a href="http://angularjs.org/">AngularJS</a> and <a href="http://knockoutjs.com/">KnockoutJS</a>.</p>
+<p>In this blog post I will focus on what I found when using KnockoutJS.</p>
+<p>Again if you just want to get to the code then feel free to take a look here for <a href="https://github.com/jchannon/AngularShopping">Angular</a> and here for <a href="https://github.com/jchannon/KnockoutShopping">Knockout</a>.</p>
+<h2 id="knockout">Knockout</h2>
+<p>Firstly Knockout should be commended on their documentation and online tutorials. Their website tutorials follows a step by step approach and once you have completed each step you can click through to the next section. You can also leave the tutorial and come back to it and it will remember where you left. There is great support in the KnockoutJS room in Jabbr and I’d like to thank <a href="https://twitter.com/davepermen">David Spörri</a> for answering my newbie JS and Knockout questions.</p>
+<p>Knockout also uses HTML elements and attributes like Angular to determine behaviour but Knockout’s approach is more HTML5 in that the most common usage is using the data-bind attribute. For example, the below will use the artist property on the viewmodel to render the div contents.</p>
+<pre><code>&lt;div data-bind=&quot;text: artist&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>As this was going to be a SPA (Single Page Application), the main screen would have an area that would display either a list of products or more information about a single product. The way Knockout handles this is via a ‘with’ keyword.</p>
+<pre><code>&lt;div id=&quot;main&quot;&gt;
+  &lt;!-- Main Page --&gt;
+  &lt;div data-bind=&quot;with: items&quot;&gt;&lt;/div&gt;
+  &lt;!-- Detail Page --&gt;
+  &lt;div data-bind=&quot;with: chosenProduct&quot;&gt;&lt;div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>So when the viewmodel’s ‘items’ property is populated it would show the first div and when the ‘chosenProduct’ property was populated it would show the second div. Nice and simple. You can then populate your markup with properties from the items and chosenProduct within those div’s.</p>
+<p>As we have 2 pages/sections in our app we need to handle routing so that when we’re going to the root it populates our view model with all our products and when the user clicks a specific product it finds that product and populates our view model. KnockoutJS does not have this built into it like Angular does and uses SammyJS to handle this.</p>
+<pre><code>var app = Sammy(function () {
+    this.get('#/:id', function (context) {
+        self.items(null);
+        var product = data.filter(function (x) {
+            return x.id === parseInt(context.params.id, 10);
+        })[0];
+        product.quantity = 1;
+        self.chosenProduct(product);
+    });
+
+    this.get('/', function () {
+        self.items(data);
+        self.chosenProduct(null);
+    });
+});
+
+jQuery(function () {
+    console.log('rn');
+    app.run();
+});
+</code></pre>
+<p>Compared to Angular’s separation approach, here we have most things all in one class/viewmodel i.e/ the routing to assign the items property for all products and single item for the selected product as well as other viewmodel properties. We also have functions to add items and determine quantity as well as saving the information to <a href="https://developer.mozilla.org/en-US/docs/DOM/Storage">localStorage</a>. I guess it keeps it altogether in one place but this may get tricky once the app becomes quite large however, I’ve been told things can get separated by using <a href="http://requirejs.org/">RequireJS</a> although I think in this demo that would require a large refactor.</p>
+<p>Again in this demo outside of the main area that gets changed with markup we have a shopping cart that needs to update when we add something. I already had a function that calculated my quantities but it did not update the div with the new value. Even though the viewmodel property was a computed function it was not re-run every time something was added to the basket, for that to happen the computed function needs to have an observable property within it.</p>
+<pre><code>self.basketItemCount = ko.computed(function () {
+       var count = 0;
+       var items = self.basketItems();
+       for (var i = 0; i &lt; items.length; i%2B%2B) {
+           count %2B= items[i].quantity(); //Given that the quantity is an observable property
+       }
+       return count;
+   });
+</code></pre>
+<p>We also wanted to do some animation when the item was added to the basket and because SammyJS has a dependency on jQuery it was very easy to add this to the viewmodel’s addItem function however like Angular this is not recommended as it ties the view to the viewmodel. What Knockout recommend is custom bindings.</p>
+<pre><code>ko.bindingHandlers.animateCart = {
+    update: function (element, valueAccessor, allBindingsAccessor) {
+        $(element)
+            .animate({ paddingTop: '30px' })
+            .animate({ paddingTop: '10px' });
+    }
+};
+
+//Usage
+&lt;div class=&quot;cart-info&quot; data-bind=&quot;animateCart: basketAsJson()&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>Now this is where the data binding gets confusing/interesting. My HTML could not use the basketItems viewmodel property as this is an observable array and so would only react when the array changed NOT when properties of objects within the array changed. I was a bit disappointed with that so I had to create a new function that obviously used an observeable within it ie/the basketItems but that was not enough to handle the properties changing within that array. So the recommendation from <a href="https://twitter.com/robwesterlund">Robert Westerlund</a> (a Javascript, Knockout and Regex wizard) was to use ko.toJSON(basketItems()). (The reason we use ko.toJSON and not JSON.stringify is because that would not pick up the observeable property values) This would mean that it would have to traverse all the objects to find the values and because they are observeable this function would fire every time, genius! This also meant when it changed I could also store the changes in localStorage for when the user came back to the website!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I found Knockout easier to comprehend and get going with compared to Angular which is always a winner when starting something new but Knockout is pretty much just about binding so for things like routing and separation of concerns you need to use other libraries whereas Angular has all that built in. I think for smaller projects without too much logic required Knockout is ideal and I really like the simplicity of SammyJS however, for larger applications that requires dependency injection, a clear separation of concerns and the easy ability to unit test logic Angular is a winner. In this case the term “pick the right tool for the job” certainly applies.</p>
+<p>I guess I should go ahead and investigate Backbone now just to fully educate myself and I’ve been recommend this link – <a href="https://github.com/kjbekkelund/writings/blob/master/published/understanding-backbone.md">“Step by step from jQuery to Backbone”</a> so here goes…</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

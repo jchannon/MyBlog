@@ -1,0 +1,659 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+	<meta name="generator" content="Hugo 0.83.1" />
+		<title>Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+		
+
+		
+		
+		
+
+		
+
+		
+		
+		
+
+		
+		
+
+		
+			
+		
+		
+
+		
+		
+		
+
+
+		
+			<div id="wrapper" class="fade-in" data-pfn="post" data-ps="6" data-pfp="true">
+
+				
+
+				
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+				
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+						
+
+
+<article class="post featured">
+    <header class="major">
+        
+        <span class="date">Fri, Jun 6, 2014</span>
+        
+        <h2><a href="https://blog.jonathanchannon.com/post/modifying-bash-adding-git-auto-completion-to-terminal/">Modifying the bash prompt and adding Git completion to terminal</a></h2>
+        
+        <p><p>At work we use Git and I use <a href="http://sourceforge.net/projects/console/files/">Console2</a> to control my terminal envrionments eg/Git Bash, Powershell, Dos and when using Git I can type part type a git command press tab and it will auto complete the command or offer suggestions to commands.  By default on OSX this behaviour is not present and it frustrated me enough to go and find out how to enable that behaviour.</p>
+<p>Fire up your terminal and type in this command:</p>
+<pre><code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+</code></pre>
+<p>This will download a git completion file into your home folder to a hidden file called git-completion.bash.</p>
+<p>If the file ~/.bash_profile does not already exist create it with the following command.</p>
+<pre><code>touch ~/.bash_profile
+</code></pre>
+<p>Now open it and paste this in:</p>
+<pre><code>if [ -f ~/.git-completion.bash ]; then . ~/.git-completion.bash; fi
+</code></pre>
+<p>Now if you type a git command and press tab, BOOM!, you have auto complete for Git!</p></p>
+        
+    </header>
+    
+    <ul class="actions">
+        <li><a href="https://blog.jonathanchannon.com/post/modifying-bash-adding-git-auto-completion-to-terminal/" class="button big">Read more</a></li>
+    </ul>
+</article>
+
+
+						
+
+						
+							
+
+<section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">Wed, May 7, 2014</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/introducing-owin-statelessauth-with-nancy-angular-demo/">Introducing Owin.StatelessAuth with Nancy/Angular demo</a></h2>
+        </header>
+        
+        
+        <p><p>If you&rsquo;re writing an API, current thinking is to provide a token in the <code>Authorization</code> header for your app to validate when the request comes in.  I have used the <a href="http://www.nuget.org/packages/Nancy.Authentication.Stateless/">Nancy.Authentication.Stateless</a> package in the past for my APIs and even have a demo of it <a href="https://github.com/jchannon/Nancy.Demo.StatelessAuth">here</a> if you&rsquo;re interested (there are more Nancy demos at <a href="http://samples.nancyfx.org/">http://samples.nancyfx.org</a>). This is a great package and does a great job but what if one day you want to use <a href="http://www.asp.net/signalr">SignalR</a> v2 that uses <a href="http://owin.org/">OWIN</a> and you want to validate not just requests to your Nancy app but also the SignalR requests?  You&rsquo;re going to need to validate requests as they come in before they get to SignalR or Nancy.</p>
+<p>For those of you who are not quite up to date or unsure what OWIN is let me try and give you the tl:dr, no doubt others may say its something slightly different.  Imagine you are asked to create a ASP.Net MVC 3 app (ignore the fact that that person needs a slap) so you fire up Visual Studio and create the app.  So what has it done? Its created an app that runs on IIS and all requests come straight into your app.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/introducing-owin-statelessauth-with-nancy-angular-demo/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Sat, Mar 22, 2014</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/using-node-and-ftp-with-promises/">Using NodeJS and FTP with Promises</a></h2>
+        </header>
+        
+        
+        <p><p>I&rsquo;ve played with node in the <a href="http://blog.jonathanchannon.com/2012/10/08/node-js-express-hello-world-formula-1-style/">past</a> but as of the new year I decided to try and make a more concerted effort to get stuck into node properly.  I decided to go back to the beginning to try and get a better appreciation for the language so read &ldquo;JavaScript: The Good Parts by Douglas Crockford&rdquo;.  I found that exercise fulfilling and resulted in a few light bulb moments that made some dots join up so I&rsquo;d recommend reading it if you haven&rsquo;t already.</p>
+<h3 id="real-world-app">Real World App</h3>
+<p>As I stated earlier I have already played with node in the past using <a href="http://expressjs.com/">Express</a> and have read quite a bit on node and read many examples but I wanted to write a non-web app as I felt this would give me a better opportunity to get to grips with the language and Node. Using Express allows you to get up and running very quickly without to much head scratching so I felt a standalone script would give me more exposure to things.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/using-node-and-ftp-with-promises/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Thu, Jan 2, 2014</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/unit-testing-with-sqlexception/">Unit Testing with SqlException</a></h2>
+        </header>
+        
+        
+        <p><p>So after a nice Christmas break I get to some code that needs some unit testing around a try/catch. Something similar to this:</p>
+<pre><code>try
+{
+    myService.DoSomethingThatMightTakeALongTime();
+}
+catch (EntityCommandExecutionException ex)
+{
+    var exception = ex.InnerException as SqlException;
+    if (exception != null)
+    {
+        if (exception.Number == -2)
+        {
+            //Do something special
+        }
+    }
+}
+</code></pre></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/unit-testing-with-sqlexception/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Fri, Dec 20, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/using-sql-server-with-nodejs/">Using SQL Server with node.js</a></h2>
+        </header>
+        
+        
+        <p><p>I like to keep eyes and ears open for new technologies and methodologies in order to become a better developer and I&rsquo;d heard about <a href="http://tjanczuk.github.io/edge/#/">edge.js</a> many months ago but made a mental note of it and waved it goodbye.  edge.js lets you have two-way communication between node and C# libraries.  When I first looked at it I thought that sounded a bit hacky, I&rsquo;ve spent my time communicating with COM libraries in Delphi and OCX libraries with C# and didn&rsquo;t like it so I felt this was pretty much the same thing.  A long time passed and I was writing a console based Windows app as a service and had wondererd whether I could quickly port it to node.</p>
+<p>I was discussing with a colleague about using node at work and that we needed something seperate and small just to try it out and see how the whole developement process with it worked.  As the database that this app needed to communicate with was MSSQL I looked into a library on NPM that would communicate with MSSQL and maybe act as an ORM.  There was a Microsoft lib that seemed untouched and reading the comments on the issues list on Github it didnt favour too well.  There were libraries that would communicate with MySQL &amp; PostgresSQL but not MSSQL.  In my search I came across edge.js again.  It had 2 samples, one that used edge-sql and one that used ScriptCS so in laymans terms, one that used a precompiled dll and one that used a C# script that was executed at runtime.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/using-sql-server-with-nodejs/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Mon, Nov 25, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/octopus-xml-transformation-in-services/">Octopus XML Transformation in Services</a></h2>
+        </header>
+        
+        
+        <p><p>We use <a href="http://octopusdeploy.com/">Octopus Deploy</a> at work and its a superb tool for deploying your applications whether they be websites or *.exes.</p>
+<p>One of the great things it also provides is the ability to use <a href="http://msdn.microsoft.com/en-us/library/dd465326.aspx">Microsoft&rsquo;s Transformation</a> process for config files.  However, when deploying a exe application its a bit trickier than a website.  Unfortunately the documentation doesn&rsquo;t mention the steps needed to get this working so read on!</p>
+<p>Typically a web application will have web.config and a web.Release.config as well as other derivations you may use.  Octopus also supports web.[Environment].config.</p></p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/octopus-xml-transformation-in-services/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">Thu, Nov 7, 2013</span>
+            
+            <h2><a href="https://blog.jonathanchannon.com/post/using-git-to-update-youtrack-via-teamcity/">Using Git to update YouTrack via TeamCity</a></h2>
+        </header>
+        
+        
+        <p>This post is mainly a reminder for me as I keep forgetting the command in Git to integrate commits to YouTrack items.
+YouTrack uses TeamCity to get the information about the commits and then scans the commit comment for a YouTrack item id and any commands that it can apply such as item status or time spent on said item.
+There is some documentation here but its not the greatest in terms of clarity and I&rsquo;ve spoken to Hadi Hariri from JetBrains about improving this so hopefully they&rsquo;re working on it.</p>
+        
+        <ul class="actions">
+            <li><a href="https://blog.jonathanchannon.com/post/using-git-to-update-youtrack-via-teamcity/" class="button">Read more</a></li>
+        </ul>
+    </article>
+    
+</section>
+
+						
+
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+    <div class="pagination">
+        <ul class="pagination">
+
+            
+            
+                
+                <li>
+                    <a href="/" class="extra first">
+                        First
+                    </a>
+                </li>
+                
+            
+            
+            
+            <li>
+                <a href="/page/4/" class="previous">
+                    Prev
+                </a>
+            </li>
+            
+
+            
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/3/" class="page">
+                        3 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/4/" class="page">
+                        4 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/5/" class="page active">
+                        5 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/6/" class="page">
+                        6 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/7/" class="page">
+                        7 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+
+            
+            
+            <li>
+                <a href="/page/6/" class="next">
+                    Next
+                </a>
+            </li>
+            
+
+            
+            
+                
+                <li>
+                    <a href="/page/11/" class="extra last">
+                        Last
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+</footer>
+
+
+					</div>
+
+					
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+					
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+					<a href="#navPanel" id="navPanelToggle">Menu</a>
+			</div>
+
+			
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+			
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+
+	</body>
+</html>

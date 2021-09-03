@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Tracing IO in .NET Core &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Fri, Jan 29, 2021</span>
+                                
+                                <h1>Tracing IO in .NET Core</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>I was made aware of <a href="https://opentelemetry.io/">OpenTelemetry</a> a while ago by a <a href="https://jimmybogard.com/building-end-to-end-diagnostics-and-tracing-a-primer/">blog series</a> <a href="https://twitter.com/jbogard">Jimmy Bogard</a> and put it in my favourites to read at a later date.  Of course I didn&rsquo;t really get back to it in depth and gave it a quick scan at the time although it is a well written in depth blog series so I suggest you do check it out.  A while later I saw a <a href="https://rehansaeed.com/deep-dive-into-open-telemetry-for-net/">blog post</a> by <a href="https://twitter.com/RehanSaeedUK">Rehan Saeed</a> which gives an introduction on what OpenTelemetry is and how it works and the concepts behind it and is definitely worth a read.  At the same time I saw a <a href="https://www.youtube.com/watch?v=FikF0DtxZno">YouTube video</a> by <a href="https://twitter.com/EltonStoneman">Elton Stoneman</a> that whilst more aimed at using tracing using Kubernetes he demonstrates a .NET app running and the tracing details appear in <a href="https://www.jaegertracing.io/">Jaeger</a></p>
+<p><img src="/images/blogpostimages/overview.png" alt="overview"></p>
+<p>Now as some of you may be aware I have an OSS project called <a href="https://github.com/CarterCommunity/Carter">Carter</a> which sits on top of ASP.NET Core and is IMO much nicer to use than MVC but still gives you everything you&rsquo;d want in a web framework.  I got thinking and wondered  if I could take Elton&rsquo;s app and convert it to work with Carter&hellip;..well of course I could, rename some Controllers here and there, remove dependencies and voila <a href="https://github.com/jchannon/widgetario/tree/opentracing/src">here you go</a>!</p>
+<p>By the time I had it all working I had discovered that the code used <a href="https://opentracing.io/">OpenTracing</a> and a <a href="https://github.com/opentracing-contrib/csharp-netcore">.NET OSS library</a> from <a href="https://twitter.com/cwe1ss">Christian Weiss</a> that used and enhanced tracing data from various components in .NET.  Essentially the concept of tracing data was being worked on by two groups, OpenTracing and OpenCensus.  These two groups merged to create OpenTracing and become part of a wider group CNCF(Cloud Native Computing Foundation). Microsoft was already invested in OpenCensus and obviously has now moved its efforts into OpenTelemetry. To read more about the merger take a visit <a href="https://cloudblogs.microsoft.com/opensource/2019/05/23/announcing-opentelemetry-cncf-merged-opencensus-opentracing/">here</a>.</p>
+<p>Luckily moving the apps to use OpenTelemetry wasn&rsquo;t too much work and the output is very similar to the efforts Christian had put into his library. The new codebase can be found on my main branch in the <a href="https://github.com/jchannon/widgetario">repo</a>.</p>
+<p>What the apps consist of is a web app which is the entry point that lists products and their stock quantities.  When making a request to the root of the web app it subsequently calls a products API and then for each product it makes a call to get the stock.  From the screenshot above you can see we have 3 products as there are 3 requests to the stock api.</p>
+<p>If we look a bit further we can see that OpenTelemetry allows us to see HTTP requests going out of our app and into our other API to get the data:</p>
+<p><img src="/images/blogpostimages/inandout.png" alt="hhtp in and out"></p>
+<p>One is the client making the request and the other is the server responding with a 200 response.</p>
+<p>If you look at the main screenshot we can delve a bit deeper as there is something marked as DemoData.  This is the name of our database.  If we click this we can get an overview of the SQL statement and how long it took to return data:</p>
+<p><img src="/images/blogpostimages/sql.png" alt="sql"></p>
+<p>Now at this point I hope you&rsquo;re suitably impressed but I can hear you asking what&rsquo;s the effort to get all this information? Am I going to have litter my codebase with lots of objects tracking IO calls? Well let&rsquo;s take a look at the HTTP server implementations of getting the products:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">this</span>.Get(<span style="color:#e6db74">&#34;/products&#34;</span>, <span style="color:#66d9ef">async</span> (req, res) =&gt;
+{
+    <span style="color:#66d9ef">var</span> products = <span style="color:#66d9ef">await</span> productsRepository.GetProducts();
+    <span style="color:#66d9ef">await</span> res.AsJson(products);
+});
+</code></pre></div><p>So it accepts the request, invokes the product repository to get the data writes this to the HTTP response. Hmm, no tracing code. Ok it must all be wrapped in the SQL logic:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IEnumerable&lt;Product&gt;&gt; GetProducts()
+{
+    <span style="color:#66d9ef">using</span> var connection = <span style="color:#66d9ef">new</span> SqlConnection(<span style="color:#66d9ef">this</span>.connectionString);
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> connection.QueryAsync&lt;Product&gt;(<span style="color:#e6db74">&#34;select * from products&#34;</span>);
+}
+</code></pre></div><p>Nope no tracing there either!</p>
+<p>So the tracing code is done at Startup and that&rsquo;s it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+{
+    services.AddCarter();
+
+    services.AddTransient&lt;ProductsRepository&gt;();
+
+    <span style="color:#66d9ef">if</span> (Configuration.GetValue&lt;<span style="color:#66d9ef">bool</span>&gt;(<span style="color:#e6db74">&#34;Tracing:Enabled&#34;</span>))
+    {
+        services.AddOpenTelemetryTracing(builder =&gt;
+            builder
+            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(<span style="color:#e6db74">&#34;Widgetario.ProductApi&#34;</span>))
+            .AddAspNetCoreInstrumentation()
+            .AddSqlClientInstrumentation(sqloptions =&gt; { sqloptions.SetTextCommandContent = <span style="color:#66d9ef">true</span>; })
+            .AddJaegerExporter());
+    }
+}
+</code></pre></div><p>When a request is made into our products API and it hits the database the .NET underlying types emit tracing data that can be exported to a number of different tools. This can be AWS, GCP, Azure, Prometheus, Akka, Elasticsearch, DataDog, GraphQL, gRPC and pretty much anything else you can think of. To note, OpenTelemetry is not a .NET thing, it is a cross platform, cross language standard for tracing data in applications and services.</p>
+<p>If you&rsquo;re still not convinced there isn&rsquo;t more to this lets take a look at the web app in our solution Startup code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+{
+    services.AddCarter();
+    services.AddScoped&lt;ProductService&gt;();
+    services.AddScoped&lt;StockService&gt;();
+
+    <span style="color:#66d9ef">if</span> (Configuration.GetValue&lt;<span style="color:#66d9ef">bool</span>&gt;(<span style="color:#e6db74">&#34;Tracing:Enabled&#34;</span>))
+    {
+        services.AddOpenTelemetryTracing(builder =&gt;
+            builder
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(<span style="color:#e6db74">&#34;Widgetario.Web&#34;</span>))
+                .AddSource(<span style="color:#e6db74">&#34;api-load-source&#34;</span>)
+                .AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation()
+                .AddJaegerExporter());
+    }
+}
+</code></pre></div><p>The only thing different here is that we have a line to add HTTP instrumentation rather than SQL instrumentation.  You may notice we have a line about adding a source.  This is purely if you want to write extra data or enrich the info you see in the Jaeger UI.  If you look back to the main screenshot you&rsquo;ll see some annotations called api-load and stock-api-load which gives me a bit more of a clue to where this code is executed in my app. This does add a bit more code to your app but it&rsquo;s purely optional:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">this</span>.Get(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#66d9ef">async</span> (req, res) =&gt;
+{
+    <span style="color:#66d9ef">var</span> stopwatch = Stopwatch.StartNew();
+    logger.LogDebug(<span style="color:#e6db74">&#34;Loading products &amp; stock&#34;</span>);
+    <span style="color:#66d9ef">var</span> model = <span style="color:#66d9ef">new</span> ProductViewModel();
+
+    <span style="color:#66d9ef">using</span> (ActivitySource.StartActivity(<span style="color:#e6db74">&#34;api-load&#34;</span>))
+    {
+        <span style="color:#66d9ef">using</span> (ActivitySource.StartActivity(<span style="color:#e6db74">&#34;product-api-load&#34;</span>))
+        {
+            model.Products = <span style="color:#66d9ef">await</span> productsService.GetProducts();
+        }
+
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> product <span style="color:#66d9ef">in</span> model.Products)
+        {
+            <span style="color:#66d9ef">using</span> (ActivitySource.StartActivity(<span style="color:#e6db74">&#34;stock-api-load&#34;</span>))
+            {
+                <span style="color:#66d9ef">var</span> productStock = <span style="color:#66d9ef">await</span> stockService.GetStock(product.Id);
+                product.Stock = productStock.Stock;
+            }
+        }
+    }
+
+    logger.LogDebug(<span style="color:#e6db74">&#34;Products &amp; stock load took: {@Time}ms&#34;</span>, stopwatch.Elapsed.TotalMilliseconds);
+
+    <span style="color:#66d9ef">await</span> res.AsJson(model);
+});
+</code></pre></div><p>We use a static object called ActivitySource created earlier in the class like so: <code>private static readonly ActivitySource ActivitySource = new ActivitySource(&quot;api-load-source&quot;);</code> and each time we want to add some data to our HTTP calls we call <code>StartActivity</code> with a name of out choosing and it then appears in our Jaeger UI.</p>
+<p>One thing to note is that the <code>ILogger</code> data does not appear in our OpenTelemetry data.  They consider this a <a href="https://github.com/open-telemetry/opentelemetry-dotnet/issues/767">separate thing</a> altogether from tracing as well as metrics, all three are very different.  That said I did mention it in the OpenTelemetry <a href="">gitter room</a> and they have raised a Github issue to implement support for this so maybe in time you&rsquo;ll be able to see your logs and your telemetry data side by side. Interestingly this was a feature in Christian&rsquo;s OSS library that used OpenTracing before I moved to OpenTelemetry.</p>
+<p>Anyway I hope this has been an interesting introduction into OpenTelemetry and shown you how we can simplify and expose tracing data within .NET so we can keep an eye on the performance of the IO in our apps!</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

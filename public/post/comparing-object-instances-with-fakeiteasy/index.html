@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Comparing object instances with FakeItEasy &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Wed, Sep 11, 2013</span>
+                                
+                                <h1>Comparing object instances with FakeItEasy</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>I had the task of writing a new application recently and of course I chose <a href="http://nancyfx.org">Nancy</a>.  One of the many great reasons is the testing capabilites it offers (For more on that see <a href="http://www.marcusoft.net/2013/01/NancyTesting1.html">this</a> great series of articles).</p>
+<p>The basics of a test with Nancy looks like this:</p>
+<pre><code>[Fact]
+public void Should_return_status_ok_when_route_exists()
+{
+    // Given
+    var bootstrapper = new DefaultNancyBootstrapper();
+    var browser = new Browser(bootstrapper);
+     
+    // When
+    var result = browser.Get(&quot;/&quot;, with =&gt; {
+        with.HttpRequest();
+    });
+        
+    // Then
+    Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+}
+</code></pre>
+<p>You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the <code>ConfigurableBootstrapper</code>.</p>
+<p>In my scenario I was testing that when a route got called something on an interface was called with an instance of an object.</p>
+<p>I had the object available in the test, I passed it to my fake interface and asserted that the call happened.</p>
+<p>Here&rsquo;s an example of what the route and test might look like:</p>
+<pre><code>public class ApiModule : NancyModule
+{
+    public ApiModule(IScheduleRepository scheduleRepository)
+        : base(&quot;/api/schedules&quot;)
+    {
+        Post[&quot;/&quot;] = parameters =&gt;
+        {
+            var result = this.BindAndValidate&lt;Schedule&gt;();
+           
+            if (!ModelValidationResult.IsValid)
+            {
+                return HttpStatusCode.UnprocessableEntity;
+            }
+
+            var conflict = scheduleRepository.CheckForConflict(result);
+
+            return HttpStatusCode.Created;
+        };
+    }
+}
+
+[Fact]
+public void Creating_Schedule_Entry_Should_Check_For_Conflicts()
+{
+    //Given
+    var fakeScheduleRepository = A.Fake&lt;IScheduleRepository&gt;();
+    var model = GetModel();
+
+    var browser = new Browser(GetBootstrapper(scheduleRepository:fakeScheduleRepository));
+
+    //When
+    var result = browser.Post(&quot;/api/schedules&quot;, with =&gt;
+    {
+        with.HttpRequest();
+        with.JsonBody(model);
+    });
+
+    //Then
+    A.CallTo(() =&gt; fakeScheduleRepository.CheckForConflict(model)).MustHaveHappened();
+}
+</code></pre>
+<p>The test is using <a href="http://xunit.codeplex.com/">xUnit</a> and <a href="https://github.com/FakeItEasy/FakeItEasy">FakeItEasy</a> for creating fakes/mocks or whatever you choose to call them and the test will pass if the call to <code>fakeScheduleRepository.CheckForConflict</code> was called with the model object.</p>
+<h2 id="the-test-fails">The test fails!</h2>
+<p>The reason for the test failing is because&hellip;? That&rsquo;s right, the object that is passed into the call on IScheduleRepository in the route is different to the one in the test.</p>
+<p>We could override Equals on our model object but that&rsquo;s not a great approach, we could hope that if we create an <code>IEqualityComparer&lt;Schedule&gt;</code> we could pass that in somewhere but from what I&rsquo;ve seen that&rsquo;s not possible so how do we get our test to pass?</p>
+<p>FakeItEasy has a nice fluent API that allows you to do the following:</p>
+<pre><code>[Fact]
+public void Creating_Schedule_Entry_Should_Check_For_Conflicts()
+{
+    //Given
+    var fakeScheduleRepository = A.Fake&lt;IScheduleRepository&gt;();
+    var model = GetModel();
+
+    var browser = new Browser(GetBootstrapper(scheduleRepository:fakeScheduleRepository));
+
+    //When
+    var result = browser.Post(&quot;/api/schedules&quot;, with =&gt;
+    {
+        with.HttpRequest();
+        with.JsonBody(model);
+    });
+
+    //Then
+    A.CallTo(() =&gt; fakeScheduleRepository.CheckForConflict(A&lt;Schedule&gt;.That.Matches(x =&gt; BodyModel(x)))).MustHaveHappened();
+}
+
+private bool BodyModel(CreateKeywordSchedule match)
+{
+    return match.DateFrom == new DateTime(2013, 01, 01, 12, 00, 00) &amp;&amp;
+           match.DateTo == new DateTime(2013, 01, 02, 12, 00, 00);
+}
+</code></pre>
+<p>Spot the difference? So instead of passing our original model object in we told FakeItEasy to expect a type of Schedule that matches an an object that is of type Schedule.  We wrote a <code>Func&lt;Schedule,bool&gt;</code> to determine what a match is when comparing objects.</p>
+<p>So when the test runs and <code>fakeScheduleRepository.CheckForConflict(model)</code> is executed FakeItEasy will assert that the argument passed into <code>fakeScheduleRepository.CheckForConflict()</code> matches the property values we decided to match on in our BodyModel method.</p>
+<p>This way if the model we send into the route has the property values that match those we have defined in BodyModel we can pass our test.</p>
+<p>Its a much neater way without having to write <code>IEqualityComparer</code> or anything over the top and hope you found this useful.</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

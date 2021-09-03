@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Running Gulp in Visual &amp; Xamarin Studio &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Mon, Nov 24, 2014</span>
+                                
+                                <h1>Running Gulp in Visual &amp; Xamarin Studio</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>I was going to write a long post explaining about all the pain I went through to get this working but then realised you probably don&rsquo;t really care and you just want the code!</p>
+<p><img src="https://i.imgur.com/iYjnPK0.png" alt="Show the code"></p>
+<p>Where I work we are moving to a Linux stack with .Net using Nancy &amp; Postgres on the backend.  At the moment we have developers working in Windows and others on OSX using Visual Studio and Xamarin Studio respectively.  At the moment when we want to run the whole app, we build our project, drop to the command line and run gulp for the frontend stuff.  In Visual Studio we already have a post build event to copy the static assets to the bin directory (we have a self host and a IIS host) but in Xamarin Studio we don&rsquo;t so if that bin directory gets nuked we have to copy assets across VMs and its one big PITA.</p>
+<p>So here&rsquo;s the code:</p>
+<pre><code>&lt;PostBuildEvent Condition=&quot; '$(OS)' != 'Windows_NT' AND $(ConfigurationName) == Debug&quot;&gt;  
+
+    export PATH=$PATH:/usr/local/bin
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    gulp --minify false --bincopy true --copyto &quot;../MyApp.Hosting.Self/bin/debug/static/&quot;
+&lt;/PostBuildEvent&gt;
+&lt;PostBuildEvent Condition=&quot; '$(OS)' != 'Windows_NT' AND $(ConfigurationName) == Release&quot;&gt;  
+
+    export PATH=$PATH:/usr/local/bin
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    gulp --minify true --bincopy true --copyto &quot;../MyApp.Hosting.Self/bin/debug/static/&quot;
+&lt;/PostBuildEvent&gt;
+&lt;PostBuildEvent Condition=&quot; '$(OS)' == 'Windows_NT'  &quot;&gt;  
+  if $(ConfigurationName) == Debug  (
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    gulp --minify false --bincopy true --copyto &quot;../MyApp.Hosting.Self/bin/debug/static/&quot;
+  ) else (
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    npm install -verbose
+
+    cd $(ProjectDir)..\MyApp.Clients.AngularJS\
+
+    gulp --minify true --bincopy true --copyto &quot;../MyApp.Hosting.Self/bin/debug/static/&quot;
+  )
+
+&lt;/PostBuildEvent&gt;
+</code></pre>
+<h2 id="idiosyncrasies">Idiosyncrasies</h2>
+<p>So you can probably see some weird things going on there so I&rsquo;ll explain:</p>
+<h3 id="separate-build-events-for-non-windows">Separate Build Events for Non-Windows</h3>
+<p>I have a separate post build event for debug and release for non windows builds, I like that, seems correct to keep them separate. However, for Windows builds I have an <code>if</code> statement.  I did get separate build events firing but then when it hit the <code>npm install</code> line it just wouldn&rsquo;t work for some reason.</p>
+<h3 id="export-path-for-non-windows">Export PATH for Non-Windows</h3>
+<p>I spent a long time trying to get gulp running on OSX. I tried it via executable shell scripts and in a post build event but it just wouldn&rsquo;t work but yet in the terminal all was fine.  I&rsquo;m not sure if <code>xbuild</code> gets executed as a different user or with limited privielges but I was stumped until <a href="http://twitter.com/yantrio">@yantrio</a> pointed me in the direction of exporting the <code>PATH</code>.  As <code>Gulp</code> sits in <code>/usr/local/bin</code> I had to expose it to the post build event</p>
+<h3 id="changing-directory">Changing directory</h3>
+<p>In the post build events I change directory to the folder where the gulp file is located.  I did play quickly on doing it without changing directory but there were some disadvantages so I just went with this approach.  On Windows you&rsquo;ll see that I change directory after each command is executed.  For some reason when executed on Windows when the commands are run the current working directory is changed so you have to change it back to folder where you want to run gulp from.  On OSX &amp; Linux you can set it once and all is fine.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>So there you have it.  You&rsquo;re asking why not use the <a href="https://visualstudiogallery.msdn.microsoft.com/8e1b4368-4afb-467a-bc13-9650572db708">Visual Studio 2013</a> extension that enables running gulp from VS?  That would only work for those developers using Visual Studio and we have developers using Xamarin Studio so we wanted an across the board solution for all developers.  I know VS 2015 will have Gulp runners baked into it but I&rsquo;m not sure of Xamarin Studio plans.  If you use this and get it working without a <code>if</code> statement for Windows let me know.</p>
+<p>Also check out <a href="http://omnisharp.net">OmniSharp</a> a little project I&rsquo;ve been working on!</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

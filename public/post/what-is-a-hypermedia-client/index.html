@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>What is a Hypermedia client? &middot; Jonathan Channon Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">Blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>Blog</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/jchannon" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://github.com/jchannon" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        
+        
+        <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">Thu, Apr 28, 2016</span>
+                                
+                                <h1>What is a Hypermedia client?</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>I&rsquo;ve been interested in Hypermedia for quite a while.  I bugged <a href="http://twitter.com/darrelmiller">Darrel Miller</a> and <a href="http://twitter.com/gblock">Glenn Block</a> (Glenn Miller) so much so they created a <a href="https://www.youtube.com/playlist?list=PLbc9sDUxHqX60XJaTnNnKvI2mRighInDW">YouTube show</a> called &ldquo;In The Mood for HTTP&rdquo;.  I bought their book <a href="http://webapibook.net/">&ldquo;Designing Evolvable Web APIs with ASP.NET&rdquo;</a>, I am waiting for <a href="http://shop.oreilly.com/product/0636920037958.do">&ldquo;RESTful Web Clients Enabling Reuse Through Hypermedia&rdquo;</a> by <a href="http://twitter.com/mamund">Mike Amundsen</a>, I have <a href="http://blog.jonathanchannon.com/2015/08/07/hypermedia-and-nancyfx/index.html">written</a> about how to return different media types with NancyFX and I am looking at going to <a href="http://2016.uk.restfest.org/">restfest.org</a> in Edinburgh this year, a REST conference.</p>
+<p>The one thing that I have always discussed with Glenn Miller is that there seems, or from my perception, that there is a lot of emphasis on the server returning media types(HAL,Siren,JSON-LD, Collection+Json) and very little information about hypermedia clients.  The information that I have come across which is very little, again coulkd be due to my lack of Google-fu, seems to generate a mis-conception.  The mis-conception I have come across is that if you have an API that returns hypermedia then your client should be able to magically work with it.  It should know everything that is required to browse the API and discover its way around.  I never quite grasped how that was supposed to happen and was serioulsy confused.  I had seen a video that showed when the server returned its responses, using Javascript it would loop over all the properties in the payload and then display them in a HTML page.  The emphasis was that if new bits of data were added then they would appear magically in the UI.  That seemed like a nice feature but I still didn&rsquo;t quite get how it went from hitting the root of the API to finding its way into the guts of it.  The server would return links in the payload with &ldquo;rels&rdquo; and I was baffled how this magic client knew what to do with a rel or even how it knew what rels it would return.</p>
+<p>After speaking to Darrel he told me that&rsquo;s the one thing clients do know ie/ what rels an API should return. See <a href="https://twitter.com/jchannon/status/719486875484991488">here</a>. I was still confused at this, I assumed that the client would have an in memory set of rels that it knew about and therefore understood them but then I was confused what would happen if a new rel was introduced by the API, how would the client know what to do?</p>
+<p>I had it in my head and maybe from some of the hypermedia client articles and videos that I&rsquo;d read/seen that a hypermedia client was some kind of magic client that just knew how to navigate an API.  I then came across <a href="https://jeffknupp.com/blog/2014/06/03/why-i-hate-hateoas/">this</a> article written by someone who also had the notion that a client is some magical thing and he states : <code>a single client that could make use of *every single (properly built) REST API in existence* without requiring documentation</code> At this point I kind of agreed with him, where are the magical clients and libraries that I can just plug into my API?  They must exist as people keep going on about how if you have a client it should know how to work with your API.  I then came across <a href="https://signalvnoise.com/posts/3373-getting-hyper-about-hypermedia-apis#comments">this</a> article, it also poo-poos the idea of hypermedia and magic clients but then I started to read the comments and saw comments from <a href="http://twitter.com/gblock">Glenn Block</a>,  <a href="http://twitter.com/mamund">Mike Amundsen</a> and <a href="https://twitter.com/mikekelly85">Mike Kelly</a>, the heavy hitters of the API world and it clicked from one of Glenn&rsquo;s replies.</p>
+<p>There is no magic client. Its that simple.  Yes they could potentially loop over a resource in a response and display data that could in time be added to by the server but the way it navigates the API by pre-defined rels is because the developer who is using the client has documentation about the rels and the payload. Glenn&rsquo;s comment <code>&quot;Hypermedia api’s don’t prevent documentation, that is a central part. The documentation centers around the link rels and payload, not the uri structure.&quot;</code>  This also confirms what Darrel said, I just didn&rsquo;t get it at the time.</p>
+<p>Clients know about rels, or to be more precise, the developer writing the program that uses a client library to navigate an API has documentation about the rels the API uses and the payloads it returns.  So you explicitly put in your code &ldquo;execute a request to the URL returned in the link that has the rel X&rdquo;, there is no discovery in that sense, it doesn&rsquo;t magically find its way around as such.  It doesn&rsquo;t hardcode URLs which is one thing where hypermedia clients aim to succeed ie/no hard coding of URLs to follow and new features and/or rels will need developer interaction to change how their client uses these new features.  Glenn sums it up quite well in his quote (I tried to link to the comment but that&rsquo;s not available):</p>
+<blockquote>
+<p>Clients have knowledge of what to expect. In the real world the average hypermedia client knows about certain types of links that may come back. That is all the rel is, and identifier that the client can use to match up against links it cares about. If new links come back that it doesn’t know about, well it will ignore those links. Although the client knows about a set of rels, it does not know if they will or will not be present. The advantage is that logic sits with the server where it can, and often does at some point change. The change might be due to several reasons, including scale as the server can tell the client go get that resource over here rather than where you got it last time. The client also doesn’t know or care about the URL, all it knows is if the rel is this, and that is a resource I want to access, follow that URL.</p>
+</blockquote>
+<blockquote>
+<p>As to the new links that were returned which that client ignored, newer clients can come along and they are coded to understand those rels. They know what to do with it so they follow it.</p>
+</blockquote>
+<blockquote>
+<p>In both cases I mentioned there’s no magic and there’s still hard coding of some logic. It’s just the type of logic is different than it is today. Instead of hardcoding uris, and logic of whether or not those resources can be called, the logic is looking for the presence of rels, and decided which one to access. And often the decision of what to do is still decided by a human being, or it maybe be a combination where the machine first looks at the available set and if it’s logic allows it to proceed it does, otherwise it gets interaction from a human.</p>
+</blockquote>
+<p>So there it is, hypermedia clients are not some magic tool/library that can see your API and go &ldquo;I got this&rdquo;, the developer has to deal with new features however, the key is that if the server modifies existing urls in a rel the client will not have to change because it hasn&rsquo;t hardcoded anything inside it to go to a certain URL.  New features in an API should in theory not break existing clients.</p>
+<p>Bringing this back to all the different media types that the server can return and all the discussion I see around them.  In simple terms the client will always look for a rel, that is common across all media types.  The difference comes where the client looks for them in the response payload.  Each media type has its own format and therefore where the rels exist.  One thing to clarify, the different media types all contain rels for link objects but media types like Siren and Collection+Json have objects in the payload that describe how to add/modify data that may not have a rel but will have a href to show where to send the request to add/modify data.</p>
+<p>My next plan is to write a simple API and a simple client using libraries that know how to deal with the media type I use and to navigate it to see how I get on.  I&rsquo;ve already been told that dynamic languages are more suited to clients than statically typed languages due to static languages requiring a binding of a payload to a resource/model class.  With dynamic languages you dont need to map a payload to a class, you can just use a property from the payload directly without the need to bind to a class of 10 properties and then only use 2 (although in theory you wouldn&rsquo;t need to create the 8 properties if you weren&rsquo;t going to use them).</p>
+<p>Anyway I hope that has highlighted and answered anyone&rsquo;s question of what a hypermedia client is.  If you read this and thought &ldquo;jeez you&rsquo;re a dumbass, you still don&rsquo;t get it&rdquo; feel free to let me know in the comments although if I still haven&rsquo;t grasped it by this point, I might cry a little inside. Thanks for reading.</p>
+
+                            
+                            
+                            
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jonathanchannonblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section class="split contact">
+        
+        
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/jchannon" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://github.com/jchannon" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                
+                
+                <li><a href="https://www.linkedin.com/in/jonathanchannon/" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                
+                
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; Blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7138405-4', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>
