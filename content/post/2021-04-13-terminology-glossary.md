@@ -23,4 +23,4 @@ DeReferencing -
 Mailbox Processor -  
 ETL -  
 HMAC -  
-
+Outbox Pattern - 
