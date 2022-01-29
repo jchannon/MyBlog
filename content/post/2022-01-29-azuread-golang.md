@@ -5,7 +5,7 @@ tags = ["golang","authentication","auth","golang"]
 +++
 So after a long time I thought I'd take another look at Go and whilst struggling to think what little app should I write to get back in the saddle with, the legend that is [Christos Matskas](https://twitter.com/christosmatskas) mentioned he wanted to try using a Go api against Azure AD for authentication. So I fired up [GoLand](https://www.jetbrains.com/go/) and got to work writing an API.
 
-## Setting up AzureAD
+## Setting up Azure AD
 
 1. You will need to create an Azure Directory in your account which is pretty straightforward. The only user in the directory will be you. 
 2. Inside the directory you will then need to register an application, again pretty straightforward. 
