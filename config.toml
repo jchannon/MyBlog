@@ -3,8 +3,8 @@ title = "Blog"
 theme = "hugo-theme-massively"
 googleAnalytics = "UA-7138405-4"
 disqusShortname = "jonathanchannonblog"
-disableKinds = ["taxonomy", "taxonomyTerm", "section"]
-paginate = 6
+disableKinds = ["taxonomy", "section"]
+pagination.pageSize = 6
 
 [Params]
     dateFormat = "Mon, Jan 2, 2006"
