@@ -42,7 +42,7 @@ Let's assume you already have a solution.
 `Enter the location to the *.sln file like below`
 
 Your `.sublime.project` file should look like this
-
+```json
     {
         "folders":
         [
@@ -53,7 +53,7 @@ Your `.sublime.project` file should look like this
         ],
         "solution_file": "./testconsoleprj.sln"
     }
-    
+```    
 Once the `YOURPROJECT.sublime-project` is set up and saved follow the below:
 
 `Close Sublime (YMMV but this seems to be the best way to open the YOURPROJECTNAME.sublime-project)`
@@ -69,13 +69,13 @@ There is one last "nice touch" to add to Sublime before you edit your files.  Su
 `Click "Sublime Text -> Preferences -> Settings - More -> Syntax Specific - User"`
     
 Paste in the below code and save
-
+```json
     {
         "auto_complete": true,
         "auto_complete_selector": "source - comment",
         "auto_complete_triggers": [ {"selector": "source.cs", "characters": ".<"} ],
     }
-
+```
 Now you're ready to rock!
 
 ## Features

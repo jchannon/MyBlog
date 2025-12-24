@@ -36,7 +36,7 @@ Lets open it up and see what it says!
 I’ve tested this with a C# application and a Node.js application. If you don’t believe me, here’s the code:
 
 **C#**
-
+```csharp
 	static void Main(string[] args)
 	{
 		MailMessage message = new MailMessage("Jonathan Channon ", "tim.cook@apple.com")
@@ -61,9 +61,9 @@ I’ve tested this with a C# application and a Node.js application. If you don�
 		    Console.WriteLine(ex.Message);
 		}
 	}
-
+```
 **Node.js**
-
+```javascript
 	var nodemailer = require("nodemailer");
 	
 	var smtpTransport = nodemailer.createTransport("SMTP");
@@ -88,7 +88,7 @@ I’ve tested this with a C# application and a Node.js application. If you don�
 	
 	    smtpTransport.close();
 	});
-
+```
 I think this is a great little app and a real time saver. I highly recommend that you check it out!
 
 They also offer a web based version called [DummySMTP][8] which allows you to test an almost live copy of your application but DummySMTP captures the emails sent out to customers, for example.

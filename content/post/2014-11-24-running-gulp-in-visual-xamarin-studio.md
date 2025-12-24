@@ -13,7 +13,7 @@ I was going to write a long post explaining about all the pain I went through to
 Where I work we are moving to a Linux stack with .Net using Nancy & Postgres on the backend.  At the moment we have developers working in Windows and others on OSX using Visual Studio and Xamarin Studio respectively.  At the moment when we want to run the whole app, we build our project, drop to the command line and run gulp for the frontend stuff.  In Visual Studio we already have a post build event to copy the static assets to the bin directory (we have a self host and a IIS host) but in Xamarin Studio we don't so if that bin directory gets nuked we have to copy assets across VMs and its one big PITA.
 
 So here's the code:
-
+```xml
     <PostBuildEvent Condition=" '$(OS)' != 'Windows_NT' AND $(ConfigurationName) == Debug">  
 
         export PATH=$PATH:/usr/local/bin
@@ -54,7 +54,7 @@ So here's the code:
       )
 
     </PostBuildEvent>
-
+```
 ## Idiosyncrasies
 
 So you can probably see some weird things going on there so I'll explain:

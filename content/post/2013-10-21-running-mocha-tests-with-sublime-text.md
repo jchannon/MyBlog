@@ -18,7 +18,7 @@ Sublime allows you to have build systems a bit like an IDE so you can tell it wh
 To get Mocha to run we need to create a new build system. To do this click Tools - Build System - New Build System and paste in the below:
 
 <!--more-->
-
+```json
     {
         "cmd": ["make"],
         "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
@@ -30,7 +30,7 @@ To get Mocha to run we need to create a new build system. To do this click Tools
             "cmd": ["make", "clean"]
         }]
     }
-    
+```
 Click Save and call it Mocha
 
 Now when you have a project go to Tools - Build System and select Mocha
@@ -40,11 +40,11 @@ Now when you have a project go to Tools - Build System and select Mocha
 A Make file is a script that allows you to execute various commands and its what our build system looks for when we tell Sublime to build our project. We need a file called `makefile` in the root of our project.  Inside that `makefile` we can invoke Mocha to run our tests.
 
 Place this in your `makefile`:
-
+```make
     test:
         mocha --recursive --reporter spec moviebucketlist.tests/*.js
     .PHONY: test
-    
+```
 Now when you invoke the build system via <kbd>cmd</kbd>+<kbd>B</kbd> in Sublime it will execute Mocha and give you the results in the console of Sublime.  Mocha by default will look for a folder called `test` and execute the tests inside it. If you have a different folder name you can append the folder name and wildcard to js files like I have done above.
 
 Happy Coding!

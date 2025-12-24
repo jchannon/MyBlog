@@ -6,7 +6,7 @@ tags = ["csharp","unit testing",".net"]
 +++
 
 So after a nice Christmas break I get to some code that needs some unit testing around a try/catch. Something similar to this:
-
+```csharp
     try
     {
         myService.DoSomethingThatMightTakeALongTime();
@@ -22,19 +22,20 @@ So after a nice Christmas break I get to some code that needs some unit testing 
             }
         }
     }
+```
 <!--more-->
 
 Obviously `myService` has a interface that can be mocked and I can tell it to throw a `EntityCommandExecutionException` when `DoSomethingThatMightTakeALongTime` is called and the constructor for that takes a string and an Exception as an inner exception.  However, you can't create a new instance of SqlException because its a sealed class therefore doing the below is impossible:
-
+```csharp
     var fakeService = A.Fake<IMyService>();
     A.CallTo(() => fakeService.DoSomethingThatMightTakeALongTime()).Throws(new EntityCommandExecutionException("What a mistaka da maka", new SqlException());
-    
+```
 You can't create your own exception class and inherit off SqlException to get around it that way either.  You could use `System.Runtime.Serialization.FormatterServices.GetUninitializedObject` to give you a `SqlException` but that won't have the `Number` property assigned to -2.  You could also setup a method in your test class that tries to connect to a non existant db that times out after 1 second but again that won't give you the Number property you may want plus its a lot of ugly and unnecessary code in a unit test project.  
 
 ## How did you do it?
 
 So after browsing all the stackoverflow answers and comments I came up with a solution that worked which I thought I'd share so here it is:
-
+```csharp
     private SqlException GetSqlException()
     {
         SqlErrorCollection collection = Construct<SqlErrorCollection>();
@@ -55,12 +56,12 @@ So after browsing all the stackoverflow answers and comments I came up with a so
     {
         return (T)typeof(T).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)[0].Invoke(p);
     }
-    
+ ```   
 You can then amend the previous mocking code to look like this:
-
+```csharp
     var fakeService = A.Fake<IMyService>();
     A.CallTo(() => fakeService.DoSomethingThatMightTakeALongTime()).Throws(new EntityCommandExecutionException("What a mistaka da maka", GetSqlException());
-
+```
 As you can see it uses reflection to create instances of all the sealed classes required and it also calls sealed methods to assign properties ie/adding the error instance to the collection instance.  You'll see that the -2 value is the first argument in the parameters used to construct the SqlError object so if you're interested in using the Number property on the exception thats where to change it.
 
 ## Conclusion

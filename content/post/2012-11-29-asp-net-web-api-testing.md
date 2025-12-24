@@ -14,7 +14,7 @@ When it came to testing ASP.NET Web API I found it to be wanting slightly in com
 <!--more-->
 
 I found that you could configure a lot of stuff to get a HttpResponseMessage back as shown below however in my opinion it wasn’t particularly easy on the eye and seemed a bit over the top just to get a response back.
-
+```csharp
 	//Arrange
 	var config = new HttpConfiguration();
 	var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/products");
@@ -24,15 +24,15 @@ I found that you could configure a lot of stuff to get a HttpResponseMessage bac
 	controller.ControllerContext = new HttpControllerContext(config, routeData, request);
 	controller.Request = request;
 	controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
-
+```
 Then you can call your controller method and assert against it.
-
+```csharp
 	// Act
 	var result = controller.PostProduct(new Product { Id = 1 });
 	
 	// Assert
 	Assert.Equal(HttpStatusCode.Created, result.StatusCode);
-
+```
 I can’t take credit for finding this out though. I found it on [Peter Provost][6] blog post where he says [Brad Wilson][7] helped him construct the code.
 
 I wasn’t positive whether the HTTP response returned was as pure as if the request was actually made to a server. By understanding the [Nancy.Testing][8] library I knew that the response given there was an exact copy of what would be given if hitting a server.
@@ -42,7 +42,7 @@ I then investigated a bit more and found a great blog post by [Filip W][9] about
 Knowing what I knew from Nancy I thought I could apply it to Web API. What this meant was you could submit requests and test against the response. I’m not sure how you would classify it in terms of unit testing or integration testing because the tests run very quickly but I suppose you are hitting an actual server albeit in memory.
 
 Here’s what a simple test looks like:
-
+```csharp
 	public class GetDataTests
 	{
 	    [Fact]
@@ -72,11 +72,11 @@ Here’s what a simple test looks like:
 	        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
 	    }
 	}
-
+```
 You define your test, in this case [xUnit][10]. You create an instance of the Browser class. This is just a class name there is no browser, it doesn’t fire up IE or anything like that. You then call a method named after a HTTP verb with a path specified. You also have the ability to specify items within the request such as headers, form values and cookies using a delegate. The methods in the Browser class will return a HttpResponseMessage which is what Web API server returns and you can then assert against the response.
 
 Delving a little deeper into the code, the Browser class takes an optional HttpConfiguration constructor argument or if one is not supplied it uses the below configuration. It then creates an instance of HttpServer and passes the configuration into it.
-
+```csharp
 	private readonly HttpServer _server;
 	
 	public Browser()
@@ -86,9 +86,9 @@ Delving a little deeper into the code, the Browser class takes an optional HttpC
 	    config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 	    _server = new HttpServer(config);
 	}
-
+```
 When a method is called it then builds up a HttpRequestMessage using the items defined in the delegate in the unit test and passes it to the server variable and the HttpResponseMessage is returned.
-
+```csharp
 	public HttpResponseMessage Get(string path, Action browserContext = null)
 	{
 	  return this.HandleRequest(HttpMethod.Get, path, browserContext);
@@ -112,7 +112,7 @@ When a method is called it then builds up a HttpRequestMessage using the items d
 	
 	    return response;
 	}
-
+```
 This gives you the ability to pretty much test the full pipeline of a request and response.
 
 The Github repository is located [here][11] and if you like what you see please take a closer look into [NancyFX][1].

@@ -8,7 +8,7 @@ I'm currently working on a project that has [Nancy][1] serving up an API.  For t
 
 
 In our Startup class I added the below
-
+```csharp
     app.UseCookieAuthentication(new CookieAuthenticationOptions
     {
         AuthenticationMode = AuthenticationMode.Active,
@@ -18,7 +18,7 @@ In our Startup class I added the below
         AuthenticationType = "MyCookie",
         CookieName = "MyCookie"
     });
-
+```
 
 Hopefully thats pretty self explanatory. So I fired up my application and BOOM!
 
@@ -31,14 +31,14 @@ Turns out the default security for cookie auth doesn't work on Mono. **Fix** : I
 
 Now we add this to be the bottom of our OWIN middleware:
 
-
+```csharp
     app.UseAesDataProtectorProvider();
-
+```
 
 Fire up our app and bingo!
 
 Now we need to handle logging in our user. As we are using OWIN we need to use Claims for our authenticated users. **Fix** Install [Nancy.MSOwinSecurity][3], this gives us Claims support inside Nancy (in v2 of Nancy the default authentication model will be using Claims, keep an eye out for release information). Below is our login code:
-
+```csharp
     public class HomeModule : NancyModule
     {
         public HomeModule()
@@ -59,7 +59,7 @@ Now we need to handle logging in our user. As we are using OWIN we need to use C
             };
         }
     }
-
+```
 
 What will happen here is as the request comes in it will fall through the cookie middleware, fall in to Nancy, we will login and as the request reverses back up the OWIN pipeline the cookie middleware will see there is someone logged in and return a cookie in the response.
 
@@ -67,14 +67,14 @@ Super duper!
 
 One thing that authentication middleware tends to do however, is still allows requests through the pipeline even if there isn't a authenticated user. The reason being there may be other middleware that may be responsible for authenticating users in another manner.  We plan to add JWT back into our API so we would end up with:
 
-
+```csharp
     app.UseJwtBearerAuthentication(); 
     app.UseCookieAuthentication();
-
+```
 
 Our previous use of [JWT][4] would return a 401 before it dropped through to the next middleware so we needed to swap out Owin.StatelessAuth to the MS middleware above.  The problem now is we need some more middleware to protect our API after the request has dropped through the JWT and cookie middleware:
 
-
+```csharp
     public Task Invoke(IDictionary<string, object> environment)
     {
         if (!environment.ContainsKey("owin.RequestPath"))
@@ -110,14 +110,14 @@ Our previous use of [JWT][4] would return a 401 before it dropped through to the
 
         return Task.FromResult(0);
     }
-
+```
 
 Then we end up with:
-
+```csharp
     app.UseJwtBearerAuthentication(); 
     app.UseCookieAuthentication();
     app.CheckLoggedInUser();
-
+```
 So now we have it all working but what about [CRSF][5]?
 
 Luckily Angular has some built in mechanisms to cater for CSRF and in its documentation is this:
@@ -130,7 +130,7 @@ Luckily Angular has some built in mechanisms to cater for CSRF and in its docume
 
 
 So now we need some middleware to create this `XSRF-TOKEN` cookie:
-
+```csharp
     public class XSRFCookieMiddleware
     {
         private readonly Func<IDictionary<string, object>, Task> nextFunc;
@@ -172,11 +172,11 @@ So now we need some middleware to create this `XSRF-TOKEN` cookie:
         }
 
     }
-
+```
 
 Note the usage of `OnSendingHeaders`, this is required because when a response stream is first written to in an OWIN pipeline the headers are flushed and using this event from Microsoft they will be called when the response is returned.  I had previously written this middleware similar to the below beforehand but this approach could potentially have unwanted effects:
 
-
+```csharp
     public async Task Invoke(IDictionary<string, object> env)
     {
       await nextFunc(env);
@@ -185,13 +185,13 @@ Note the usage of `OnSendingHeaders`, this is required because when a response s
           //
       }
     }
-
+```
 
 One thing to note that cost me a few days is the ordering of these events.  Suffice to say there is no specification for this but HttpListener, Nowin & System.Web call these events via LIFO (Last In First Out) which means that our middleware needs to be above the `app.UseCookieAuthentication()` line so that our event gets called after the auth cookie has been set.
 
 So now we return the `XSRF-TOKEN` cookie on login Angular will now detect this and then send the `X-XSRF-TOKEN` header on every request. We now need some middleware to obviously validate this:
 
-
+```csharp
     public class XSRFMiddleware
     {
         private readonly Func<IDictionary<string, object>, Task> nextFunc;
@@ -251,20 +251,20 @@ So now we return the `XSRF-TOKEN` cookie on login Angular will now detect this a
             }
         }
     }
-
+```
 
 So now we have
-
+```csharp
     app.UseXSRFCookieMiddleware();  //Add XSRF-TOKEN cookie on login
     app.UseJwtBearerAuthentication(); 
     app.UseCookieAuthentication();
     app.UseXSRFMiddleware(); //Validate XSRF requests
     app.UseOwinUserVerifcation();  //Check server.User key is populated
     app.UseNancy();
-
+```
 
 One thing to note is the CsrfTokenHelper, below is the code:
-
+```csharp
     public class CsrfTokenHelper
     {
         const string ConstantSalt = "MYSALT";
@@ -339,7 +339,7 @@ One thing to note is the CsrfTokenHelper, below is the code:
             return new string(chars);
         }
     }
-
+```
 
 You'll notice I had to pinch `UrlTokenEncode` from Github from System.Web! OSS FTW! I didn't want to take a dependency on System.Web just for one method!
 
@@ -348,7 +348,7 @@ Once I'd finally got this all sorted I wanted to write some tests to check all w
 I was already using [Microsoft.Owin.Testing][6] and all seemed ok however I discovered I couldn't actually test for cookies as there was no handler to pass to the HttpClient that the TestServer returns.  Luckily in all situations OWIN related [@randompunter][8] always has another better option, this time called [OwinHttpMessageHandler][7]. This allowed me to test against cookies which the previous library didn't but then I spotted an issue on Windows. My test passed on Mono and failed on Windows, its usually the other way around.  This is where the ordering of the middleware and `OnSendingHeaders` played a big part.  Anyway after a bit of toing and froing we discovered a bug and it was fixed however, **beware** Microsoft.Owin.Testing also has this bug in that it uses FIFO(first in first out).  So MS hosts act in one way but their test library works the opposite!
  
 Here's the test
-
+```csharp
     public class CookieTests
     {
         [Fact]
@@ -398,7 +398,7 @@ Here's the test
             return client;
         }
     }
-
+```
 
 So after some lessons learnt and bugs fixed we have Cookie Authentication & CRSF with AngularJs, Owin & Mono.  After getting this all working it was pointed out to me that Kestrel, Microsoft's new cross platform web server behaves the opposite to HttpListener, Nowin & System.Web in its ordering of `OnSendingHeaders` Isn't this all fun!!
 

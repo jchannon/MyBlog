@@ -28,7 +28,7 @@ Being enthusiastic, I asked if any help was needed and I ended up making a simpl
 Let me see some code I hear you say so here we go:
 
 **Bootstrapper:**
-
+```csharp
 	public class Bootstrapper : DefaultNancyBootstrapper
 	{
 	    private const string TwitterConsumerKey = "Rb7qNNPUPsRSYkznFTbF6Q";
@@ -71,9 +71,9 @@ Let me see some code I hear you say so here we go:
            container.Register(authenticationService);
        }
     }
-
+```
 **HomeModule**
-
+```csharp
 	public class HomeModule : NancyModule
 	{  
 	   private const string SessionGuidKey = "GUIDKey";
@@ -130,7 +130,7 @@ Let me see some code I hear you say so here we go:
                   };
        }
     }
-
+```
 This should hopefully be pretty self explanatory as that is the aim of the game but I will go through it.
 
 Firstly we need to setup our social network key and secret which was provided to us by registering an app at the relevant site. We then setup a IAuthenticationProvider class for Twitter, Google &amp; Facebook with the key, secret and callback URL that the social network will make request to after login. We then register our providers with a IAuthenticationService class.

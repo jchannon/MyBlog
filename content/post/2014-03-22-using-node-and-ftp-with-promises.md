@@ -15,7 +15,7 @@ As I stated earlier I have already played with node in the past using [Express][
 During the previous couple of weeks at work I wrote a console app that downloaded zip file from a FTP server, extract the contents, read data in a XML file that was in the zip, do some string matching and upload the zip to another FTP server.  I figured this would be a good app to replicate in node so off I went.
 
 After a bit of [npm][3] research I found the modules I needed and managed to get to the point of downloading files pretty easily with the below code:
-
+```javascript
     var path = require('path');
     var fs = require('fs');
     var Promise = require('bluebird');
@@ -57,7 +57,7 @@ After a bit of [npm][3] research I found the modules I needed and managed to get
     });
 
     c.connect(connectionProperties);
-
+```
 However, I originally had that code in a function and wanted to call it and then call another function to read the files that I had downloaded but what I found was callback hell.
 
 ### Enter Promises
@@ -65,7 +65,7 @@ However, I originally had that code in a function and wanted to call it and then
 I needed to know that all the files had downloaded and then I could read the files in a directory ready for zip extraction but I couldn't work out how.  I discovered promises and probably didn't read enough about all the ins and outs of them but I remember [Glenn Block][8] giving a talk about [async programming in node][4] so I pestered him on Twitter and he kindly helped and me out and also pointed me towards his code and slides where I decided to use [Bluebird][5], the promise library.  Unfortunately I just couldn't get the files downloaded. It would download one file but not the other and closed the streams.
 
 Here is a snippet of what I had (brace yourself)
-
+```javascript
     var processListing = function (directoryItems) {
         var itemsToDownload = [];
         directoryItems.forEach(function (element, index, array) {
@@ -115,9 +115,9 @@ Here is a snippet of what I had (brace yourself)
             });
         }).done()
     };
-
+```
 Not only is that a tad complicated but I could not for the life of me understand what the hell was happening and why it wasn't downloading all the files.  I reached out to [@PrabirShrestha][7] who agreed it was a tad over complicated and tried to help but recommended I take a look at Reactive Extensions, maybe I will in the future but at this point my frustration had kicked in and I wanted to give up.  I went through a mixture of emotions from frustration, which led to anger, fuming anger, denial, then apathy.  Although these emotions went by and after a couple of questions on stackoverflow that helped but didn't give the solution I explained the issue to a colleague and we both took a look.  I went through a few iterations with no luck and after a bit more reading I think we were closing in on it individually but I was beaten to it. All hail [@iamnerdfury][6] who produced this:
-
+```javascript
     var connect = function() {
         c.connect(connectionProperties);
         return c.onAsync('ready');
@@ -144,7 +144,7 @@ Not only is that a tad complicated but I could not for the life of me understand
     };
     
     connect().then(getList).filter(zipFiles).map(downloadFiles).done();
-    
+```
 I think the previous issues I had was I was returning `resolve()` after the first file downloaded which is not what you want to do when multiple calls to it are executed as a promise can only resolve once.  I needed to find some way of concatenating a promise somehow for each file that is downloaded. I looked at the `all()` command but I couldn't get it to fit but @iamnerdfury found that you could do this via creating an instance of a promise by calling resolve and then assign to it on each file that needed to be downloaded.
 
 Now I know the files are downloaded I can chain more functions to read the file system, extract the zip for each one, read the XML and upload to a new server.

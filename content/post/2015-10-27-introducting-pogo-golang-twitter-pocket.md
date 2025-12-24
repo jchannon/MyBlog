@@ -24,15 +24,15 @@ So I was going to write a tool that would import all your favourites into Pocket
 
 Now I needed to communicate with Pocket so more Googling resulted in this [library][8].  Whilst this had the basics to connect to Pocket I had to add extra steps to get authentication working properly.  I also had to read their [documentation][9] about 20 times to understand their workflow.  I think their authentication workflow is aimed at mobile clients and websites authenticating against them rather than console applications.  Two of their steps require passing in redirect urls which is no good if you're a terminal app.  Also their documentation states that if the user authorises the app to access the user's Pocket account it will redirect back to a url, it will also redirect to the same url if the user doesn't allow access. Yeah that makes sense!?!  Rather than having it redirect it would have been helpful if it did what Twitter did and provide a code the user can paste into the terminal but alas that's not an option so I had to fire up a webserver in my app that Pocket would redirect to.  Surprisingly that only took two lines of code!
 
-
+```go
     http.Handle("/", http.FileServer(http.Dir("./static")))
     http.ListenAndServe(":3000", nil)
-
+```
 Once I had authenticated I had to do a bit more reading regarding the Twitter API, I had to have logic to keep calling the Twitter API to get favourites until I had got them all.  By default you can only return 200 favourites in one go and I had over that stored on Twitter.
 
 I then had to ensure that my array of tweets were oldest first because when I looped over them adding them to Pocket I wanted the most recent favourites first.  Reversing an array is not as easy as it sounds unfortunately and especially when in C# I'm used to `Array.Reverse(array);`  You could write a `for` loop starting from the length of the array rather than zero and populate a new array with the last item first but I didn't want to do that really although it might have been simpler in the long run. Instead of doing that I could have looped over my array in a for loop but I wanted to use a `foreach` loop or in Go thats called `range`.  What I had to do is similar to what you do in C# when doing custom comparisons and that is I had to implement an interface that would implement `Len,Less,Swap` methods.  It was the `Less` method which was what did the magic for us, ie/order the tweets by date.
 
-
+```go
 	func (slice Tweets) Less(i, j int) bool {
 		firstTime, err := slice[i].CreatedAtTime()  
 		if err != nil {
@@ -45,7 +45,7 @@ I then had to ensure that my array of tweets were oldest first because when I lo
 
 		return firstTime.Before(secondTime)
 	}
-
+```
 Here we take in a slice (a wrapped array) of tweets, we get our first and second tweet and call a method on it that parses a datetime in string format and return a `time` object specific to Go.  We then return a boolean to say whether the first tweet's date is before the second tweet's date. Then to reverse our array now we have that interface implemented we can call `sort.Sort(myFavourites)`. As I say when used to a one line statement reversing an array or using LINQ to do custom ordering of an array doing all this code seems a bit over the top but I think this is just because Go is reasonably young and the authors are trying to keep it fairly simple.  Whether or not they will add LINQ type abstractions to the language in time, who knows but I think they are looking at languages like C# where things have been added and added over time and not wanting to populate Go too much. That's what I've heard anyway but what do I know I've only been using it for 7 days.
 
 Some other things I noticed was that when you import a package it is case sensitive otherwise Go doesn't really like it. Also naming your variables matters. I have a package called `twitter`, I created a type called `Twitter` inside that package so to instantiate that I did `twitter := twitter.Twitter{}`. So that's `package.type`.  I could then call methods by doing `twitter.` however once I added another type in the `twitter` package when I did  `otherVariable := twitter.MyNewType{}` it complained that `twitter` didn't have anything called `MyNewType` inside it.  What it was saying was that my variable called `twitter` didn't have it not that my package didn't have it so we have to be careful on naming things which is where developers fail!

@@ -17,12 +17,12 @@ In a console application you have an app.config and maybe a app.Release.config i
 The trick is to rename the app.Release.config to be the name of the final config file produced by the build along with the 'exe' extension in it and to make sure in Visual Studio you set the build to Copy Always on the MyApp.exe.Release.config file.
 
 So for example if your project is called MyApp and you have an app.config and app.Release.config, open Windows Explorer and rename it to MyApp.exe.Release.config.  Visual Studio won't allow you to rename these files that are dependent on another so you now have to open up MyApp.csproj and alter the references from app.Release.config to MyApp.exe.Release.config
-
+```xml
     <Content Include="App.config" />
     <Content Include="MyApp.exe.Release.config" >
         <DependentUpon>App.Config</DependentUpon>
     </Content>
-
+```
 Go into VS, Reload All when it prompts you and set the Copy to Output Directory value to Copy Always
 
 ![VS Property Window](https://i.imgur.com/E8Kbezh.jpg)

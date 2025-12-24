@@ -18,7 +18,7 @@ variables that VSCode provides eg/`${fileDirname}` but again if you are in a fol
 <!--more-->
 I wanted a Build All projects command and a Build Current project command but with the above limitations I set about investigating some terminal commands that could be run to get this to work
 and below is what I came up with:
-
+```json
     {
         // See https://go.microsoft.com/fwlink/?LinkId=733558
         // for the documentation about the tasks.json format
@@ -50,7 +50,7 @@ and below is what I came up with:
             "problemMatcher": "$msCompile"
         }]
     } 
-
+```
 **One thing to note, this will only work for OSX/Linux users with ZSH.**
 
 So what we have is a build task that runs a command (the first task) which calls out to `zsh` with the argument `-c` that shows the output in the task panel within VSCode and it executes it

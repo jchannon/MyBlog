@@ -18,7 +18,7 @@ Doing this is no easy feat with MVC (with Nancy its all [done for you][4]) and y
 <!--more-->
 
 I found that there a quite a lot of samples with Moq but nothing for Fake It Easy(FIE) so I checked in at the [FIE Jabbr room][5] and got some help and worked through some ideas and below is the result.
-
+```csharp
 	//Controller
 	public class MyController : Controller
 	{
@@ -62,7 +62,7 @@ I found that there a quite a lot of samples with Moq but nothing for Fake It Eas
 
         Assert.Contains("fiddly", sb.ToString());
 	}
-
+```
 As we are not running this against a live web server we need to mock everything from base controller types to requests, responses and everything in between. My example initiates a bit more than is required ie. querystring and headers but hopefully it demonstrates what’s needed.
 
 Firstly we create an instance of a StringBuilderthat will store the response information that we can assert against. We setup a NameValueCollection to add keys/values for posted data, we could do the same for headers etc if we wanted.

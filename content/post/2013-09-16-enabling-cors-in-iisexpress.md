@@ -11,7 +11,7 @@ I went Googling and it couldn't find anything specific to IIS Express but manage
 The solution is to go to `C:\Program Files (x86)\IIS Express\AppServer` and open the `applicationhost.config` file.
 
 Search for `httpProtocol` and you should see this:
-
+```xml
     <httpProtocol>
         <customHeaders>
             <clear />
@@ -21,12 +21,12 @@ Search for `httpProtocol` and you should see this:
             <clear />
         </redirectHeaders>
     </httpProtocol>
-    
+```
 Now add this to the `customHeaders` node:
-
+```xml
     <add name="Access-Control-Allow-Origin" value="*" />
     <add name="Access-Control-Allow-Headers" value="Content-Type" />
-   
+```   
 Just bear in mind this opens up your webserver so you may need to find something alternative for a live production environment.
 
 Anyway you should now be able to start accepting requests via CORS when you fire up IISExpress

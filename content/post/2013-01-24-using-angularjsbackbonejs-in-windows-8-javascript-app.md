@@ -24,12 +24,12 @@ To get around this issue you can wrap your dynamic content calls with _execUnsaf
 You can read more about that from Microsoft’s documentation [here][4]
 
 Here is how you would execute the function around dynamically adding HTML:
-
+```javascript
 	MSApp.execUnsafeLocalFunction(function() {
 	  var body = document.getElementsByTagName('body')[0];
 	  body.innerHTML = 'example';
 	});
-
+```
 I moved onto Angular to see if that would help but again I hit the same bug. I did find in the Angular code that if you have a reference to jQuery in your page it would use that, so I downloaded the latest version, referenced it and still the same issue.
 
 What I didn’t realise is that Backbone and Angular both ship jQuery or a subset of it within them and I didn’t fancy modifying those libraries.
@@ -48,14 +48,14 @@ I put a question on StackOverflow and after a couple of days [Elijah Manor][6] o
 
 So I setup the Angular version of the TodoMVC demo in my Win8 application, referenced the WinJS libs, jquery-win8 and set `jQuery.isUnsafe` to true and the app started perfectly and all functionality was present. Yay!
 
-  
+```bash  
 	<script src="//Microsoft.WinJS.1.0/js/base.js"></script>
 	<script src="/js/default.js"></script>
 	<script src="js/jquery-1.8.2-win8-1.0.min.js"></script>
 	<script type="text/javascript">
 	    jQuery.isUnsafe = true;
 	</script>
-
+```
 One thing to note is that jquery-win8 runs off of jQuery 1.8.2 but appendTo are working on a 1.9 version.
 
    [1]: http://blog.jonathanchannon.com/2013/01/09/javascript-is-the-future-maybe/ (JavaScript is the future…maybe!)

@@ -19,7 +19,7 @@ After my chat with Glenn, he was using a hypermedia type called [Collection+Json
 
 In simple terms you may have a module such as:
 
-    
+```csharp 
     public class OrderModule : NancyModule
     {
       public OrderModule(IOrderRepository orderRepo) : base("/orders")
@@ -31,11 +31,11 @@ In simple terms you may have a module such as:
         };
       }
     }
-    
+```
 
 When you send in a request with `Accept : application/json` you will get a JSON representation of an array of orders
 
-    
+```json    
     [
     	{
     		"id" : 1,
@@ -48,10 +48,10 @@ When you send in a request with `Accept : application/json` you will get a JSON 
     		"itemcount":1
     	}
     ]
-    
+ ```   
 
 However if you send in a request `Accept : application/vnd.collection+json` you will get a Collection+Json representation
-
+```json
     {
         "version": "1.0",
         "href": "http://localhost:9200/orders/",
@@ -143,7 +143,7 @@ However if you send in a request `Accept : application/vnd.collection+json` you 
             ]
         }
     }
-
+```
 
 
 How this works is by content negotiation. As with most things, Nancy makes this very simple.  In Nancy.Collection+Json I wrote a `ResponseProcessor` that handles Accept headers for Collection+Json and then finds a "writer" responsible for the entity being requested, which writes all the JSON properties seen above and then this is returned in the response.  The code and demo can be found [here][6] and more documentation is available [here][5].
