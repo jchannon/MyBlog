@@ -16,15 +16,15 @@ My first attempt was a piece of middleware that allowed the request to go to Goj
 
 
     //***** HTTP Handler *****
-
+```go
     func HelloWorldHTTPHandler(ctx web.C, w http.ResponseWriter, req *http.Request) {
         user := &User{"Joe","Bloggs"}
 
         ctx.Env["model"] = user
     }
-
+```
     //*****First stab at content negotiation midleware *****
-
+```go
     package conneg
 
     import (
@@ -74,7 +74,7 @@ My first attempt was a piece of middleware that allowed the request to go to Goj
         }
         return http.HandlerFunc(fn)
     }
-
+```
 
 As you can see its pretty rudimentary but does the job but if I developed multiple web applications I would have to copy and paste this into every app that I wrote.  I would also have to add to the switch statement for every media type I wanted to handle.
 
@@ -82,27 +82,27 @@ I wanted to write a library that I could reference for every web application, se
 
 To cut a long story short if you install a reference to `github.com/jchannon/negotiator` you can how have a HTTP handler like so:
 
-
+```go
     func getUser(w http.ResponseWriter, req *http.Request) {
         user := &User{"Joe","Bloggs"}
         negotiator.Negotiate(w, req, user)
     }
-
+```
 
 This in my humble opinion keeps things pretty tidy.  If you want to extend the base functionality of JSON/XML handling you can implement this interface for your own response processor:
 
-
+```go
     type ResponseProcessor interface {
     	CanProcess(mediaRange string) bool
     	Process(w http.ResponseWriter, model interface{})
     }
-
+```
 
 CanProcess is called when `negotiator` loops over the media types in the Accept header.  This loop is also ordered by the weighted value in the Accept header eg. `Accept: application/json,application/xml;q=0.8,text/plain;q=0.5`, some great work by [Phil Cleveland][2] who helped with writing `negotiator` (note: if there is no accept header or relevant response processor then `negotiator` will return a 406).  The response processor will return a boolean saying whether it can handle the current media type.  If it returns true then `Process` is called and it will then handle writing the body to the response in the format that is applicable to that response processor.
 
 To add your new custom processor to `negotiator` simple pass it to the `New` method.
 
-
+```go
     func customHandler(w http.ResponseWriter, req *http.Request) {
         user := &user{"Joe", "Bloggs"}
         textplainNegotiator := negotiator.New(&PlainTextResponseProcessor{})
@@ -130,7 +130,7 @@ To add your new custom processor to `negotiator` simple pass it to the `New` met
     	}
 
     }
-
+```
 
 This is a slightly contrived example but you can see what needs to be done to add your own response processor for it to be used by `negotiator`.  One thing I don't like about this is that you need to call `New` in every handler however, you may only want this processor in certain route handlers in your application.  Going back to my first example, what you could do is insert the pointer returned from calling `New` and insert it into the http context and then in the handlers pull it out and then call `Negotiate`.  You can see a demo of this in the Github repo [here][6]
 

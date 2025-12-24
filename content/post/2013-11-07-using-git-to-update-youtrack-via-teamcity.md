@@ -12,10 +12,10 @@ YouTrack uses TeamCity to get the information about the commits and then scans t
 There is some documentation [here][1] but its not the greatest in terms of clarity and I've spoken to [Hadi Hariri][2] from JetBrains about improving this so hopefully they're working on it.
 
 Anyhow here's some example Git commands to wire it all up
-
+```bash
     git commit -am "I fixed a massive bug #PROJ-158 Complete"
     git commit -am "I fixed a massive bug #PROJ-158 Complete add work 1h"
-
+```
 The first command will update the status of YouTrack item #PROJ-158 to Complete.  The second item will do the same but also add Time Tracking information to the item in YouTrack.
 
 Hope that helps, Happy Coding!

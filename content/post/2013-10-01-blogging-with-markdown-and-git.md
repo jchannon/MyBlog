@@ -7,13 +7,13 @@ tags = ["community","oss","snow","nancyfx","git","csharp",".net"]
 There are many markdown blogging engines out there such as [Calepin][1], [Scriptogram][2] and even [WordPress][3] allows you to write blog posts in Markdown but [Sandra.Snow][4] tries to add something different.  Firstly, it is written in .Net and [Nancy][5], secondly its a static blog generator and finally it supports Git deployment.
 
 Even if you don't want to use Git deployment you can use FTP, its a great tool.  To write your blog post in Markdown you need a custom header in your file so it knows some information about your post.
-
+```markdown
     ---
     layout: post
     category: Azure
     title: Setting up a ServiceStack Service
     ---
-
+```
 It then parses this information along with your Markdown into its engine, uses a Markdown view engine to convert the file content into HTML, assign model properties based on the header and creates a HTML file using the model via a Razor viewengine.
 
 The "layout" refers to the Razor file it uses to render the final HTML file.  This allows you to style your pages and blog posts whichever way you'd prefer.  These "layout" files should exist in the "_layouts" folder for your site template.  The site template is a set of files and folders that Sandra.Snow uses to produce the final static website.
@@ -27,7 +27,7 @@ You can optionally add an author and email properties to override the global con
 ### Global Config
 
 In the root of the site template is a snow.config file which is what Sandra.Snow uses to determine url format, where to look for posts and layouts and other related information. It is JSON formatted and looks like this:
-
+```json
     {
       "blogTitle" : "Joe Bloggs Blog",
       "author" : "Mr.Guest",
@@ -64,7 +64,7 @@ In the root of the site template is a snow.config file which is what Sandra.Snow
         "loop": "sitemap"
       }]
     }
-
+```
 Here is an explanation:
 
 - "blogTitle" : The title of the blog you want to appear on your RSS feed
@@ -78,7 +78,7 @@ Here is an explanation:
 - "copyDirectories" : The directories in your template that it will copy to the output
 - "processFiles" : This takes an object of the filename and property information on how to render the file.  Each file/view will be called and rendered with model information availble.  The model information available to these views are shown below:
 
-    
+```csharp
         public List<Post> PostsInCategory { get; set; }
         public Dictionary<int, Dictionary<int, List<Post>>> PostsGroupedByYearThenMonth { get; set; }
         public List<Post> Posts { get; set; }
@@ -88,7 +88,7 @@ Here is an explanation:
         public bool HasNextPage { get; set; }
         public int NextPage { get; set; }
         public int PreviousPage { get; set; }
-        
+```        
 
 In the standard website template there are category, categories, about and index *.cshtml pages which accept this model information and render the relevant information. Based on the file name you can guess what each file outputs.  The "loop" in the settings is used internally by Sandra.Snow to process the relevant data. For example "RSS" creates a RSS file based on the list of posts while Posts/Categories create sub-directories for the relevant model type eg/categories/posts.  "sitemap" will use the `List<Post>` to create a sitemap.xml in the root of your blog. 
 
@@ -110,10 +110,10 @@ One you have forked the Barbato template you can begin to style your blog pages.
 
 #### Azure
 If deploying to Azure you must have a .deployment file in the root of your repository that contains:
-
+```bash
     [config]
     project = Website
-    
+```
 This is needed because when your template repository is pushed to Azure it needs to know what to deploy. This simply tells it to use the Website folder ie.the output folder from Sandra.Snow.
 
 #### Github Pages

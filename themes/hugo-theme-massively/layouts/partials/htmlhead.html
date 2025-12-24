@@ -6,11 +6,11 @@
 -->
 <html lang='{{ .Site.Language.Lang | default "en-us" }}'>
 	<head>
-		<title>{{ if eq (.Site.Title) (.Title) }}{{ .Site.Author.name }}{{ else }}{{ .Title }} &middot; {{ .Site.Author.name }}{{ end }}</title>
+		<title>{{ if eq (.Site.Title) (.Title) }}{{ .Site.Params.Author.name }}{{ else }}{{ .Title }} &middot; {{ .Site.Params.Author.name }}{{ end }}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!-- CSS -->
-		{{ if .Site.IsServer }}
+		{{ if hugo.IsServer }}
 		{{ $style := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "main.scss" . | toCSS (dict "targetPath" "assets/css/main.css" "enableSourceMap" true) }}
 		<link rel="stylesheet" href="{{ ($style).RelPermalink }}">
 		{{ else }}

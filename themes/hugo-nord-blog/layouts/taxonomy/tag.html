@@ -1,0 +1,21 @@
+{{ define "main" }}
+<section class="archive">
+  <h1>Posts tagged "{{ .Title }}"</h1>
+  
+  {{- $pagesByYear := .Pages.GroupByDate "2006" }}
+  
+  {{- range $pagesByYear }}
+  <div class="archive-year">
+    <h2>{{ .Key }}</h2>
+    <ul class="archive-list">
+      {{- range .Pages }}
+      <li class="archive-item">
+        <span class="archive-date">{{ .Date.Format "Jan 2" }}</span>
+        <a href="{{ .Permalink }}" class="archive-title">{{ .Title }}</a>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+  {{- end }}
+</section>
+{{ end }}

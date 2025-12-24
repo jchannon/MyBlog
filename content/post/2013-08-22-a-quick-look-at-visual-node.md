@@ -27,7 +27,7 @@ I like that they have tried to bring a [NuGet][5] style dialog for searching pac
 This brings a sense of familiarity to Visual Studio users which is great. It orders its results alphabetically. I found the searching a bit slow but I'm not sure if that's down to my internet connection or how NPM handles searching.
 
 The code in the template is:
-
+```javascript
     // Load the http module to create an http server.
     var http = require('http');
     
@@ -42,7 +42,7 @@ The code in the template is:
     
     // Put a friendly message on the terminal
     console.log("Server running at http://127.0.0.1:8000/");
-
+```
 I then pressed F5 to see what happened.
 
 It fires up a console app and a browser:

@@ -17,7 +17,7 @@ It could also be argued that only "use asynchronicity in a web framework if you 
 With the introduction of `async/await` in .NET 4.5 the way to do asynchronous execution simplified the previous approaches in .NET.  Having asynchronous execution within a web framework these days seems to be a "must have" so the Nancy team got their freak on (mainly [@grumpydev][2]) and enabled async/await within Nancy.  Its codebase has been kept backward compatible with .NET 4.0 but has been enabled to use the .NET 4.5 `async/await`, pretty impressive! In fact it uses its own version of `ContinueWith` as the default one was considered not quick enough along with other [TPL][1] optimizations.
 
 Below is the synchronous version of returning "Hello World":
-
+```csharp
     public class SampleModule : Nancy.NancyModule
     {
         public SampleModule()
@@ -25,9 +25,9 @@ Below is the synchronous version of returning "Hello World":
             Get["/"] = parameters => "Hello World!";
         }
     }
-    
+```  
 If we wanted to make this `async` (although we wouldn't as there is no I/O and we wouldn't see any benefit) we would change it to look this:
-
+```csharp
     public class SampleModule : Nancy.NancyModule
     {
         public SampleModule()
@@ -35,11 +35,11 @@ If we wanted to make this `async` (although we wouldn't as there is no I/O and w
             Get["/", true] = async (parameters, ct) => "Hello World!";
         }
     }
-    
+```    
 Simple and elegant hey?!
 
 So what's going on you say?  Well the boolean of "true" on the request path tells Nancy that the request is marked as asynchronous.  We can then mark the route as `async` as you would any `async` method and the delegate of the route now takes and additional `CancellationToken` along with the captured parameters.  If you wanted you could use named parameters and define your route like so: 
-
+```csharp
     public class SampleModule : Nancy.NancyModule
     {
         public SampleModule()
@@ -47,7 +47,7 @@ So what's going on you say?  Well the boolean of "true" on the request path tell
             Get["/", runAsync:true] = async (parameters, ct) => "Hello World!";
         }
     }
-
+```
 
 The `CancellationToken` is passed in so you can check the `ct.IsCancellationRequested` property to determine if you want to cooperatively cancel processing in your route handler.  This property may be set for example if there is an internal error or if a piece of middleware decides to cancel the request, or the host is shutting down. If you didn't know Nancy is OWIN compliant and has been pretty much since the OWIN specification came out.
 
@@ -56,7 +56,7 @@ The `CancellationToken` is passed in so you can check the `ct.IsCancellationRequ
 As I stated above, returning "Hello World" from an asynchronous route is pointless so we need something I/O bound to demonstrate a bit better how we would use async/await in an application.
 
 Lets imagine we are one of those types that love QR codes and we need to generate one:
-
+```csharp
     public class IndexModule : NancyModule
     {
         public IndexModule()
@@ -86,7 +86,7 @@ Lets imagine we are one of those types that love QR codes and we need to generat
             return model["image_url"];
         }
     }
-
+```
 Here we have a GET that returns a view and then an async POST that `await`'s a `GetQrCode` method that returns a `Task<string>` or `string` depending on how you interpret that specific .NET 4.5 behaviour.  At this point the thread can be used to process another request whilst it waits to be notified that `GetQrCode` has finished.  
 
 The `GetQrCode` method uses a `HttpClient` to execute an API call to get a QR code which will link to http://www.nancyfx.org.  Our method will then return the location of the QR code image. 
@@ -100,18 +100,18 @@ We return a string from the method but the compiler will actually convert that t
 Once the `GetQrCode` returns we set up a simple anonymous type with a QrPath property that is set to the result of `GetQrCode` and we return our view.  
 
 In the view we then have some code that determines when to show the QR image:
-
+```csharp
     @if (Model != null)
     {
         <img alt="QR Code" src="Model.QrPath"/>
     }
-
+```
 You can view this code as a running application in my Github repository [here][4].
 
 ## The Guts of it
 
 If you want a bit more of an understanding how `async/await` works in Nancy then lets take a look at the code below that is located in the [DefaultRouteInvoker][7] class:
-
+```csharp
     public Task<Response> Invoke(Route route, CancellationToken cancellationToken, DynamicDictionary parameters, NancyContext context)
     {
         var tcs = new TaskCompletionSource<Response>();
@@ -126,7 +126,7 @@ If you want a bit more of an understanding how `async/await` works in Nancy then
             }
         ...
     }
-    
+```  
 Our route that we are executing is invoked and as we know from above the captured parameters on the route eg/customer/{id} and a CancellationToken is passed in.  We can then see the customized `ContinueWith` known as `WhenCompleted` is setup to resolve what our route returns be that a view or data.  So as we know when using async we need to return a `Task<T>` (you can return void and have a method marked as `async` but those should only be used for fire-and-forget methods like event handlers) and in our routes case it returns a Task<Nancy.Responses.Negotiation.Negotiator>.  The DefaultRouteInvoker then carries on to do its thing getting ready to render a view or serialize our data.
 
 ## Conclusion

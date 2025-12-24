@@ -16,7 +16,7 @@ So I went over to TypeScript’s [website][2] and followed the Hello World type 
 <!--more-->
 
 After understanding the basics of it and wanting to learn more I spotted this demo code:
-
+```typescript
 	class Student {
 	    fullname : string;
 	    constructor(public firstname, public middleinitial, public lastname) {
@@ -36,7 +36,7 @@ After understanding the basics of it and wanting to learn more I spotted this de
 	var user = new Student("Jane", "M.", "User");
 	
 	document.body.innerHTML = greeter(user);
-
+```
 There is an interface that expects public properties of firstname and lastname. There is a Student class that has a constructor with arguments for firstname, middleinitial and lastname. TypeScript constructor arguments are shorthand for making the arguments properties on the object itself without having to code all that yourself. We then have a function called greeter that takes a method argument of our Person interface and uses the properties of it to return a string. We then create a new instance of the Student class and then call the greeter function with our instance. Woooaaahhh! I want static typing, WTF is going on here? Essentially TypeScript allows for [Duck Typing][3] where any object that makes calls to or uses properties that match another type, it will allow. Now technically you can do this in C# by using the “dynamic” keyword but I would still keep and one to one mapping even if it was dynamic/duck typed so not to confuse future users.
 
 It may be this example that I don’t like where properties are being un-used or the fact that the keyword “interface” is being used and the class is not statically implementing it but I guess this is how TypeScript uses interfaces ie/duck typing. I can’t think of a reason why you’d have an object that exposes properties that are not used when they have been shoe horned/duck typed into another with fewer properties etc, however, this might just be my statically typed mind not liking it and it should chill and get with the dynamic nature of things!

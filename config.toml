@@ -1,38 +1,59 @@
-baseURL = "https://blog.jonathanchannon.com/"
-title = "Blog"
-theme = "hugo-theme-massively"
+# Site Configuration
+theme = "hugo-nord-blog"
+languageCode = "en-gb"
+baseurl = "https://blog.jonathanchannon.com/"
+title = "Jonathan Channon's Blog"
 googleAnalytics = "UA-7138405-4"
 disqusShortname = "jonathanchannonblog"
-disableKinds = ["taxonomy", "taxonomyTerm", "section"]
-paginate = 6
 
-[Params]
-    dateFormat = "Mon, Jan 2, 2006"
+# Pagination
+[pagination]
+  pagerSize = 10
 
-[Params.Posts]
-    featuredpost = "true"
-    showFirstLast = true
+# Content settings
+summaryLength = 70
+DefaultContentLanguage = "en"
 
-[Author]
-    name = "Jonathan Channon Blog"
-
- [outputs]
-    home = [ "HTML", "RSS" ]
-    page = [ "HTML", "RSS" ]
-
- [outputFormats]
- [outputFormats.RSS]
-    mediatype = "application/rss"
-    baseName = "feed"
-
+# Extract date from filename (e.g., 2021-01-29-post-title.md)
 [frontmatter]
-date  = [":filename", ":default"]
-publishDate = [":filename", ":default"]
+  date = [":filename", ":default"]
 
-[languages]
-[languages.en]
-  languageName = "English"
+# Code highlighting
+pygmentsCodefences = true
+pygmentsUseClasses = true
+pygmentsStyle = "nord"
 
-[Permalinks]
-    post = "/:filename/"
-    page = "/:filename/"
+# Features
+enableEmoji = true
+enableGitInfo = true
+enableRobotsTXT = true
+canonifyURLs = true
+
+# Enable tags taxonomy
+[taxonomies]
+  tag = "tags"
+
+# Permalinks - use filename for post URLs
+[permalinks]
+  post = "/:contentbasename/"
+
+# Site parameters
+[params]
+    author = "Jonathan Channon"
+    description = "Jonathan Channon's Blog"
+    
+    # Social links (leave empty to hide)
+    [params.social]
+        bluesky = "https://bsky.app/profile/jonathanchannon.com"
+        github = "https://github.com/jchannon"
+        linkedin = "https://linkedin.com/in/jonathanchannon"
+
+# Markup settings
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "nord"
+    lineNos = false
+    lineNumbersInTable = true

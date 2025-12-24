@@ -42,19 +42,19 @@ Microsoft have also [produced][8] a "Getting Started with ASP.NET vNext and Visu
 As Nancy supported Owin from the very beginning unlike MVC there was a Nancy.Owin package that you could opt-in to your application and use Nancy in an Owin based application.  This also gave you the option to use Nancy in a non-Owin application.  Today you still have that option but as of June 10th 2014 the Nancy team decided to merge a pull request moving Owin as a separate package into the core code base.  This pull request also added extensions to be able to run Nancy in a ASP.Net vNext project.  You can still run Nancy in a non-Owin application but the decision was made to embrace Owin as a first class citizen.  These changes are currently in the master branch and not yet part of an official release but to save building the source and referencing the project we can use Nancy's [nightly builds][10]. 
 
 In our `ASP.NET vNext Empty Web Application` we can open up the Package Manager Console and run the following commands
-
+```powershell
     Install-Package DiscoverPackageSources
     Discover-PackageSources -Url "https://www.myget.org/F/nancyfx/"
-    
+```
 Now open up `project.json` and under the dependency node add the below and save the file.
-
+```json
     "Microsoft.AspNet.Owin": "0.1-alpha-*",
     "Nancy": "0.23-Pre1387"
-    
+```
 You'll notice in the Solution Explorer under References that these two references have magically appeared.
 
 Open `Startup.cs` and make it look like
-    
+```csharp    
     namespace WebApplication3
     {
         using Microsoft.AspNet.Builder;
@@ -68,9 +68,9 @@ Open `Startup.cs` and make it look like
             }
         }
     }
-
+```
 Now create a class called HomeModule and make it look like this:
-
+```csharp 
 namespace WebApplication3
 {
     using Nancy;
@@ -83,6 +83,7 @@ namespace WebApplication3
 	    }
     }
 }
+```
 
 Hit F5 and ****boom****
 

@@ -90,14 +90,14 @@ create
     |> apply <| validatedDateOfBirth
 ```
 
-From the [last blog post]((https://blog.jonathanchannon.com/2020-06-28-understanding-fsharp-map-and-bind/)) I showed how to call functions in a chain of functions where `Result` types needed to be unwrapped and their values passed to the next function.  So my first thought looking at this was `validatedName` is a value not a function so how is `Result.map` working? I also didn't quite understand the precedence of `|>` and `|<` how that worked.  As part of my investigation, or some may say my learning and understanding, I was told Don Syme regretted making the back pipe and that using forward and back pipes together can make code unreadable.  The take away there is to be careful about it's usage.  The good thing here is that we only have one usage of it but it still didn't make sense to me.  So I tried to split it up:
+From the [last blog post](https://blog.jonathanchannon.com/2020-06-28-understanding-fsharp-map-and-bind/) I showed how to call functions in a chain of functions where `Result` types needed to be unwrapped and their values passed to the next function.  So my first thought looking at this was `validatedName` is a value not a function so how is `Result.map` working? I also didn't quite understand the precedence of `|>` and `|<` how that worked.  As part of my investigation, or some may say my learning and understanding, I was told Don Syme regretted making the back pipe and that using forward and back pipes together can make code unreadable.  The take away there is to be careful about it's usage.  The good thing here is that we only have one usage of it but it still didn't make sense to me.  So I tried to split it up:
 
 
 ```fsharp
 let foo = create |> Result.map <| validatedName
 ```
 
-I still didn't quite get it, `foo` is a type of `Result<(string -> DateTime -> ValidatedUser), ValidationFailure list>` which means it's taken the name argument and now wants the email and date of birth passed to it.  I understood partial application but still it didn't click.  I went back to the [previous blog post]((https://blog.jonathanchannon.com/2020-06-28-understanding-fsharp-map-and-bind/)) and looked at what the function signature of `Result.map` is.  It takes in a function and a `Result<'a,'b>`.  If the `Result` is `OK` it calls the passed in function with the unwrapped `Result` of `'a` and returns a `Result` type of `Ok(fn a)` otherwise it returns `Error e` Here's the code for it: 
+I still didn't quite get it, `foo` is a type of `Result<(string -> DateTime -> ValidatedUser), ValidationFailure list>` which means it's taken the name argument and now wants the email and date of birth passed to it.  I understood partial application but still it didn't click.  I went back to the [previous blog post](https://blog.jonathanchannon.com/2020-06-28-understanding-fsharp-map-and-bind) and looked at what the function signature of `Result.map` is.  It takes in a function and a `Result<'a,'b>`.  If the `Result` is `OK` it calls the passed in function with the unwrapped `Result` of `'a` and returns a `Result` type of `Ok(fn a)` otherwise it returns `Error e` Here's the code for it: 
 
 ```fsharp
 let map mapping result = match result with Error e -> Error e | Ok x -> Ok (mapping x)

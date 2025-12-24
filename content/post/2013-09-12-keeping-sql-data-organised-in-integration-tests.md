@@ -19,7 +19,7 @@ My options were to move the constructor logic into separate methods and then cal
 ## The Solution
 
 I started playing with the attributes on my tests to see if xUnit offered me something and was chuffed to find the `BeforeAfterTestAttribute`.  This does exactly what it says on the tin.  Its an abstract class that you inherit from for your own implementation and overide the `Before` and `After` methods;
-
+```csharp
     public class RepoMethod1BeforeAfter : BeforeAfterTestAttribute
     {
         public override void After(MethodInfo methodUnderTest)
@@ -39,7 +39,7 @@ I started playing with the attributes on my tests to see if xUnit offered me som
     {
       //Check it's awesome
     }
-    
+```
 You can then put an attribute on the relevant tests that need to have specific data inserted/deleted and it keeps the design of your test class follow best practices as well as not implementing IDisposable.
 
 The only thing I can spot as a slight issue is remembering to put the attribute on your tests but I think that'll be quite obvious when your tests start failing!

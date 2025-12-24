@@ -7,7 +7,7 @@ tags = ["unit testing","oss","community",".net","fake it easy"]
 I had the task of writing a new application recently and of course I chose [Nancy][1].  One of the many great reasons is the testing capabilites it offers (For more on that see [this][2] great series of articles).
 
 The basics of a test with Nancy looks like this:
-
+```csharp
     [Fact]
     public void Should_return_status_ok_when_route_exists()
     {
@@ -23,7 +23,7 @@ The basics of a test with Nancy looks like this:
         // Then
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
     }
-
+```
 You set up a bootstrapper, this can be your live one or an inherited version of your live one with dependencies changed to mocks for example or use the `ConfigurableBootstrapper`.
 
 <!--more-->

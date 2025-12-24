@@ -7,11 +7,11 @@ tags = ["fake it easy","oss","unit testing","integration testing","csharp",".net
 I was recently writing some unit tests where I needed to test that multiple calls to an interface returned different objects.  
 
 With [FakeItEasy][2] this is easy:
-
+```csharp
     A.CallTo(() => myInterface.GetSomething(1)).Returns(new Something())
-
+```
 All very nice, but now if I have multiple calls to `myInterface` I have to execute the above statement 'x' amount of times:
-
+```csharp
     [Fact]
     public void Should_Do_Something()
     {
@@ -24,11 +24,12 @@ All very nice, but now if I have multiple calls to `myInterface` I have to execu
       
       Assert.Equal("Super Duper", result);
     }
+```
 <!--more-->
 
 There is a tidier way to do the above where you can return specific objects and its called `ReturnsLazily`.  Lets take a look at this:
 
-
+```csharp
     public class Employee
     {
         public string Name { get; set; }
@@ -80,7 +81,7 @@ There is a tidier way to do the above where you can return specific objects and 
             Assert.Equal("Moss,Roy", result);
         }
     }
-
+```
 We have an `Employee` object, a `IEmployeeRepository` which returns an `Employee` object and an App that returns a CSV.  We then want to test this and make sure we get back a CSV from multiple objects.
 
 So we set our fake setup and say that when `GetEmployeeById` is called we want to return a specific object.  Our App class will call `GetEmployeeById` twice with the id of 1 and 2.  This is done by passing in `employees.Keys.ToArray()` to our GetNamesAsCsv method under test. 

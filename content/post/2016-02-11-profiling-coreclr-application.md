@@ -25,12 +25,12 @@ On the comparison I was a bit confused with all this information and fumbled aro
 
 Now being a guy on the cutting edge I knew the issue I had was this new piece of technology called XML, you should try it.  We looked in the code and found it was doing this, which was getting called every second.
 
-
+```csharp 
     var stream = new MemoryStream(Encoding.UTF8.GetBytes(myXml)));
     var sr = new StreamReader(stream));
     var serializer = new XmlSerializer(typeof(MyObject), new XmlRootAttribute("rootNode"));
     var obj = (MyObject)xml.Deserialize(stream);                             
-
+```
 
 So did you spot it? Clue : Its not the fact that the memorystream or streamreader isn't within a `using` statement (although that was fixed).
 

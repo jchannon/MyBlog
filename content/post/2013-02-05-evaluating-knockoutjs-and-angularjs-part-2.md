@@ -18,22 +18,22 @@ Firstly Knockout should be commended on their documentation and online tutorials
 <!--more-->
 
 Knockout also uses HTML elements and attributes like Angular to determine behaviour but Knockout’s approach is more HTML5 in that the most common usage is using the data-bind attribute. For example, the below will use the artist property on the viewmodel to render the div contents.
-
+```html
 	<div data-bind="text: artist"></div>
-
+```
 As this was going to be a SPA (Single Page Application), the main screen would have an area that would display either a list of products or more information about a single product. The way Knockout handles this is via a ‘with’ keyword.
-
+```html
 	<div id="main">
 	  <!-- Main Page -->
 	  <div data-bind="with: items"></div>
 	  <!-- Detail Page -->
 	  <div data-bind="with: chosenProduct"><div>
 	</div>
-
+```
 So when the viewmodel’s ‘items’ property is populated it would show the first div and when the ‘chosenProduct’ property was populated it would show the second div. Nice and simple. You can then populate your markup with properties from the items and chosenProduct within those div’s.
 
 As we have 2 pages/sections in our app we need to handle routing so that when we’re going to the root it populates our view model with all our products and when the user clicks a specific product it finds that product and populates our view model. KnockoutJS does not have this built into it like Angular does and uses SammyJS to handle this.
-
+```javascript
 	var app = Sammy(function () {
 	    this.get('#/:id', function (context) {
 	        self.items(null);
@@ -54,11 +54,11 @@ As we have 2 pages/sections in our app we need to handle routing so that when we
 	    console.log('rn');
 	    app.run();
 	});
-
+```
 Compared to Angular’s separation approach, here we have most things all in one class/viewmodel i.e/ the routing to assign the items property for all products and single item for the selected product as well as other viewmodel properties. We also have functions to add items and determine quantity as well as saving the information to [localStorage][9]. I guess it keeps it altogether in one place but this may get tricky once the app becomes quite large however, I’ve been told things can get separated by using [RequireJS][10] although I think in this demo that would require a large refactor.
 
 Again in this demo outside of the main area that gets changed with markup we have a shopping cart that needs to update when we add something. I already had a function that calculated my quantities but it did not update the div with the new value. Even though the viewmodel property was a computed function it was not re-run every time something was added to the basket, for that to happen the computed function needs to have an observable property within it.
-
+```javascript
 	self.basketItemCount = ko.computed(function () {
 	       var count = 0;
 	       var items = self.basketItems();
@@ -67,9 +67,9 @@ Again in this demo outside of the main area that gets changed with markup we hav
 	       }
 	       return count;
 	   });
-
+```
 We also wanted to do some animation when the item was added to the basket and because SammyJS has a dependency on jQuery it was very easy to add this to the viewmodel’s addItem function however like Angular this is not recommended as it ties the view to the viewmodel. What Knockout recommend is custom bindings.
-
+```javascript
 	ko.bindingHandlers.animateCart = {
 	    update: function (element, valueAccessor, allBindingsAccessor) {
 	        $(element)
@@ -80,7 +80,7 @@ We also wanted to do some animation when the item was added to the basket and be
 
 	//Usage
 	<div class="cart-info" data-bind="animateCart: basketAsJson()"></div>
-
+```
 Now this is where the data binding gets confusing/interesting. My HTML could not use the basketItems viewmodel property as this is an observable array and so would only react when the array changed NOT when properties of objects within the array changed. I was a bit disappointed with that so I had to create a new function that obviously used an observeable within it ie/the basketItems but that was not enough to handle the properties changing within that array. So the recommendation from [Robert Westerlund][11] (a Javascript, Knockout and Regex wizard) was to use ko.toJSON(basketItems()). (The reason we use ko.toJSON and not JSON.stringify is because that would not pick up the observeable property values) This would mean that it would have to traverse all the objects to find the values and because they are observeable this function would fire every time, genius! This also meant when it changed I could also store the changes in localStorage for when the user came back to the website!
 
 ## Conclusion

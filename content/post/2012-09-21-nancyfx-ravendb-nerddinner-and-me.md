@@ -18,7 +18,7 @@ _This means that everything in Nancy is setup to have sensible defaults and conv
 <!--more-->
 
 When ASP.Net MVC was first introduced to the world I was hooked on the framework, it seemed so easy and logical in comparison to ASP.Net Webforms plus it had lots more [benefits][5].  NancyFX took these benefits and added lots more to them. For example creating a website was very easy:
-
+```csharp
 	public class HelloModule : NancyModule
 	{
 	  public HelloModule()
@@ -26,7 +26,7 @@ When ASP.Net MVC was first introduced to the world I was hooked on the framework
 	    Get["/"] = parameters => "Hello World";
 	  }
 	}
-
+```
 If you have experience using MVC and want to check out how Nancy compares check out [@jhovgaard][6] series of posts titled _“From ASP.Net MVC to Nancy”_ ([Part1][7], [2][8] &amp; [3][9])
 
 ### What is RavenDB
@@ -44,7 +44,7 @@ This was my first jump into actually contributing to OSS and I was very excited 
 I got stuck in by browsing the NerdDinner source code and began getting the Razor views working with Nancy. I started converting all the ASP.Net MVC controllers into Nancy Modules and then had an idea for Nancy.  A domain specific language (DSL).  Nancy uses various ways to capture querystring arguments, one of them being regex.  To cut a long story short I created [Nancy.Routehelpers][13] and put it on NuGet.  It was a way to define routes in the modules without the need for using Regex because lets be honest no-one *likes* using Regex!
 
 It meant I could use this:
-
+```csharp
 	public class HomeModule : NancyModule
 	{
 	  public HomeModule()
@@ -62,13 +62,13 @@ It meant I could use this:
 	    };
 	  }
 	}
-
+```
 So now by helping out and learning stuff at the same time I was already contributing to the community with my own ideas, even though in the small league however, it was all very exciting!
 
 As the logic started to wind up and I needed to put in the data store I was having teething trouble with Raven.  A quick tweet asking for help and [@philjones88][14] to the rescue.  As we were chatting we both realised we only live 40 miles apart! Small world but no matter how large, another great sign of the active community willing to help. I’ve gone on to chat to Phil numerous times and he’s been a huge help not just in RavenDB. I would highly recommend him for anyone needing any contract work as he is a true professional.
 
 Luckily integrating RavenDB was fairly painless, if I did have any quick questions I would pester [@philjones88][14] or use RavenDB’s [Jabbr][15] room or use the official [RavenDB Google group][16]. The only two areas that stand out from memory that caused a few scratches of the head were indexing and clearing out documents of a certain age. The latter was needed due to the database being on a free account with [RavenHQ][17] as it had a database size limit of 15mb.  I’ll post the snippet here just in case anyone comes by and wants to  use it to delete all their documents from RavenDB:
-
+```csharp
 	private void CleanUpDB(IDocumentSession DocSession)
 	{
 	    var configInfo = DocSession.Load("DinnerParty/Config");
@@ -120,7 +120,7 @@ Luckily integrating RavenDB was fairly painless, if I did have any quick questio
 	        }
 	    }
 	}
-
+```
 One neat feature of the indexes within RavenDB although initially a tad confusing is the ability to define them in C# so when your application starts you can make a call to **Raven.Client.Indexes.IndexCreation.CreateIndexes** and it will apply them to your database. Slightly cooler than a RDBMS way of creating an index.
 
 ### It’s all in the name

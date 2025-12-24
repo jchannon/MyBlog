@@ -17,7 +17,7 @@ What OWIN introduces is an HTTP abstraction from the host to framework and there
 ### Authentication
 
 Due to the HTTP abstraction we can now inspect the requests and then determine whether we should return a 401 or let the request continue. So how does that look?
-
+```csharp
     public class Startup
     {
         public void Configuration(IAppBuilder app)
@@ -28,7 +28,7 @@ Due to the HTTP abstraction we can now inspect the requests and then determine w
                .UseNancy();
         }
     }
-
+```
 In an OWIN app we need a Startup class to configure our application and we wire up the requests and how they may be handled in order of processing.  So as I stated earlier we want to use SignalR and Nancy and validate the requests before they hit our application, using [Owin.StatelessAuth][7] we can do that.  It takes an implementation of `ITokenValidator` where a method gets called to determine if the request is valid by passing in a token from the `Authorization` header.  How you implement the interface and determine what is a valid request is up to you.  Luckily I have a demo available in the [Github repository][8] which I'll now explain.
 
 ### Demo Time
@@ -36,7 +36,7 @@ In an OWIN app we need a Startup class to configure our application and we wire 
 About 2 days after publishing [Owin.StatelessAuth][8], Mike Hadlow published a great [blog post][9] on using JWT (JavaScript Web Tokens) & OWIN & Angular so I thought I would do a similar post just to throw my 2 cents in.  Its going to be hard not to say the same things as Mike so I may skip some stuff but it just means you should read his post too!  So lets get the code to do the talking...
 
 **Startup.cs**
-
+```csharp
     public class Startup
     {
         public void Configuration(IAppBuilder app)
@@ -48,11 +48,11 @@ About 2 days after publishing [Owin.StatelessAuth][8], Mike Hadlow published a g
 
         }
     }
-
+```
 So we pass in our implementation of ITokenValidator called MySecureTokenValidator and pass in some options to Owin.StatelessAuth which says if the paths contain the items in the list then Owin.StatelessAuth will not try and authenticate those requests.  In the demo we have javascript and images in the content folder so we don't want to authenticate those requests.  We also don't want to authenticate requests to the login path.  Why not? This is the route that will give us the token for all subsequent requests.
 
 **Nancy Module**
-
+```csharp
     public HomeModule(IConfigProvider configProvider, IJwtWrapper jwtWrapper)
     {
         Get["/login"] = _ => View["Login"];
@@ -86,13 +86,13 @@ So we pass in our implementation of ITokenValidator called MySecureTokenValidato
     
         Get["/"] = _ => "Hello Secure World!";
     }
-    
+``` 
 Here on the GET request to login we return a view where Angular wil be used.  On the POST request to login we Bind the posted values to a class called UserCredentials, we then need to validate these credentials (I assume yours will be better than mine) and then create a new instance of JwtToken which is just another class in our application which has properties that relate to the [JWT spec][10] and then we encode the object to return a token for our user using the [JWT][11] library (I have created a wrapper for it in the demo as they are static methods out of the box).  
 
 **Angular View**
 
 Here's the code:
-
+```html
     <!DOCTYPE html>
     <html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="owinstatelessauthexample">
     <head>
@@ -116,11 +116,11 @@ Here's the code:
         <script src="/Content/app.js"></script>
     </body>
     </html>
-    
+```
 We have a form that will POST to our login route, a label to show our logged in status, a button to hit our route that should return "Hello Secure World"
 
 **Angular Code**
-
+```javascript
     (function () {
         'use strict';
     
@@ -176,11 +176,11 @@ We have a form that will POST to our login route, a label to show our logged in 
             }]);
     
     })();
-
+```
 When the form from our view is posted to our login route we get take the response data and store it in localStorage.  However, here we are using a library called [localForage][12] which has a fallback option if you don't have HTML5 in your browser.  When the user clicks the button to hit our secure route it will retrieve the token from localForage and pass it in the request and hopefully we get the expected response as Owin.StatelessAuth will validate it via MySecureTokenValidator.
 
 **MySecureTokenValidator**
-
+```csharp
     public class MySecureTokenValidator : ITokenValidator
     {
         private readonly IConfigProvider configProvider;
@@ -233,11 +233,11 @@ When the form from our view is posted to our login route we get take the respons
             }
         }
     }
-    
+```
 My first comment in the code is that the class [Claim][13] won't deserialize which would have made our code a one liner but unfortunately not. Possibly if the JWT library used JSON.Net or ServiceStack.Text it may work but for now I had to do some logic to assign the properties of the JwtToken class.  It really is some ugly code so hopefully a PR or so to JWT it may be cleaned up.  So we decode the token to a dictionary and then assign the values to our class, loop over the claims, see if the expiry date is before now and if so return null which will cause Owin.StatelessAuth to return a 401.  If all is well we return a [ClaimsPrincipal][14] instance.  Owin.StatelessAuth will add it to the Owin environment which can be read further down the request stack.
 
 **Nancy Bootstrapper**
-
+```csharp
     public class Bootstrapper : DefaultNancyBootstrapper
     {
         protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
@@ -255,7 +255,7 @@ My first comment in the code is that the class [Claim][13] won't deserialize whi
             }
         }
     }
-    
+``` 
 Nancy has a CurrentUser property on the NancyContext, if this is not null then we know the user is authenticated.  In the introduction of the blog post I mentioned Nancy.Authentication.Stateless (other Nancy.Authentication libraries are available) which does exactly that, it assigns the the CurrentUser to the validated user.  In our Bootstrapper we use the ClaimsPrincipal instance in the Owin environment that Owin.StatelessAuth put in there for us to assign the properties of `IUserIdentity` in Nancy to assign the current user.  We can then use `RequiresAuthentication` on our Nancy routes to secure routes based on extra security such as claim types.
 
 ### Conclusion

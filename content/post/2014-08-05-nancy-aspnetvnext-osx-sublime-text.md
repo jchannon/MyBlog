@@ -16,36 +16,35 @@ There is a [guide][6] on Mono's website on how to compile but I found some issue
 Download 3.4.0 from [here][7] and install with the PKG installer because when compiling the latest Mono source it needs a compiler on the machine.
 
 Install [Homebrew][8] and install the dependencies as shown in Mono's guide. The guide discusses compiling these dependencies but it conflicted with something already on the system.
-
+```bash
     brew install autoconf
     brew install automake
     brew install libtool
-
+```
 **NOTE:** You could install Mono using Homebrew if you wish but I didn't realise this until afterwards
 
 Copy the below and put it in a `mymonoinstall.sh` file. Make **$PREFIX** to be a folder on your system, I used `/Users/jonathanchannon/mono`
-
+```bash 
     PATH=$PREFIX/bin:$PATH
     git clone https://github.com/mono/mono.git
     cd mono
     CC='cc -m32' ./autogen.sh --prefix=$PREFIX --disable-nls --build=i386-apple-darwin11.2.0
     sudo make
     sudo make install
-
+```
 Execute this by typing `mymonoinstall.sh` in a terminal under the folder where the file is. This may take some time based on your internet connection and power of your machine but once done you should be able to run `mono --version` and hopefully see something greater than 3.4.0.
 
-<a name="vnext"></a> 
 Now we have Mono installed we're ready to start coding so download [Sublime Text 3][4] and install it.  Once installed we need to install the ASP.Net vNext tools using the following instructions:
-
+```bash
     brew tap aspnet/k
     brew install kvm
-
+```
 Create a `.profile` file in your home directory and enter `source kvm.sh`. This is so the system knows what the kvm command is when its typed into the console.
     
 We now need to install the [Kulture][9] Sublime plugin that will enable us to run ASP.Net vNext from Sublime.  In Sublime open the console `View -> Show Console` and paste in the below
-
+```bash
     import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
-
+```
 **NOTE: These instructions are for Sublime Text 3. At the time of writing Kulture is only supported on version 3 so if you have version 2 you're out of luck I'm afraid**
 
 This will install a package manager for Sublime, you can never have too many package managers eh!
@@ -59,10 +58,10 @@ This will install a package manager for Sublime, you can never have too many pac
 So now we have the ability to run, restore and build our ASP.Net vNext apps in Sublime we're ready to create a Nancy app.  Now you could create 4 files manually and build and run them but we might as well install another package manager that will create a Nancy app for us!  I've made a [Yeoman][11] plugin which [creates a Hello World app][15] in Nancy for ASP.Net vNext which can be opened in Sublime.
 
 Go and install [Node.js][10] and then open up a terminal and type:
-
+```bash
     npm install -g yo
     npm install -g generator-nancy
-
+```
 Go to a folder in your terminal and type `yo nancy`, it will ask you what you want to call your app, you can type something in or accept the default and it will create the files needed to create the app.  It will also do a NuGet restore for all the dependencies the app has.  In Sublime go to `File -> Open Folder` and select the folder with your app in.
 
 `Go to Tools -> Build System and select ASP.Net`

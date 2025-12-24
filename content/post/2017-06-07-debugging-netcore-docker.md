@@ -15,7 +15,7 @@ To be able to debug that application we are going to need VSDBG(the .Net Core co
 
 We are also going to need to append the launch.json for VSCode in your project's root to have the below:
 
-
+```json
     {
         "name": ".NET Core Remote Attach",
         "type": "coreclr",
@@ -33,7 +33,7 @@ We are also going to need to append the launch.json for VSCode in your project's
         },
         "justMyCode": true
     }
-
+```
 
 <!--more-->
 
@@ -41,7 +41,7 @@ They key things to note are the `pipeArgs` and `sourceFileMap`. Where it says `j
 
 The final Dockerfile looks like this:
 
-
+```dockerfile
     FROM microsoft/dotnet:1.1-runtime-deps
 
     RUN apt-get update
@@ -55,7 +55,7 @@ The final Dockerfile looks like this:
     WORKDIR /app
 
     ENTRYPOINT ./jsonfile
-
+```
 
 So we're ready to go with the following steps:
 
