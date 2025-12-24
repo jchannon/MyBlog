@@ -399,6 +399,7 @@ main {
 .post-content {
   font-size: 1rem;
   line-height: 1.8;
+  color: var(--text-secondary);
 }
 
 .post-content h2 {
