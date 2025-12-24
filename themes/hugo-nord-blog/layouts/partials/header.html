@@ -3,7 +3,7 @@
     <nav class="main-nav">
       <div class="nav-tabs">
         <a href="{{ .Site.BaseURL }}" class="nav-tab{{ if .IsHome }} active{{ end }}">Blog</a>
-        <a href="{{ "post/" | relURL }}" class="nav-tab{{ if eq .Section "post" }}{{ if not .IsPage }} active{{ end }}{{ end }}">Archive</a>
+        <a href="{{ "archive/" | relURL }}" class="nav-tab{{ if eq .Type "archive" }} active{{ end }}">Archive</a>
       </div>
       
       <div class="header-right">

@@ -33,6 +33,10 @@ canonifyURLs = true
 [taxonomies]
   tag = "tags"
 
+# Permalinks - use filename for post URLs
+[permalinks]
+  post = "/:contentbasename/"
+
 # Site parameters
 [params]
     author = "Jonathan Channon"
