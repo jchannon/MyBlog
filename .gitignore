@@ -1,6 +1,2 @@
 .DS_Store
 public/
-# Hugo binary
-/hugo
-/hugo.tar.gz
-/LICENSE
