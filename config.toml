@@ -6,6 +6,10 @@ title = "Jonathan Channon's Blog"
 googleAnalytics = "UA-7138405-4"
 disqusShortname = "jonathanchannonblog"
 
+[services]
+  [services.googleAnalytics]
+    id = "UA-7138405-4"
+
 # Pagination
 [pagination]
   pagerSize = 10
