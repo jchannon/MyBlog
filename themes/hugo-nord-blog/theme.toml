@@ -1,0 +1,11 @@
+name = "Hugo Nord Blog"
+license = "MIT"
+licenselink = "https://github.com/jchannon/hugo-nord-blog/blob/main/LICENSE"
+description = "A clean, minimal Hugo blog theme using the Nord color palette"
+homepage = "https://github.com/jchannon/hugo-nord-blog"
+tags = ["blog", "minimal", "nord", "dark-mode", "responsive"]
+features = ["dark mode", "syntax highlighting", "responsive", "pagination"]
+min_version = "0.80.0"
+
+[author]
+  name = "Jonathan Channon"

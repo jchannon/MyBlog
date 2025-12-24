@@ -1,0 +1,11 @@
+{{ define "main" }}
+<section class="archive">
+  <h1>Tags</h1>
+  
+  <div class="tags" style="margin-top: 1.5rem;">
+    {{- range .Site.Taxonomies.tags.Alphabetical }}
+    <a href="{{ .Page.Permalink }}" class="tag">{{ .Page.Title }} ({{ .Count }})</a>
+    {{- end }}
+  </div>
+</section>
+{{ end }}
