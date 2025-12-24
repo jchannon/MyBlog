@@ -1,6 +1,7 @@
 +++
 title = "Introduction to AI"
 tags = ["AI",".NET","csharp"]
+draft = true
 +++
 
 If you can't beat them, join them is probably the best quote to sum up my experience with AI.
