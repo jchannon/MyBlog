@@ -3,12 +3,11 @@ theme = "hugo-nord-blog"
 languageCode = "en-gb"
 baseurl = "https://blog.jonathanchannon.com/"
 title = "Jonathan Channon's Blog"
-googleAnalytics = "UA-7138405-4"
 disqusShortname = "jonathanchannonblog"
 
 [services]
   [services.googleAnalytics]
-    id = "UA-7138405-4"
+    id = "G-JEEX96WRGE"
 
 # Pagination
 [pagination]
