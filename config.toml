@@ -59,6 +59,6 @@ canonifyURLs = true
     [markup.goldmark.renderer]
       unsafe = true
   [markup.highlight]
-    #style = "nord"
+    style = "nord"
     lineNos = false
     lineNumbersInTable = true
