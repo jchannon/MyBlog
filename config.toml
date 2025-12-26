@@ -24,9 +24,9 @@ DefaultContentLanguage = "en"
   date = [":filename", ":default"]
 
 # Code highlighting
-pygmentsCodefences = true
-pygmentsUseClasses = true
-pygmentsStyle = "nord"
+#pygmentsCodefences = true
+#pygmentsUseClasses = true
+#pygmentsStyle = "nord"
 
 # Features
 enableEmoji = true
