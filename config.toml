@@ -3,7 +3,6 @@ theme = "hugo-nord-blog"
 languageCode = "en-gb"
 baseurl = "https://blog.jonathanchannon.com/"
 title = "Jonathan Channon's Blog"
-disqusShortname = "jonathanchannonblog"
 
 [services]
   [services.googleAnalytics]
