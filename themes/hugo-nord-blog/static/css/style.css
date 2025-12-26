@@ -679,3 +679,15 @@ main {
 /* ========================================
    Syntax Highlighting (Nord-based)
    ======================================== */
+  
+.highlight {
+margin: 1.5rem 0;
+border-radius: 0.5rem; 
+overflow: hidden;
+
+｝
+
+.highlight pre {
+ margin: 0;
+ border-radius: 0;
+}
