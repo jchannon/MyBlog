@@ -23,11 +23,6 @@ DefaultContentLanguage = "en"
 [frontmatter]
   date = [":filename", ":default"]
 
-# Code highlighting
-#pygmentsCodefences = true
-#pygmentsUseClasses = true
-#pygmentsStyle = "nord"
-
 # Features
 enableEmoji = true
 enableGitInfo = true
@@ -59,6 +54,7 @@ canonifyURLs = true
     [markup.goldmark.renderer]
       unsafe = true
   [markup.highlight]
+    noClasses = true
     style = "nord"
     lineNos = false
-    lineNumbersInTable = true
+    lineNumbersInTable = false
