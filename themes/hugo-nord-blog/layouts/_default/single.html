@@ -27,5 +27,8 @@
   <div class="post-content">
     {{ .Content }}
   </div>
+  
+  <!-- Disqus Comments -->
+  {{ partial "disqus.html" . }}
 </article>
 {{ end }}

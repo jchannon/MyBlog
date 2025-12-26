@@ -9,6 +9,9 @@ disqusShortname = "jonathanchannonblog"
   [services.googleAnalytics]
     id = "G-JEEX96WRGE"
 
+  [services.disqus]
+    shortname = "jonathanchannonblog"
+
 # Pagination
 [pagination]
   pagerSize = 10
