@@ -74,7 +74,18 @@
         updateGiscusTheme();
         
         // Watch for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+          // Only auto-update if user hasn't set an explicit preference
+          const hasStoredPreference = localStorage.getItem('theme');
+          if (!hasStoredPreference) {
+            // Update page theme to match system preference
+            if (e.matches) {
+              document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+              document.documentElement.removeAttribute('data-theme');
+            }
+          }
+          // Update Giscus theme to match current page theme
           updateGiscusTheme();
         });
       });
