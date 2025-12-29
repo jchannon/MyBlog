@@ -10,6 +10,8 @@ I recently wrote a single case discriminated union which is what I wanted but wa
 
 I was aware of both syntaxes and from a quick scan they look the same however they behave differently and rightly so.  As I travel the F# road there is more emphasis on creating types for your functions. I have used this approach in C# to enforce type discrimination but it seems less prevalent in the mainstream from my experience. For example think of this:
 
+<!--more-->
+
 ```csharp
 public string DoSomething(string name, int age, string address)
 {

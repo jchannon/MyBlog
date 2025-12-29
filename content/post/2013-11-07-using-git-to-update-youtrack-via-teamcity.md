@@ -11,6 +11,8 @@ YouTrack uses TeamCity to get the information about the commits and then scans t
 
 There is some documentation [here][1] but its not the greatest in terms of clarity and I've spoken to [Hadi Hariri][2] from JetBrains about improving this so hopefully they're working on it.
 
+<!--more-->
+
 Anyhow here's some example Git commands to wire it all up
 ```bash
     git commit -am "I fixed a massive bug #PROJ-158 Complete"
