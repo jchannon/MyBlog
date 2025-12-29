@@ -633,4 +633,26 @@ main {
   overflow-x: auto;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
-} 
+}
+
+/* ========================================
+   Giscus Comments
+   ======================================== */
+.giscus-wrapper {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.giscus-wrapper .giscus-frame {
+  colorscheme: light dark;
+}
+
+/* Light mode giscus styling */
+.giscus-wrapper {
+  filter: brightness(1);
+}
+
+[data-theme="dark"] .giscus-wrapper {
+  filter: brightness(1);
+}
