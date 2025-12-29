@@ -69,7 +69,17 @@
         }
       }
       
-      // Watch for theme changes
+      // Initialize theme on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        updateGiscusTheme();
+        
+        // Watch for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+          updateGiscusTheme();
+        });
+      });
+      
+      // Watch for theme toggle button clicks
       const themeToggle = document.getElementById('theme-toggle');
       if (themeToggle) {
         themeToggle.addEventListener('click', function() {
