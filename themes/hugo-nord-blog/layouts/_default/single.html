@@ -88,6 +88,11 @@
             });
             
             observer.observe(giscusWrapper, { childList: true });
+            
+            // Safety timeout: disconnect observer after 10 seconds if iframe hasn't loaded
+            setTimeout(function() {
+              observer.disconnect();
+            }, 10000);
           }
         }
       }
