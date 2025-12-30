@@ -75,18 +75,18 @@
         if (giscusFrame) {
           updateGiscusTheme();
         } else {
-          // Use MutationObserver to watch for iframe being added
-          const observer = new MutationObserver(function(mutations) {
-            const giscusFrame = document.querySelector('iframe.giscus-frame');
-            if (giscusFrame) {
-              updateGiscusTheme();
-              observer.disconnect();
-            }
-          });
-          
           // Observe the giscus-wrapper for child additions
           const giscusWrapper = document.querySelector('.giscus-wrapper');
           if (giscusWrapper) {
+            // Use MutationObserver to watch for iframe being added
+            const observer = new MutationObserver(function() {
+              const giscusFrame = document.querySelector('iframe.giscus-frame');
+              if (giscusFrame) {
+                updateGiscusTheme();
+                observer.disconnect();
+              }
+            });
+            
             observer.observe(giscusWrapper, { childList: true, subtree: true });
           }
         }
