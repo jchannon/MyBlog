@@ -74,27 +74,46 @@
         const giscusFrame = document.querySelector('iframe.giscus-frame');
         if (giscusFrame) {
           updateGiscusTheme();
-        } else {
-          // Observe the giscus-wrapper for child additions
-          const giscusWrapper = document.querySelector('.giscus-wrapper');
-          if (giscusWrapper) {
-            // Use MutationObserver to watch for iframe being added
-            const observer = new MutationObserver(function() {
-              const giscusFrame = document.querySelector('iframe.giscus-frame');
-              if (giscusFrame) {
-                updateGiscusTheme();
-                observer.disconnect();
-              }
-            });
-            
-            observer.observe(giscusWrapper, { childList: true });
-            
-            // Safety timeout: disconnect observer after 10 seconds if iframe hasn't loaded
-            setTimeout(function() {
-              observer.disconnect();
-            }, 10000);
-          }
+          return;
         }
+        
+        // Observe the giscus-wrapper for child additions
+        const giscusWrapper = document.querySelector('.giscus-wrapper');
+        if (!giscusWrapper) return;
+        
+        let timeoutId;
+        let observer;
+        
+        // Function to check and update theme
+        function checkAndUpdate() {
+          const giscusFrame = document.querySelector('iframe.giscus-frame');
+          if (giscusFrame) {
+            updateGiscusTheme();
+            if (observer) observer.disconnect();
+            if (timeoutId) clearTimeout(timeoutId);
+            return true;
+          }
+          return false;
+        }
+        
+        // Use MutationObserver to watch for iframe being added
+        observer = new MutationObserver(checkAndUpdate);
+        observer.observe(giscusWrapper, { childList: true, subtree: true });
+        
+        // Fallback: polling check every 100ms for up to 10 seconds
+        let pollCount = 0;
+        const maxPolls = 100; // 10 seconds / 100ms
+        const pollInterval = setInterval(function() {
+          if (checkAndUpdate() || pollCount++ >= maxPolls) {
+            clearInterval(pollInterval);
+          }
+        }, 100);
+        
+        // Safety timeout: disconnect observer after 10 seconds
+        timeoutId = setTimeout(function() {
+          if (observer) observer.disconnect();
+          clearInterval(pollInterval);
+        }, 10000);
       }
       
       // Initialize theme on page load
