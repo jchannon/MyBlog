@@ -58,3 +58,7 @@ canonifyURLs = true
     style = "nord"
     lineNos = false
     lineNumbersInTable = false
+
+# Output formats - enable RSS
+[outputs]
+  home = ["HTML", "RSS"]
