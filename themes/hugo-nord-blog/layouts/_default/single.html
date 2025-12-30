@@ -48,6 +48,16 @@
   
   <script>
     (function() {
+      // Set the correct initial theme on the Giscus script element before it loads
+      (function setInitialGiscusTheme() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const giscusTheme = isDark ? 'dark_dimmed' : 'light';
+        const giscusScript = document.querySelector('script[src="https://giscus.app/client.js"]');
+        if (giscusScript) {
+          giscusScript.setAttribute('data-theme', giscusTheme);
+        }
+      })();
+      
       // Update giscus theme when page theme changes
       function updateGiscusTheme() {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -69,7 +79,37 @@
         }
       }
       
-      // Watch for theme changes
+      // Listen for Giscus ready event and set theme
+      window.addEventListener('message', function(event) {
+        if (event.origin !== 'https://giscus.app') return;
+        if (!(typeof event.data === 'object' && event.data.giscus)) return;
+        
+        // Giscus is ready, set the theme
+        if (event.data.giscus.discussion || event.data.giscus.error) {
+          updateGiscusTheme();
+        }
+      });
+      
+      // Initialize theme on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        // Watch for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+          // Only auto-update if user hasn't set an explicit preference
+          const hasStoredPreference = localStorage.getItem('theme');
+          if (!hasStoredPreference) {
+            // Update page theme to match system preference
+            if (e.matches) {
+              document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+              document.documentElement.removeAttribute('data-theme');
+            }
+          }
+          // Update Giscus theme to match current page theme
+          updateGiscusTheme();
+        });
+      });
+      
+      // Watch for theme toggle button clicks
       const themeToggle = document.getElementById('theme-toggle');
       if (themeToggle) {
         themeToggle.addEventListener('click', function() {
