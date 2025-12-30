@@ -48,6 +48,16 @@
   
   <script>
     (function() {
+      // Set the correct initial theme on the Giscus script element before it loads
+      (function setInitialGiscusTheme() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const giscusTheme = isDark ? 'dark_dimmed' : 'light';
+        const giscusScript = document.querySelector('script[src="https://giscus.app/client.js"]');
+        if (giscusScript) {
+          giscusScript.setAttribute('data-theme', giscusTheme);
+        }
+      })();
+      
       // Update giscus theme when page theme changes
       function updateGiscusTheme() {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -69,59 +79,19 @@
         }
       }
       
-      // Wait for Giscus iframe to load, then set initial theme
-      function initializeGiscusTheme() {
-        const giscusFrame = document.querySelector('iframe.giscus-frame');
-        if (giscusFrame) {
+      // Listen for Giscus ready event and set theme
+      window.addEventListener('message', function(event) {
+        if (event.origin !== 'https://giscus.app') return;
+        if (!(typeof event.data === 'object' && event.data.giscus)) return;
+        
+        // Giscus is ready, set the theme
+        if (event.data.giscus.discussion || event.data.giscus.error) {
           updateGiscusTheme();
-          return;
         }
-        
-        // Observe the giscus-wrapper for child additions
-        const giscusWrapper = document.querySelector('.giscus-wrapper');
-        if (!giscusWrapper) return;
-        
-        let timeoutId;
-        let observer;
-        let pollInterval;
-        
-        // Function to check and update theme
-        function checkAndUpdate() {
-          const giscusFrame = document.querySelector('iframe.giscus-frame');
-          if (giscusFrame) {
-            updateGiscusTheme();
-            if (observer) observer.disconnect();
-            if (timeoutId) clearTimeout(timeoutId);
-            if (pollInterval) clearInterval(pollInterval);
-            return true;
-          }
-          return false;
-        }
-        
-        // Use MutationObserver to watch for iframe being added
-        observer = new MutationObserver(checkAndUpdate);
-        observer.observe(giscusWrapper, { childList: true, subtree: true });
-        
-        // Fallback: polling check every 100ms for up to 10 seconds
-        let pollCount = 0;
-        const maxPolls = 100; // 10 seconds / 100ms
-        pollInterval = setInterval(function() {
-          if (checkAndUpdate() || pollCount++ >= maxPolls) {
-            clearInterval(pollInterval);
-          }
-        }, 100);
-        
-        // Safety timeout: disconnect observer after 10 seconds
-        timeoutId = setTimeout(function() {
-          if (observer) observer.disconnect();
-          if (pollInterval) clearInterval(pollInterval);
-        }, 10000);
-      }
+      });
       
       // Initialize theme on page load
       document.addEventListener('DOMContentLoaded', function() {
-        initializeGiscusTheme();
-        
         // Watch for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
           // Only auto-update if user hasn't set an explicit preference
