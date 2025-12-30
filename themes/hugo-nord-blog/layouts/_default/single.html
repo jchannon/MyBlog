@@ -69,9 +69,32 @@
         }
       }
       
+      // Wait for Giscus iframe to load, then set initial theme
+      function initializeGiscusTheme() {
+        const giscusFrame = document.querySelector('iframe.giscus-frame');
+        if (giscusFrame) {
+          updateGiscusTheme();
+        } else {
+          // Use MutationObserver to watch for iframe being added
+          const observer = new MutationObserver(function(mutations) {
+            const giscusFrame = document.querySelector('iframe.giscus-frame');
+            if (giscusFrame) {
+              updateGiscusTheme();
+              observer.disconnect();
+            }
+          });
+          
+          // Observe the giscus-wrapper for child additions
+          const giscusWrapper = document.querySelector('.giscus-wrapper');
+          if (giscusWrapper) {
+            observer.observe(giscusWrapper, { childList: true, subtree: true });
+          }
+        }
+      }
+      
       // Initialize theme on page load
       document.addEventListener('DOMContentLoaded', function() {
-        updateGiscusTheme();
+        initializeGiscusTheme();
         
         // Watch for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
