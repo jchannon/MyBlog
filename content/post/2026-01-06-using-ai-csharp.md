@@ -276,7 +276,7 @@ Console.WriteLine(response);
 
 Obviously there is a lot more we can do with AI in our apps but I hope this illustrates the relative simplicity in getting started of building AI into your app.
 
-All the source code can be found in [this GitHub repo]().
+All the source code can be found in [this GitHub repo](https://github.com/jchannon/ChatClient).
 
 P.S If you were wondering what each model returned for the question we passed it:
 
