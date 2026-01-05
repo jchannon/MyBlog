@@ -635,6 +635,12 @@ main {
   text-size-adjust: none;
 }
 
+p code {
+    color: #8fbcbb;
+    font-size: 1rem;
+    font: inherit;
+}
+
 /* ========================================
    Giscus Comments
    ======================================== */
