@@ -1,6 +1,8 @@
 +++
 title = "Using AI in a C# app"
 tags = ["AI",".NET","csharp"]
+description = "Using AI in an existing or new C# app"
+images = ['images/usingaicsharpapp.png']
 +++
 
 Following on my from my previous [introduction to AI](https://blog.jonathanchannon.com/2025-12-23-introduction-to-ai/) post I thought I would now introduce how to use the AI providers in a C# application.

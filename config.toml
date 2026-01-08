@@ -41,7 +41,8 @@ canonifyURLs = true
 [params]
     author = "Jonathan Channon"
     description = "Jonathan Channon's Blog"
-    
+    images = ['images/og-site.png']
+
     # Social links (leave empty to hide)
     [params.social]
         bluesky = "https://bsky.app/profile/jonathanchannon.com"

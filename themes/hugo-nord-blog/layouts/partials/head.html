@@ -9,15 +9,6 @@
 <meta name="author" content="{{ . }}">
 {{- end }}
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
-<meta property="og:title" content="{{ .Title }}">
-<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}">
-<meta property="og:url" content="{{ .Permalink }}">
-{{- with .Site.Params.ogImage }}
-<meta property="og:image" content="{{ . | absURL }}">
-{{- end }}
-
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ .Title }}">
@@ -45,6 +36,6 @@
     }
   })();
 </script>
-
+{{ partial "opengraph.html" . }}
 <!-- Google Analytics -->
 {{ partial "google_analytics.html" . }}
