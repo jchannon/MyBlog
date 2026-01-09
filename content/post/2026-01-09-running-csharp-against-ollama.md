@@ -1,7 +1,7 @@
 +++
 title = "Running C# against Ollama"
 tags = ["AI",".NET","csharp"]
-draft = true
+description = "In this blog post we discuss how to use C# in an app that runs against an LLM running locally rather than in the cloud via Ollama and OllamaSharp"
 +++
 
 In my previous posts I introduced [AI concepts](https://blog.jonathanchannon.com/2025-12-23-introduction-to-ai/) and then showed how to [use AI in a C# app](https://blog.jonathanchannon.com/2026-01-06-using-ai-csharp/) using the cloud providers. In this post I want to expand on Ollama and show you how to build a chat agent in C# that runs entirely on your local machine.
