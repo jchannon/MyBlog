@@ -1,29 +1,30 @@
 +++
 title = "Agentic Semantic Data Modelling in C#"
 tags = ["AI",".NET","csharp","MongoDB"]
-draft = true
+description = "This blog posts describes how you can enable stakeholders to generate adhoc reports via the power of C# and AI. It will discuss the business cost and benefit of implementing this."
+images = ['images/AgenticSemanticDataModellinginCsharp.png']
 +++
 
-Over the last few months I've been working on a feature that I think represents where software development is heading. It's a natural language query interface that allows non-technical users to ask questions about data in plain English and get back meaningful results. No SQL to write, no reports to configure, just ask a question and get an answer. The interesting bit though is how we've approached this problem and what it reveals about building trustworthy AI-powered systems.
+Over the last few weeks I've been working on a feature that allows us to take advantage of AI within businesses and providing increased value to stakeholders. It's a natural language query interface that allows non-technical users to ask questions about data in plain English and get back meaningful results. No SQL to write, no reports to configure, just ask a question and get an answer. The interesting bit though is how I've approached this problem and what it reveals about building trustworthy AI-powered systems.
 
 <!--more-->
 
 ## The Problem Space
 
-Imagine you're a sales manager at a company that manages electric vehicle charging infrastructure for housing associations. You've got contracts with multiple housing associations, each with their own sites, drivers who subscribe to chargers, orders for equipment, installation work orders, and billing records. It's a complex domain with lots of moving parts.
+Imagine you're a sales manager at a company that manages electric vehicle charging infrastructure for housing associations (This might sound familiar to some readers!). You've got contracts with multiple housing associations, each with their own sites, drivers who subscribe to chargers, orders for equipment, installation work orders, and billing records. It's a complex domain with lots of moving parts.
 
-Now imagine it's Monday morning and your boss asks "which housing associations updated their prices on January 1st 2026?" You could fire up your database client, write some MongoDB aggregation pipeline, fiddle with the joins, and eventually get an answer. Or you could ask a sales analyst to run a report. Or you could spend 20 minutes clicking through pages of data.
+Now imagine it's Monday morning and your boss asks "which housing associations updated their prices on January 1st 2026?" You could fire up your database client, write some MongoDB aggregation pipeline, fiddle with the joins, and eventually get an answer. Or you could ask a data analyst to run a report. Or you could spend 20 minutes clicking through pages of data.
 
 What if you could just type that question into a text box and get the answer immediately?
 
-That's what we built, and I want to show you how it works.
+That's what I've built, and I want to show you how it works.
 
 ## The Architecture
 
-The system is built around a pipeline of services that take a natural language question and convert it into an executable MongoDB aggregation, run that aggregation, and return both the raw results and a natural language summary. Here's the flow:
+The system is built around a pipeline of services that take a natural language question and converts it into an executable MongoDB aggregation, that aggregation is run against the database, and I return both the raw results and a natural language summary. Here's the flow:
 
 1. User enters a natural language query in the UI
-2. System infers the schema from MongoDB collections
+2. System infers the schema from MongoDB collections at runtime
 3. System loads domain relationship documentation
 4. LLM generates a MongoDB aggregation pipeline
 5. System validates the pipeline for safety
@@ -34,7 +35,7 @@ Let me walk through each step with code.
 
 ## Step 1: The Entry Point
 
-The UI posts the query to our API endpoint. In our case we're using ASP.NET Core minimal APIs:
+The UI posts the query to our API endpoint. In this case I'm using ASP.NET Core minimal APIs:
 
 ```csharp
 public static void MapNaturalLanguageEndpoints(this WebApplication app)
@@ -53,8 +54,7 @@ public static void MapNaturalLanguageEndpoints(this WebApplication app)
 
         return Results.Ok(response);
     })
-    .RequireAuthorization()
-    .DisableAntiforgery();
+    .RequireAuthorization();
 }
 ```
 
@@ -62,7 +62,7 @@ The user's question gets passed to the `NaturalLanguageQueryOrchestrator` which 
 
 ## Step 2: Schema Inference
 
-Before we can generate a query, the LLM needs to know what data is available. We use a `SchemaInferenceService` that samples documents from each allowed collection and infers the field types:
+Before we can generate a query, the LLM needs to know what data is available. I use a `SchemaInferenceService` that samples documents from each allowed collection and infers the field names and types at runtime:
 
 ```csharp
 public async Task<MongoCollectionSchema> InferSchemaAsync(
@@ -121,6 +121,8 @@ private static string GetCollectionDescription(string collectionName)
 ```
 
 These descriptions give the LLM business context about what each collection represents in the domain.
+
+As we discussed in earlier posts we could have used a MongoDB MCP server to get this information but to save tokens and to control this schema generation I decided to do it myself.
 
 ## Step 3: Loading Domain Knowledge
 
@@ -309,9 +311,9 @@ That last bit is crucial. By showing users the actual MongoDB pipeline that ran,
 
 Now let's talk about the elephant in the room. How do you know if the data is correct?
 
-The sales manager runs a query and gets back a list of housing associations that updated prices on January 1st. But how does she know this is the right data? Maybe the LLM misunderstood "updated prices" and checked the wrong field. Maybe it got the date comparison backwards. Maybe it queried the wrong collection entirely.
+The sales manager runs a query and gets back a list of housing associations that updated prices on January 1st. But how do they know this is the right data? Maybe the LLM misunderstood "updated prices" and checked the wrong field. Maybe it got the date comparison backwards. Maybe it queried the wrong collection entirely.
 
-This is the fundamental challenge with AI-powered systems. They're powerful but fallible. Here's how we approach trust:
+This is the fundamental challenge with AI-powered systems. They're powerful but fallible. Here's how to approach trust:
 
 ### 1. Transparency
 
@@ -319,7 +321,7 @@ By returning the generated pipeline, users can inspect what actually ran. If you
 
 ### 2. Iteration on Domain Knowledge
 
-That markdown file with relationship documentation? It needs constant refinement. Every time we discover that the LLM misinterprets a query, we update the documentation to be more explicit. Over time, this builds a comprehensive domain model that improves accuracy.
+That markdown file with relationship documentation? It needs constant refinement. Every time we discover that the LLM misinterprets a query, we update the documentation to be more explicit. Over time, this builds a comprehensive domain model document that improves accuracy.
 
 ### 3. Validation and Safety
 
@@ -327,7 +329,7 @@ The validation layer prevents catastrophically wrong queries. It won't stop the 
 
 ### 4. Logging and Audit
 
-We log every query, the results, and whether it succeeded:
+We log every query, the results, who invoked it, and whether it succeeded:
 
 ```csharp
 await LogQueryAsync(userId, naturalLanguageQuery, collectionName,
@@ -338,7 +340,7 @@ This creates an audit trail. If users report incorrect results, we can review th
 
 ### 5. Human Verification
 
-At the end of the day, users need to apply judgment. The system is a tool that makes data access faster and easier, but critical business decisions should still involve verification. Think of it like a junior analyst who's fast but needs supervision.
+At the end of the day, users need to apply judgement. The system is a tool that makes data access faster and easier, but critical business decisions should still involve verification.
 
 ## The Ubiquitous Language Challenge
 
@@ -351,7 +353,7 @@ The biggest lever for improving accuracy is enriching the domain knowledge that 
 
 If the system prompt doesn't include this mapping, the LLM will guess. Sometimes it will guess right, sometimes not. The more comprehensive your ubiquitous language documentation, the better the results.
 
-This is actually a benefit in disguise. Building this system forces you to codify your domain knowledge. You end up with a document that's valuable beyond just powering the AI feature. It becomes onboarding material for new developers, a reference for the whole team, and a forcing function for domain-driven design.
+This is actually a benefit in disguise. Building this system forces you to codify your domain knowledge albeit possibly too late, however, you end up with a document that's valuable beyond just powering the AI feature. It becomes onboarding material for new developers, a reference for the whole team, and a forcing function for domain-driven design.
 
 ## Practical Considerations
 
@@ -359,11 +361,19 @@ A few things I learned building this:
 
 ### Token Costs
 
-Every query hits the LLM twice - once to generate the pipeline, once to generate the summary. With a comprehensive system prompt including all schemas and documentation, you're looking at potentially thousands of tokens per request. This adds up. We found it helpful to cache schemas (they don't change often) and to be judicious about what goes into the system prompt.
+Every query hits the LLM twice - once to generate the pipeline, once to generate the summary. With a comprehensive system prompt including all schemas and documentation, you're looking at potentially thousands of tokens per request. This adds up.
 
 ### Prompt Engineering
 
-The quality of results is directly tied to prompt quality. We went through many iterations of the system prompt, adding constraints, examples, and clarifications. Getting the LLM to consistently return parseable JSON in the right format took work. The instruction "Return valid JSON only, no additional explanation" was added after the LLM kept adding helpful commentary outside the JSON block.
+The quality of results is directly tied to prompt quality. I went through many iterations of the system prompt, adding constraints, examples, and clarifications. Getting the LLM to consistently return parseable JSON in the right format took work. The instruction "Return valid JSON only, no additional explanation" was added after the LLM kept adding helpful commentary outside the JSON block.
+
+If you are using OpenAI or Anthropic you can also make use of `Evaluations(evals)`. Think of this as an abstract way to unit test this kind of architecture. As I said previously, getting the most helpful system prompt is the target so that we can ensure more meaningful results but how you do know what will work? You can read more about how to approach it with OpenAI [here](https://platform.openai.com/docs/guides/evaluation-getting-started) or with Anthropic [here](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests). 
+
+Essentially like unit tests you know what you want to assert to make tests pass so you have to have that in mind and design success criteria. In this example, if I ask the LLM to give me a response where the input is worded like "X" I expect to see an aggregation to look like "Y". You build these tests up so you know who to word the inputs to get the results you want. In turn you take these results from the evals and build this into your system prompt so have a highly tuned prompt that the LLM understands. 
+
+This obviously benefits the users of the system but also can help your product team learn and understand what works and what does not and how to design and execute certain things within the tooling you are building. 
+
+The other benefit of using evals is that you have confirmation when the the core model changes. As we know Anthropic/Claude improve their models every few months, if they default model changes underneath you how do you know if your data querying tool still works? The answer is evals, you now run them against the new model to see what has changed or what needs tweaking to make things as good if not better.
 
 ### Error Handling
 
@@ -371,7 +381,7 @@ LLMs fail in interesting ways. Sometimes they hallucinate collection names that 
 
 ### Performance
 
-Schema inference on large collections can be slow. We cache schemas and only refresh them periodically. The LLM calls take 1-3 seconds typically. The MongoDB execution is usually fast if the pipeline is well-formed. Overall, queries complete in 3-5 seconds which feels acceptable for an ad-hoc analysis tool.
+Schema inference on large collections can be slow. I cache schemas and only refresh them periodically. The LLM calls take 1-3 seconds typically. The MongoDB execution is usually fast if the pipeline is well-formed. Overall, queries complete in 3-5 seconds which feels acceptable for an ad-hoc analysis tool although YMMV.
 
 ## Conclusion
 
@@ -389,11 +399,11 @@ If I were to summarize the key lessons:
 
 The code examples above are simplified from our production system, but they capture the essential architecture. If you're building something similar, I hope this gives you a good starting point.
 
-The full approach can be found in the Helix codebase, specifically:
-- NaturalLanguageQueryOrchestrator.cs:1
-- OpenAiQueryGenerationService.cs:1
-- SchemaInferenceService.cs:1
-- MongoQueryValidationService.cs:1
-- MongoQueryExecutionService.cs:1
-
 As AI capabilities continue to improve, I suspect we'll see more of these semantic interfaces in enterprise software. The challenge isn't just the technology, it's building systems that users can trust. That's the interesting problem to solve.
+
+A full example can be seen in this video:
+
+<video width="100%" controls poster="/images/AgenticSemanticDataModellinginCsharp.png">
+  <source src="/videos/AgenticSemanticDataModellinginCsharp.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
