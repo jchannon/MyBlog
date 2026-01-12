@@ -1,7 +1,7 @@
 +++
 title = "Agentic Semantic Data Modelling in C#"
 tags = ["AI",".NET","csharp","MongoDB"]
-description = "This blog posts describes how you can enable stakeholders to generate adhoc reports via the power of C# and AI. It will discuss the business cost and benefit of implementing this.
+description = "This blog posts describes how you can enable stakeholders to generate adhoc reports via the power of C# and AI. It will discuss the business cost and benefit of implementing this."
 +++
 
 Over the last few months I've been working on a feature that I think represents where software development is heading. It's a natural language query interface that allows non-technical users to ask questions about data in plain English and get back meaningful results. No SQL to write, no reports to configure, just ask a question and get an answer. The interesting bit though is how we've approached this problem and what it reveals about building trustworthy AI-powered systems.
