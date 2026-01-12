@@ -5,7 +5,7 @@ description = "This blog posts describes how you can enable stakeholders to gene
 images = ['images/AgenticSemanticDataModellinginCsharp.png']
 +++
 
-Over the last few weeks I've been working on a feature that allows us to take advantage of AI within businesses and providing increased value to stakeholders. It's a natural language query interface that allows non-technical users to ask questions about data in plain English and get back meaningful results. No SQL to write, no reports to configure, just ask a question and get an answer. The interesting bit though is how we've approached this problem and what it reveals about building trustworthy AI-powered systems.
+Over the last few weeks I've been working on a feature that allows us to take advantage of AI within businesses and providing increased value to stakeholders. It's a natural language query interface that allows non-technical users to ask questions about data in plain English and get back meaningful results. No SQL to write, no reports to configure, just ask a question and get an answer. The interesting bit though is how I've approached this problem and what it reveals about building trustworthy AI-powered systems.
 
 <!--more-->
 
@@ -35,7 +35,7 @@ Let me walk through each step with code.
 
 ## Step 1: The Entry Point
 
-The UI posts the query to our API endpoint. In our case we're using ASP.NET Core minimal APIs:
+The UI posts the query to our API endpoint. In this case I'm using ASP.NET Core minimal APIs:
 
 ```csharp
 public static void MapNaturalLanguageEndpoints(this WebApplication app)
@@ -62,7 +62,7 @@ The user's question gets passed to the `NaturalLanguageQueryOrchestrator` which 
 
 ## Step 2: Schema Inference
 
-Before we can generate a query, the LLM needs to know what data is available. We use a `SchemaInferenceService` that samples documents from each allowed collection and infers the field names and types at runtime:
+Before we can generate a query, the LLM needs to know what data is available. I use a `SchemaInferenceService` that samples documents from each allowed collection and infers the field names and types at runtime:
 
 ```csharp
 public async Task<MongoCollectionSchema> InferSchemaAsync(
@@ -313,7 +313,7 @@ Now let's talk about the elephant in the room. How do you know if the data is co
 
 The sales manager runs a query and gets back a list of housing associations that updated prices on January 1st. But how do they know this is the right data? Maybe the LLM misunderstood "updated prices" and checked the wrong field. Maybe it got the date comparison backwards. Maybe it queried the wrong collection entirely.
 
-This is the fundamental challenge with AI-powered systems. They're powerful but fallible. Here's how we approach trust:
+This is the fundamental challenge with AI-powered systems. They're powerful but fallible. Here's how to approach trust:
 
 ### 1. Transparency
 
@@ -366,6 +366,14 @@ Every query hits the LLM twice - once to generate the pipeline, once to generate
 ### Prompt Engineering
 
 The quality of results is directly tied to prompt quality. I went through many iterations of the system prompt, adding constraints, examples, and clarifications. Getting the LLM to consistently return parseable JSON in the right format took work. The instruction "Return valid JSON only, no additional explanation" was added after the LLM kept adding helpful commentary outside the JSON block.
+
+If you are using OpenAI or Anthropic you can also make use of `Evaluations(evals)`. Think of this as an abstract way to unit test this kind of architecture. As I said previously, getting the most helpful system prompt is the target so that we can ensure more meaningful results but how you do know what will work? You can read more about how to approach it with OpenAI [here](https://platform.openai.com/docs/guides/evaluation-getting-started) or with Anthropic [here](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests). 
+
+Essentially like unit tests you know what you want to assert to make tests pass so you have to have that in mind and design success criteria. In this example, if I ask the LLM to give me a response where the input is worded like "X" I expect to see an aggregation to look like "Y". You build these tests up so you know who to word the inputs to get the results you want. In turn you take these results from the evals and build this into your system prompt so have a highly tuned prompt that the LLM understands. 
+
+This obviously benefits the users of the system but also can help your product team learn and understand what works and what does not and how to design and execute certain things within the tooling you are building. 
+
+The other benefit of using evals is that you have confirmation when the the core model changes. As we know Anthropic/Claude improve their models every few months, if they default model changes underneath you how do you know if your data querying tool still works? The answer is evals, you now run them against the new model to see what has changed or what needs tweaking to make things as good if not better.
 
 ### Error Handling
 
